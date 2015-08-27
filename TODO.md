@@ -1,0 +1,3 @@
+- [ ] specs
+- [ ] setting flair
+- [ ] shipping info
