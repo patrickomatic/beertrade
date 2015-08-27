@@ -5,10 +5,11 @@ GIT
     omniauth-reddit (0.0.2)
       omniauth-oauth2 (~> 1.1)
 
-PATH
-  remote: /Users/patrick/redd
+GIT
+  remote: git://github.com/patrickomatic/redd.git
+  revision: 2fa43f51f33ae71dcc80bdb7e23c3dde025847bf
   specs:
-    redd (0.7.8)
+    redd (0.7.7)
       faraday (~> 0.9.1)
       fastimage (~> 1.6.6)
       hashie (~> 3.4.0)
