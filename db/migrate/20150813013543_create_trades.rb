@@ -3,6 +3,7 @@ class CreateTrades < ActiveRecord::Migration
     create_table :trades do |t|
       t.text :agreement
       t.datetime :accepted_at
+      t.datetime :completed_at
       t.timestamps null: false
     end
   end

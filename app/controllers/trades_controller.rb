@@ -4,6 +4,15 @@ class TradesController < ApplicationController
   end
 
 
+  def index
+    @trades = Trade.order(created_at: :desc).page(params[:page])
+  end 
+
+
+  def show
+    @trade = Trade.find(params[:id])
+  end
+
   def create
     @trade = Trade.new(trade_params)
     @trade.participants.build(user: current_user)

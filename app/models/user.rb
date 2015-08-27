@@ -13,6 +13,7 @@ class User < ActiveRecord::Base
     User.where(["LOWER(username) = ?", username.downcase.strip]).first
   end
 
+
   def to_param
     username
   end

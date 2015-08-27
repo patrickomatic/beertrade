@@ -9,7 +9,7 @@ showErrors = (error) ->
   $("#new_trade input[type=submit]").prop('disabled', true)
 
 
-$ ->
+ready = ->
   $username = $("#participant_username")
 
   hideErrors()
@@ -28,3 +28,6 @@ $ ->
     ), 250
 
     false
+
+$(document).on('page:load', ready)
+$ ready

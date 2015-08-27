@@ -2,23 +2,13 @@
 
 <h1>Listing Trades</h1>
 
-<table>
-  <thead>
-    <tr>
-      <th colspan="3"></th>
-    </tr>
-  </thead>
-
-  <tbody>
-    <% @trades.each do |trade| %>
-      <tr>
-        <td><%= link_to 'Show', trade %></td>
-        <td><%= link_to 'Edit', edit_trade_path(trade) %></td>
-        <td><%= link_to 'Destroy', trade, method: :delete, data: { confirm: 'Are you sure?' } %></td>
-      </tr>
-    <% end %>
-  </tbody>
-</table>
+<ul>
+  <% @trades.each do |trade| %>
+    <li>
+      <%= link_to trade, trade  %>
+    </li>
+  <% end %>
+</ul>
 
 <br>
 

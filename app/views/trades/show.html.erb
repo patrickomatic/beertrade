@@ -1,4 +1,16 @@
 <p id="notice"><%= notice %></p>
 
+<h1><%= @trade %></h1>
+
+<% if @trade.completed? %>
+  <% @trade.participants.each do |participant| %>
+    <%= participant.username %>: 
+    <%= participant.feedback %>
+    (<%= participamt.feedback_description %>)
+  <% end %>
+<% else %>
+<% end %>
+
+
 <%= link_to 'Edit', edit_trade_path(@trade) %> |
 <%= link_to 'Back', trades_path %>
