@@ -1,7 +1,7 @@
 class Trade < ActiveRecord::Base
-  has_one :requester
-  has_one :requestee
+  has_many :participants
+  has_many :users, through: :participants
 
-  validates :requester, presence: true
-  validates :requestee, presence: true
+  scope :open, ->{where(accepted_at: nil)}
+  scope :closed, ->{where("accepted_at IS NOT NULL")}
 end

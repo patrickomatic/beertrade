@@ -1,0 +1,20 @@
+<%= form_for(@trade) do |f| %>
+  <div id="error_explanation">
+    <ul id="trade_errors">
+    </ul>
+  </div>
+
+  <p>
+    <%= f.label :participant_username, "Who are you trading with? (reddit username)" %>
+    <%= text_field_tag :participant_username %>
+  </p>
+
+  <p>
+    <%= f.label :agreement, "What did you agree to trade?" %>
+    <%= f.text_field :agreement %>
+  </p>
+
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>
