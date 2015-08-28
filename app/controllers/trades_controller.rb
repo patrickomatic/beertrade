@@ -13,13 +13,11 @@ class TradesController < ApplicationController
     @trade = Trade.find(params[:id])
   end
 
+
   def create
     @trade = Trade.new(trade_params)
-    @trade.participants.build(user: current_user)
-    @trade.participants.build(user: User.find_or_create_by(username: params[:participant_username]))
 
-    if @trade.save
-      # XXX send message
+    if @trade.create_participants(current_user, params[:participant_username])
       redirect_to @trade
     else
       render 'new'
@@ -30,6 +28,7 @@ class TradesController < ApplicationController
   def edit
     @trade = Trade.find(params[:id])
   end
+
 
   def update
   end

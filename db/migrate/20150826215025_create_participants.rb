@@ -8,6 +8,7 @@ class CreateParticipants < ActiveRecord::Migration
       t.boolean :feedback_positive, default: false
       t.boolean :feedback_neutral, default: false
       t.boolean :feedback_negative, default: false
+      t.datetime :accepted_at
       t.timestamps null: false
     end
   end
