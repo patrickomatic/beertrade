@@ -7,6 +7,18 @@
     <%= csrf_meta_tags %>
   </head>
   <body>
+    <% if current_user %>
+      <nav>
+        <ul id="left-nav">
+          <li><%= link_to current_user.username, user_path(current_user) %></li>
+        </ul>
+
+        <ul id="right-nav">
+          <li><%= link_to "Logout", session_path(current_user), method: :delete %></li>
+        </ul>
+      </nav>
+    <% end %>
+
     <p class="notice"><%= notice %></p>
     <p class="alert"><%= alert %></p>
 
