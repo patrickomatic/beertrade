@@ -1,4 +1,5 @@
 class User < ActiveRecord::Base
+  has_many :participants
   has_many :trades, through: :participants
 
   validates :username, presence: true
@@ -25,6 +26,6 @@ class User < ActiveRecord::Base
   end
 
   def total_completed_trades
-    20 # TODO
+    participants.completed.count
   end
 end

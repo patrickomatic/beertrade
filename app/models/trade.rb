@@ -4,8 +4,13 @@ class Trade < ActiveRecord::Base
 
 
   def completed?
-
+    participants.pending.empty?
   end
+
+  def waiting_for_approval?(user)
+    participants.pending.where(user: user).exists?
+  end
+
 
   def create_participants(organizer_user, participant_reddit_username)
     participants.build(user: organizer_user, accepted_at: Time.now)
@@ -16,10 +21,6 @@ class Trade < ActiveRecord::Base
     true
   rescue ActiveRecord::RecordInvalid
     false
-  end
-
-
-  def waiting_for_approval?(user)
   end
 
 

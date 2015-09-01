@@ -24,22 +24,27 @@
 
 <h1><%= @user.username %></h1>
 
-<% if @pending_trades %>
+<% unless @pending.empty? %>
   <h2>Pending trades</h2>
 
   <ul>
-    <% @pending_trades.each do |trade| %>
-      <li><%= trade %></li>
+    <% @pending.each do |participant| %>
+      <li><%= link_to participant.trade, trade_path(participant.trade) %></li>
     <% end %>
   </ul>
+
+  <%= paginate @pending, param_name: :pending_page %>
 <% end %>
 
 
-<% if @completed_trades %>
+<% unless @completed.empty? %>
   <h2>Completed trades</h2>
 
   <ul>
-    <% @completed_trades.each do |trade| %>
-      <li><%= trade %></li>
-    <% end %> </ul>
+    <% @completed.each do |participant| %>
+      <li><%= link_to participant.trade, trade_path(participant.trade) %></li>
+    <% end %>
+  </ul>
+
+  <%= paginate @completed, param_name: :completed_page %>
 <% end %>

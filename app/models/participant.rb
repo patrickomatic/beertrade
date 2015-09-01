@@ -1,9 +1,14 @@
 class Participant < ActiveRecord::Base
+  paginates_per 20
+
   belongs_to :trade
   belongs_to :user
 
   validates :trade, presence: true
   validates :user, presence: true
+
+  scope :pending, ->{ where(feedback: nil) }
+  scope :completed, ->{ where("feedback IS NOT NULL") }
 
 
   def feedback_description
