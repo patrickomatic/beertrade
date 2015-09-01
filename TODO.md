@@ -1,3 +1,5 @@
+- [ ] make it so when you accept a trade, you get redirected to log in
+- [ ] make a README
 - [ ] specs
 - [ ] setting flair
 - [ ] shipping info

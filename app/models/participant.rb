@@ -22,21 +22,22 @@ class Participant < ActiveRecord::Base
   end
 
 
-  def invite
+  def send_invite
     reddit_bot.compose_message(self.user.username, "/r/beertrade trade invite", 
-                               render_md_template('participants/invite', 
+                               render_md_partial('participants/invite', 
                                                   participant: self, 
-                                                  other_participant: other_participants.first)
+                                                  other_participant: other_participants.first))
   end
 
 
   private
 
     def reddit_bot
-      Redd.it(Rails.configuration.secrets.bot_oauth_id, 
-              Rails.configuration.secrets.bot_oauth_secret, 
-              Rails.configuration.secrets.bot_username, 
-              Rails.configuration.secrets.bot_password).tap {|r| r.authorize!}
+      Redd.it(:script, 
+              Rails.application.secrets.bot_oauth_id, 
+              Rails.application.secrets.bot_oauth_secret,
+              Rails.application.secrets.bot_username, 
+              Rails.application.secrets.bot_password).tap {|r| r.authorize!}
     end
 
     def render_md_partial(partial, locals={})
@@ -50,6 +51,6 @@ class Participant < ActiveRecord::Base
           end
       end
 
-      action_view.render(partial: partial, format: :md, locals: locals)
+      action_view.render(partial: partial, formats: [:md], locals: locals)
     end
 end

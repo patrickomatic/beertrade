@@ -1,0 +1,7 @@
+Hi /u/<%= participant.user.username %>, we're messaging you to let you know that /u/<%= other_participant.user.username %> has a requested a trade with you via the /r/beertrade subreddit. 
+
+<% if participant.trade.agreement %>
+  The agreed trade was: <%= participant.trade.agreement %>
+<% end %>
+
+To confirm this trade please visit this link: <%= trade_url(participant.trade) %>

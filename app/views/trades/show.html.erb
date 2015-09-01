@@ -8,7 +8,16 @@
     <%= participant.feedback %>
     (<%= participamt.feedback_description %>)
   <% end %>
-<% else %>
+<% elsif @trade.waiting_for_approval?(current_user) %>
+  <div id="trade-approval">
+    This trade is pending your approval.  Please select Yes or No:
+
+    <div id="trade-yes-no">
+      <%= link_to "Yes", create_trade_participant_path(@trade), method: :post %>
+      |
+      <%= link_to "No", trade_path(@trade), method: :delete %>
+    </div>
+  </div>
 <% end %>
 
 

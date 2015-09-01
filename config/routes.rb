@@ -1,5 +1,8 @@
 Rails.application.routes.draw do
-  resources :trades, except: [:destroy]
+  resources :trades do
+    resources :participants, only: [:create]
+  end
+
   resources :users, except: [:destroy, :create]
   resources :sessions, only: [:create, :new, :destroy]
 
