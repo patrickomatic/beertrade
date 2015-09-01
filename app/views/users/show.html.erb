@@ -1,3 +1,45 @@
-Hi <%= @user.username %>
+<div id="reputation">
+  <h3>Reputation - <%= @user.reputation %>%</h3>
 
-<%= link_to 'Request a trade', new_trade_path %>
+  <table>
+    <tr>
+      <td>Completed trades</td>
+      <td><%= @user.total_completed_trades %></td>
+    </tr>
+    <tr>
+      <td>Positive</td>
+      <td><%= @user.positive_feedback %></td>
+    </tr>
+    <tr>
+      <td>Neutral</td>
+      <td><%= @user.neutral_feedback %></td>
+    </tr>
+    <tr>
+      <td>Negative</td>
+      <td><%= @user.negative_feedback %></td>
+    </tr>
+  </table>
+</div>
+
+
+<h1><%= @user.username %></h1>
+
+<% if @pending_trades %>
+  <h2>Pending trades</h2>
+
+  <ul>
+    <% @pending_trades.each do |trade| %>
+      <li><%= trade %></li>
+    <% end %>
+  </ul>
+<% end %>
+
+
+<% if @completed_trades %>
+  <h2>Completed trades</h2>
+
+  <ul>
+    <% @completed_trades.each do |trade| %>
+      <li><%= trade %></li>
+    <% end %> </ul>
+<% end %>

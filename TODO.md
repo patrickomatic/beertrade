@@ -1,4 +1,5 @@
 - [ ] make it so when you accept a trade, you get redirected to log in
+- [ ] reset CSS so everything has uniform padding/margins
 - [ ] make a README
 - [ ] specs
 - [ ] setting flair

@@ -1,7 +1,8 @@
 class UsersController < ApplicationController
   def show
     @user = User.find_by(username: params[:id])
-    #@open_trades = Trade.involving_user(@user).open
+    @pending_trades = nil # TODO
+    @completed_trades = nil # TODO
   end
 
   def index

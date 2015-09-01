@@ -7,21 +7,24 @@
     <%= csrf_meta_tags %>
   </head>
   <body>
-    <% if current_user %>
-      <nav>
-        <ul id="left-nav">
-          <li><%= link_to current_user.username, user_path(current_user) %></li>
-        </ul>
+    <div id="main">
+      <% if current_user %>
+        <nav>
+          <ul id="left-nav">
+            <li><%= link_to current_user.username, user_path(current_user) %></li>
+            <li><%= link_to 'request a trade', new_trade_path %></li>
+          </ul>
 
-        <ul id="right-nav">
-          <li><%= link_to "Logout", session_path(current_user), method: :delete %></li>
-        </ul>
-      </nav>
-    <% end %>
+          <ul id="right-nav">
+            <li><%= link_to "logout", session_path(current_user), method: :delete %></li>
+          </ul>
+        </nav>
+      <% end %>
 
-    <p class="notice"><%= notice %></p>
-    <p class="alert"><%= alert %></p>
+      <p class="notice"><%= notice %></p>
+      <p class="alert"><%= alert %></p>
 
-    <%= yield %>
+      <%= yield %>
+    </div>
   </body>
 </html>

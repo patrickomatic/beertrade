@@ -20,5 +20,11 @@ class User < ActiveRecord::Base
 
   def reputation
     (positive_feedback / (positive_feedback - negative_feedback)) * 100
+  rescue ZeroDivisionError
+    0
+  end
+
+  def total_completed_trades
+    20 # TODO
   end
 end
