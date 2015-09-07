@@ -1,4 +1,9 @@
 class SessionsController < ApplicationController
+  def new
+    @last_completed = Trade.last_completed
+  end
+
+
   def create
     user = find_or_create_user(auth_hash.uid, auth_hash.info.name)
 

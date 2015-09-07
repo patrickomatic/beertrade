@@ -2,6 +2,8 @@ class Trade < ActiveRecord::Base
   has_many :participants, dependent: :destroy
   has_many :users, through: :participants
 
+  scope :last_completed, ->{ all } # XXX 
+
 
   def completed?
     participants.pending.empty?

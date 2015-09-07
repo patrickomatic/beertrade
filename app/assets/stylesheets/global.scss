@@ -1,6 +1,10 @@
+$background-color: #D1D1D1;
+$border-color: #000;
+
+
 nav { 
   display: block;
-  border-bottom: 2px solid #000;
+  border-bottom: 2px solid $border-color;
   width: 100%;
   min-height: 3em;
   padding-bottom: 2px;
@@ -15,7 +19,7 @@ nav {
       float: left;
       padding-left: 1em;
       padding-right: 1em;
-      border-right: 1px solid #000;
+      border-right: 1px solid $border-color;
     }
 
     li:last-child {
@@ -36,6 +40,8 @@ nav {
 
 footer {
   width: 100%;
+  margin-top: 2em;
+  border-top: 1px solid $border-color;
   text-align: center;
 
   ul {
@@ -58,7 +64,7 @@ div {
 body {
   width: 100%;
   text-align: center;
-  background-color: #D1D1D1;
+  background-color: $background-color;
   padding: 0px;
   margin: 0px;
 

@@ -1,3 +1,15 @@
 <p>
-  <%= link_to "Sign in with Reddit", '/auth/reddit' %><br />
+  <%= link_to "sign in with reddit", '/auth/reddit' %><br />
+</p>
+
+<p class="current-trades">
+  <h2>latest trades</h2>
+
+  <ul>
+    <% @last_completed.each do |trade| %>
+      <li><%= link_to trade, trade_path(trade) %></li>
+    <% end %>
+
+    <%# paginate @last_completed %>
+  </ul>
 </p>
