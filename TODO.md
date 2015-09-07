@@ -4,3 +4,4 @@
 - [ ] specs
 - [ ] setting flair
 - [ ] shipping info
+- [ ] N+1 query on user show page

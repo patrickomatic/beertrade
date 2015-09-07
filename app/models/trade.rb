@@ -7,8 +7,19 @@ class Trade < ActiveRecord::Base
     participants.pending.empty?
   end
 
+
   def waiting_for_approval?(user)
+    participants.not_yet_accepted.where(user: user).exists?
+  end
+
+
+  def waiting_for_feedback?(user)
     participants.pending.where(user: user).exists?
+  end
+
+
+  def can_delete?(user)
+    waiting_for_approval?(user)
   end
 
 

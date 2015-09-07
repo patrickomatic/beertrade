@@ -31,6 +31,19 @@ class TradesController < ApplicationController
 
 
   def update
+    # TODO shipping support and updating feedback
+  end
+
+
+  def destroy 
+    @trade = Trade.find(params[:id])
+
+    render status: 404 unless @trade.can_delete?(current_user)
+
+    @trade.destroy
+
+    flash[:success] = "Trade cancelled"
+    redirect_to user_path(current_user)
   end
 
 

@@ -1,6 +1,6 @@
 Rails.application.routes.draw do
   resources :trades do
-    resources :participants, only: [:create]
+    resources :participants, only: [:create, :edit, :update]
   end
 
   resources :users, except: [:destroy, :create]

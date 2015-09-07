@@ -19,6 +19,11 @@ class User < ActiveRecord::Base
     username
   end
 
+  def to_s
+    "/u/#{username}"
+  end
+
+
   def reputation
     (positive_feedback / (positive_feedback - negative_feedback)) * 100
   rescue ZeroDivisionError

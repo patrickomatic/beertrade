@@ -2,7 +2,6 @@ require "rails_helper"
 
 RSpec.describe TradesController, type: :routing do
   describe "routing" do
-
     it "routes to #index" do
       expect(:get => "/trades").to route_to("trades#index")
     end
@@ -28,12 +27,11 @@ RSpec.describe TradesController, type: :routing do
     end
 
     it "routes to #update via PATCH" do
-      expect(:patch => "/trades/1").to route_to("trades#update", :id => "1")
+      expect(patch: "/trades/1").to route_to("trades#update", :id => "1")
     end
 
     it "routes to #destroy" do
-      expect(:delete => "/trades/1").to route_to("trades#destroy", :id => "1")
+      expect(delete: "/trades/1").to route_to("trades#destroy", :id => "1")
     end
-
   end
 end

@@ -7,8 +7,9 @@ class Participant < ActiveRecord::Base
   validates :trade, presence: true
   validates :user, presence: true
 
-  scope :pending, ->{ where(feedback: nil) }
-  scope :completed, ->{ where("feedback IS NOT NULL") }
+  scope :pending,           ->{ where(feedback: nil) }
+  scope :completed,         ->{ where("feedback IS NOT NULL") }
+  scope :not_yet_accepted,  ->{ where(accepted_at: nil) }
 
 
   def feedback_description
@@ -24,6 +25,10 @@ class Participant < ActiveRecord::Base
 
   def other_participants
     trade.participants.reject {|p| p == self}
+  end
+
+  def other_participant
+    other_participants.first
   end
 
 

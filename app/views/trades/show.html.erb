@@ -1,5 +1,3 @@
-<p id="notice"><%= notice %></p>
-
 <h1><%= @trade %></h1>
 
 <% if @trade.completed? %>
@@ -13,13 +11,14 @@
     This trade is pending your approval.  Please select Yes or No:
 
     <div id="trade-yes-no">
-      <%= link_to "Yes", create_trade_participant_path(@trade), method: :post %>
+      <%= link_to "Yes", trade_participants_path(@trade), method: :post %>
       |
       <%= link_to "No", trade_path(@trade), method: :delete %>
     </div>
   </div>
+<% elsif @trade.waiting_for_feedback?(current_user) %>
+  <% participant = @trade.participants.find_by(user: current_user) %>
+  <%= link_to "Update shipping info", edit_trade_participant_path(@trade, participant) %>
+  |
+  <%= link_to "Leave feedback and complete trade", edit_trade_participant_path(@trade, participant.other_participant) %>
 <% end %>
-
-
-<%= link_to 'Edit', edit_trade_path(@trade) %> |
-<%= link_to 'Back', trades_path %>

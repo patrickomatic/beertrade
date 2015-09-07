@@ -1,0 +1,10 @@
+<%= form_for(@participant) do |f| %>
+  <% if @participant.user == current_user %>
+    <%= f.input :shipping_info %>
+  <% else %>
+    <%= f.input :feedback %>
+    <%# XXX radio button with type of feedback %>
+  <% end %>
+
+  <%= f.submit %>
+<% end %>
