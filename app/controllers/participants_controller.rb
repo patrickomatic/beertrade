@@ -22,6 +22,7 @@ class ParticipantsController < ApplicationController
     @participant = @trade.participants.find!(params[:id])
 
     if @participant.update_attributes(params)
+      # XXX
     else 
       flash[:error] = "Error updating shipping info"
       redirect_to edit_trade_participant_path(@participant)
