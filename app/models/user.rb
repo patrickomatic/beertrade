@@ -25,7 +25,7 @@ class User < ActiveRecord::Base
 
 
   def reputation
-    (positive_feedback / (positive_feedback - negative_feedback)) * 100
+    ((positive_feedback / (positive_feedback + negative_feedback).to_f) * 100).round
   rescue ZeroDivisionError
     0
   end
