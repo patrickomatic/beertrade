@@ -1,8 +1,8 @@
-<%= form_for(@participant) do |f| %>
+<%= form_for [@trade, @participant] do |f| %>
   <% if @participant.user == current_user %>
-    <%= f.input :shipping_info %>
+    <%= f.text_field :shipping_info %>
   <% else %>
-    <%= f.input :feedback %>
+    <%= f.text_field :feedback %>
     <%# XXX radio button with type of feedback %>
   <% end %>
 

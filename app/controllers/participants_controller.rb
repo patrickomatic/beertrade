@@ -13,13 +13,13 @@ class ParticipantsController < ApplicationController
 
   def edit
     @trade = Trade.find(params[:trade_id])
-    @participant = @trade.participants.find!(params[:id])
+    @participant = @trade.participants.find_by_id(params[:id])
   end
 
 
   def update
     @trade = Trade.find(params[:trade_id])
-    @participant = @trade.participants.find!(params[:id])
+    @participant = @trade.participants.find_by_id(params[:id])
 
     if @participant.update_attributes(params)
       # XXX
