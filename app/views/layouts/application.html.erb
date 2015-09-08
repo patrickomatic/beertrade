@@ -12,7 +12,7 @@
         <% if current_user %>
           <ul id="left-nav">
             <li><%= link_to current_user.username, user_path(current_user) %></li>
-            <li><%= link_to 'request a trade', new_trade_path %></li>
+            <li><%= link_to '+ request a trade', new_trade_path %></li>
           </ul>
 
           <ul id="right-nav">

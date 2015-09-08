@@ -1,10 +1,19 @@
 <%= form_for [@trade, @participant] do |f| %>
   <% if @participant.user == current_user %>
+    <h1>update shipping info</h1>
+    <%= f.label :shipping_info %>
     <%= f.text_field :shipping_info %>
+
+    <div>
+      <%= f.submit "update shipping info" %>
+    </div>
   <% else %>
+    <h1>provide feedback for <%= @participant.other_participant.user.username%></h1>
     <%= f.text_field :feedback %>
     <%# XXX radio button with type of feedback %>
-  <% end %>
 
-  <%= f.submit %>
+    <div>
+      <%= f.submit "leave feedback" %>
+    </div>
+  <% end %>
 <% end %>

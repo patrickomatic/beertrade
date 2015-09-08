@@ -18,7 +18,7 @@
   </div>
 <% elsif @trade.waiting_for_feedback?(current_user) %>
   <% participant = @trade.participants.find_by(user: current_user) %>
-  <%= link_to "Update shipping info", edit_trade_participant_path(@trade, participant) %>
+  <%= link_to "update shipping info", edit_trade_participant_path(@trade, participant) %>
   |
-  <%= link_to "Leave feedback and complete trade", edit_trade_participant_path(@trade, participant.other_participant) %>
+  <%= link_to "leave feedback and complete trade", edit_trade_participant_path(@trade, participant.other_participant) %>
 <% end %>
