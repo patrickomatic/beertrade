@@ -3,9 +3,9 @@ $foreground-color: #FEFEFA;
 $border-color: #000;
 $main-width: 900px;
 
-$good-color: #00FF00;
+$good-color: #61B329;
 $neutral-color: #C0C0C0;
-$bad-color: #FF0000;
+$bad-color: #C00000;
 
 
 nav { 
@@ -72,6 +72,8 @@ div {
 
 
 body {
+  font-family: verdana, arial, helvetica, sans-serif;
+  font-size: 0.75em;
   width: 100%;
   text-align: center;
   background-color: $background-color;
@@ -84,6 +86,7 @@ body {
     width: $main-width;
     text-align: left;
     margin: 0px auto;
+    padding-top: 0px;
     background-color: $foreground-color;
     min-height: 500px;
   }
@@ -105,4 +108,15 @@ body {
   color: $bad-color;
 }
 
+a {
+  color: #000;
 
+  &:visited {
+    color: #666;
+  }
+
+  &:hover {
+    color: #fff;
+    background-color: #000;
+  }
+}
