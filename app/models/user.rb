@@ -15,6 +15,18 @@ class User < ActiveRecord::Base
   end
 
 
+  def update_reputation(feedback_type)
+    case feedback_type
+    when "positive"
+      increment!(:positive_feedback)
+    when "neutral"
+      increment!(:neutral_feedback)
+    when "negative"
+      increment!(:negative_feedback)
+    end
+  end
+
+
   def to_param
     username
   end

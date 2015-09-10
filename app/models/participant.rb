@@ -6,13 +6,15 @@ class Participant < ActiveRecord::Base
 
   validates :trade, presence: true
   validates :user, presence: true
+  validate :full_feedback?
 
   enum feedback_type: [:negative, :neutral, :positive]
 
-  scope :not_accepted,      ->{ where(accepted_at: nil) }
   scope :pending,           ->{ where(feedback: nil) }
   scope :completed,         ->{ where("feedback IS NOT NULL") }
   scope :not_yet_accepted,  ->{ where(accepted_at: nil) }
+
+  after_update :update_feedback
 
 
   def other_participants
@@ -40,6 +42,17 @@ class Participant < ActiveRecord::Base
 
   private
 
+    def update_feedback
+      return unless feedback_changed?
+      user.update_reputation(feedback_type)      
+    end
+
+
+    def full_feedback?
+      (feedback? || feedback_type?) && feedback? && feedback_type?
+    end
+
+
     def reddit_bot
       Redd.it(:script, 
               Rails.application.secrets.bot_oauth_id, 
@@ -47,6 +60,7 @@ class Participant < ActiveRecord::Base
               Rails.application.secrets.bot_username, 
               Rails.application.secrets.bot_password).tap {|r| r.authorize!}
     end
+
 
     def render_md_partial(partial, locals={})
       action_view = ActionView::Base.new(Rails.configuration.paths["app/views"])

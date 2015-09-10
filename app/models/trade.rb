@@ -13,7 +13,7 @@ class Trade < ActiveRecord::Base
 
 
   def accepted?
-    !participants.not_accepted.exists?
+    !participants.not_yet_accepted.exists?
   end
 
 
