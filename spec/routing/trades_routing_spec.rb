@@ -22,14 +22,6 @@ RSpec.describe TradesController, type: :routing do
       expect(post: "/trades").to route_to("trades#create")
     end
 
-    it "routes to #update via PUT" do
-      expect(put: "/trades/1").to route_to("trades#update", id: "1")
-    end
-
-    it "routes to #update via PATCH" do
-      expect(patch: "/trades/1").to route_to("trades#update", id: "1")
-    end
-
     it "routes to #destroy" do
       expect(delete: "/trades/1").to route_to("trades#destroy", id: "1")
     end

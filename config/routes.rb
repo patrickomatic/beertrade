@@ -1,5 +1,5 @@
 Rails.application.routes.draw do
-  resources :trades do
+  resources :trades, except: [:update] do
     resources :participants, only: [:create, :edit, :update]
   end
 

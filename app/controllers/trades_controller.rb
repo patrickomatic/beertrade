@@ -10,6 +10,7 @@ class TradesController < ApplicationController
 
 
   def show
+    # XXX should require authentication if it's not yet accepted and only visible to those who are participants
     @trade = Trade.find(params[:id])
   end
 
@@ -27,11 +28,6 @@ class TradesController < ApplicationController
 
   def edit
     @trade = Trade.find(params[:id])
-  end
-
-
-  def update
-    # TODO shipping support and updating feedback
   end
 
 

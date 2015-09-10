@@ -1,19 +1,31 @@
 <%= form_for [@trade, @participant] do |f| %>
   <% if @participant.user == current_user %>
     <h1>update shipping info</h1>
-    <%= f.label :shipping_info %>
-    <%= f.text_field :shipping_info %>
 
-    <div>
-      <%= f.submit "update shipping info" %>
+    <div class="form-row">
+      <%= f.label :shipping_info %>
+      <%= f.text_field :shipping_info %>
     </div>
   <% else %>
-    <h1>provide feedback for <%= @participant.other_participant.user.username%></h1>
-    <%= f.text_field :feedback %>
-    <%# XXX radio button with type of feedback %>
+    <h1>provide feedback for <%= @participant.other_participant.user %></h1>
 
-    <div>
-      <%= f.submit "leave feedback" %>
+    <div class="form-row">
+      <%= f.label :feedback_type, 'Positive', value: 'positive' %>
+      <%= f.radio_button :feedback_type, 'positive', checked: true %>
+
+      <%= f.label :feedback_type, 'Neutral', value: 'neutral' %>
+      <%= f.radio_button :feedback_type, 'neutral' %>
+
+      <%= f.label :feedback_type, 'Negative', value: 'negative' %>
+      <%= f.radio_button :feedback_type, 'negative' %>
+    </div>
+
+    <div class="form-row">
+      <%= f.text_area :feedback %>
     </div>
   <% end %>
+
+  <div class="actions">
+    <%= f.submit "submit" %>
+  </div>
 <% end %>

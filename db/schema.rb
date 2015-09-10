@@ -14,16 +14,14 @@
 ActiveRecord::Schema.define(version: 20150826215025) do
 
   create_table "participants", force: :cascade do |t|
-    t.integer  "user_id",                           null: false
-    t.integer  "trade_id",                          null: false
+    t.integer  "user_id",       null: false
+    t.integer  "trade_id",      null: false
     t.text     "shipping_info"
     t.text     "feedback"
-    t.boolean  "feedback_positive", default: false
-    t.boolean  "feedback_neutral",  default: false
-    t.boolean  "feedback_negative", default: false
+    t.integer  "feedback_type"
     t.datetime "accepted_at"
-    t.datetime "created_at",                        null: false
-    t.datetime "updated_at",                        null: false
+    t.datetime "created_at",    null: false
+    t.datetime "updated_at",    null: false
   end
 
   add_index "participants", ["trade_id"], name: "index_participants_on_trade_id"

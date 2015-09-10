@@ -7,20 +7,11 @@ class Participant < ActiveRecord::Base
   validates :trade, presence: true
   validates :user, presence: true
 
+  enum feedback_type: [:negative, :neutral, :positive]
+
   scope :pending,           ->{ where(feedback: nil) }
   scope :completed,         ->{ where("feedback IS NOT NULL") }
   scope :not_yet_accepted,  ->{ where(accepted_at: nil) }
-
-
-  def feedback_description
-    if feedback_positive
-      "positive"
-    elsif feedback_neutral
-      "neutral"
-    elsif feedback_negative
-      "negative"
-    end
-  end
 
 
   def other_participants
