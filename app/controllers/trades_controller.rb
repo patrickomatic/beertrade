@@ -38,7 +38,7 @@ class TradesController < ApplicationController
 
     @trade.destroy
 
-    flash[:success] = "Trade cancelled"
+    flash[:notice] = "Trade cancelled"
     redirect_to user_path(current_user)
   end
 

@@ -4,7 +4,7 @@ class ParticipantsController < ApplicationController
     @participant = @trade.participants.not_yet_accepted.where(user: current_user).first
     
     if !@participant.update_attributes(accepted_at: Time.now)
-      flash[:error] = @participant.errors
+      flash[:alert] = @participant.errors
     end
 
     redirect_to trade_path(@trade)
@@ -25,10 +25,10 @@ class ParticipantsController < ApplicationController
 
     # XXX trigger messages to other_participant
     if @participant.update_attributes(params)
-      flash[:message] = "Successfully updated trade"
+      flash[:notice] = "Successfully updated trade"
       redirect_to @trade
     else 
-      flash[:error] = "Error updating trade info"
+      flash[:alert] = "Error updating trade info"
       redirect_to edit_trade_participant_path(@participant)
     end
   end

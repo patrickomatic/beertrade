@@ -1,5 +1,11 @@
 $background-color: #D1D1D1;
+$foreground-color: #FEFEFA;
 $border-color: #000;
+$main-width: 900px;
+
+$good-color: #00FF00;
+$neutral-color: #C0C0C0;
+$bad-color: #FF0000;
 
 
 nav { 
@@ -17,6 +23,7 @@ nav {
     float: left;
 
     li { 
+      padding-left: 1em;
       display: inline;
     }
 
@@ -39,13 +46,16 @@ nav {
 
 footer {
   width: 100%;
-  margin-top: 2em;
+  margin-top: 1em;
+  padding-top: 1em;
   border-top: 1px solid $border-color;
   text-align: center;
 
   ul {
     list-style: none;
     display: block;
+    margin: 0;
+    padding: 0;
 
     li {
       display: inline;
@@ -69,11 +79,12 @@ body {
   margin: 0px;
 
   #main {
+    padding: 2em;
     z-index: 1;
-    width: 900px;
+    width: $main-width;
     text-align: left;
     margin: 0px auto;
-    background-color: #FFF;
+    background-color: $foreground-color;
     min-height: 500px;
   }
 
@@ -85,3 +96,13 @@ body {
     margin-bottom: 2em;
   }
 }
+
+.notice {
+  color: $good-color;
+}
+
+.alert {
+  color: $bad-color;
+}
+
+
