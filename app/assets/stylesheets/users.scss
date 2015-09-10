@@ -1,11 +1,28 @@
+@import "global";
+
+.user-info {
+  min-height: 12em;
+}
+
 #reputation {
-  border: 1px solid #000;
+  border: 1px solid $dark-color;
   float: right;
   padding: 1em;
+  min-height: 10em;
 
   table {
     width: 100%;
   }
 }
 
+.good-trades {
+  color: $good-color;
+}
 
+.neutral-trades {
+  color: $neutral-color;
+}
+
+.bad-trades {
+  color: $bad-color;
+}

@@ -6,7 +6,7 @@
     <%= participant.feedback %>
     (<%= participamt.feedback_description %>)
   <% end %>
-<% elsif @trade.waiting_for_approval?(current_user) %>
+<% elsif @trade.waiting_for_approval? current_user %>
   <div id="trade-approval">
     This trade is pending your approval.  Please select Yes or No:
 
@@ -16,9 +16,13 @@
       <%= link_to "No", trade_path(@trade), method: :delete %>
     </div>
   </div>
-<% elsif @trade.waiting_for_feedback?(current_user) %>
-  <% participant = @trade.participants.find_by(user: current_user) %>
-  <%= link_to "update shipping info", edit_trade_participant_path(@trade, participant) %>
-  |
-  <%= link_to "leave feedback and complete trade", edit_trade_participant_path(@trade, participant.other_participant) %>
+<% elsif @trade.participant(current_user) %>
+  <% participant = @trade.participant(current_user) %>
+  <ul class="trade-actions">
+    <li><%= link_to "update shipping info", edit_trade_participant_path(@trade, participant) %></li>
+    <% if @trade.waiting_to_give_feedback? current_user %>
+      <li><%= link_to "leave feedback and complete trade", edit_trade_participant_path(@trade, participant.other_participant) %></li>
+    <% end %>
+  </ul>
+  <br style="clear: both;"/> <%# XXX ick %>
 <% end %>

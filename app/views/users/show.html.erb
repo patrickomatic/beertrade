@@ -6,15 +6,15 @@
       <td>Completed trades</td>
       <td><%= @user.total_completed_trades %></td>
     </tr>
-    <tr>
+    <tr class="good-trades">
       <td>Positive</td>
       <td><%= @user.positive_feedback %></td>
     </tr>
-    <tr>
+    <tr class="neutral-trades">
       <td>Neutral</td>
       <td><%= @user.neutral_feedback %></td>
     </tr>
-    <tr>
+    <tr class="bad-trades">
       <td>Negative</td>
       <td><%= @user.negative_feedback %></td>
     </tr>
@@ -24,27 +24,29 @@
 
 <h1><%= @user.username %></h1>
 
-<% unless @pending.empty? %>
-  <h2>Pending trades</h2>
+<div class="user-info">
+  <% unless @pending.empty? %>
+    <h2>Pending trades</h2>
 
-  <ul>
-    <% @pending.each do |participant| %>
-      <li><%= link_to participant.trade, trade_path(participant.trade) %></li>
-    <% end %>
-  </ul>
+    <ul>
+      <% @pending.each do |participant| %>
+        <li><%= link_to participant.trade, trade_path(participant.trade) %></li>
+      <% end %>
+    </ul>
 
-  <%= paginate @pending, param_name: :pending_page %>
-<% end %>
+    <%= paginate @pending, param_name: :pending_page %>
+  <% end %>
 
 
-<% unless @completed.empty? %>
-  <h2>Completed trades</h2>
+  <% unless @completed.empty? %>
+    <h2>Completed trades</h2>
 
-  <ul>
-    <% @completed.each do |participant| %>
-      <li><%= link_to participant.trade, trade_path(participant.trade) %></li>
-    <% end %>
-  </ul>
+    <ul>
+      <% @completed.each do |participant| %>
+        <li><%= link_to participant.trade, trade_path(participant.trade) %></li>
+      <% end %>
+    </ul>
 
-  <%= paginate @completed, param_name: :completed_page %>
-<% end %>
+    <%= paginate @completed, param_name: :completed_page %>
+  <% end %>
+</div>

@@ -1,11 +1,28 @@
-$background-color: #D1D1D1;
-$foreground-color: #FEFEFA;
-$border-color: #000;
-$main-width: 900px;
-
 $good-color: #61B329;
 $neutral-color: #C0C0C0;
 $bad-color: #C00000;
+
+$dark-color: #000000;
+$light-color: #FEFEFA;
+
+$border-color: $dark-color;
+
+$background-color: #D1D1D1;
+$foreground-color: $light-color;
+$main-width: 900px;
+
+
+@mixin action-list {
+  padding-left: 0;
+  list-style: none;
+  display: block;
+  float: left;
+
+  li {
+    padding-left: 1em;
+    display: inline;
+  }
+}
 
 
 nav { 
@@ -17,19 +34,7 @@ nav {
   padding-top: 1em;
 
   #left-nav {
-    padding-left: 0;
-    list-style: none;
-    display: block;
-    float: left;
-
-    li { 
-      padding-left: 1em;
-      display: inline;
-    }
-
-    li:last-child {
-      border-right: none;
-    }
+    @include action-list;
   }
 
   #right-nav {
@@ -89,6 +94,7 @@ body {
     padding-top: 0px;
     background-color: $foreground-color;
     min-height: 500px;
+    box-shadow: 0 0 0.5em $dark-color;
   }
 
   h1 {
@@ -109,14 +115,14 @@ body {
 }
 
 a {
-  color: #000;
+  color: $dark-color;
 
   &:visited {
     color: #666;
   }
 
   &:hover {
-    color: #fff;
-    background-color: #000;
+    color: $light-color;
+    background-color: $dark-color;
   }
 }

@@ -3,10 +3,17 @@ class Trade < ActiveRecord::Base
   has_many :users, through: :participants
 
   scope :last_completed, ->{ all } # XXX 
+  scope :completed, -> { }
+  scope :with_user, -> { }
 
 
   def completed?
     participants.pending.empty?
+  end
+
+
+  def participant(user)
+    participants.where(user: user).first
   end
 
 
@@ -15,8 +22,8 @@ class Trade < ActiveRecord::Base
   end
 
 
-  def waiting_for_feedback?(user)
-    participants.pending.where(user: user).exists?
+  def waiting_to_give_feedback?(user)
+    # XXX not right
   end
 
 

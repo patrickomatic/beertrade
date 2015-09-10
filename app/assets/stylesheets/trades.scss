@@ -1,10 +1,18 @@
-#trade-approval {
-  background-color: #E3969E;
-  margin: 0.5em;
-  padding: 0.5em;
-  border: 1px solid #D1D1D1;
+@import "global";
 
-  #trade-yes-no {
-    text-align: center;
+.user-info {
+  #trade-approval {
+    background-color: #E3969E;
+    margin: 0.5em;
+    padding: 0.5em;
+    border: 1px solid $neutral-color;
+
+    #trade-yes-no {
+      text-align: center;
+    }
+  }
+
+  .trade-actions {
+    @include action-list;
   }
 }
