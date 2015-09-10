@@ -3,7 +3,7 @@ class Trade < ActiveRecord::Base
   has_many :users, through: :participants
 
   scope :last_completed, ->{ all } # XXX 
-  scope :completed, -> { } # XXX 
+  scope :completed, -> { joins(:participants).where(participants: {feedback: "foo"}).empty? } # XXX 
   scope :with_user, -> { } # XXX
 
 
