@@ -9,6 +9,7 @@ class Participant < ActiveRecord::Base
 
   enum feedback_type: [:negative, :neutral, :positive]
 
+  scope :not_accepted,      ->{ where(accepted_at: nil) }
   scope :pending,           ->{ where(feedback: nil) }
   scope :completed,         ->{ where("feedback IS NOT NULL") }
   scope :not_yet_accepted,  ->{ where(accepted_at: nil) }
@@ -18,8 +19,14 @@ class Participant < ActiveRecord::Base
     trade.participants.reject {|p| p == self}
   end
 
+
   def other_participant
     other_participants.first
+  end
+
+
+  def waiting_to_give_feedback?
+    !other_participant.feedback?
   end
 
 

@@ -3,12 +3,17 @@ class Trade < ActiveRecord::Base
   has_many :users, through: :participants
 
   scope :last_completed, ->{ all } # XXX 
-  scope :completed, -> { }
-  scope :with_user, -> { }
+  scope :completed, -> { } # XXX 
+  scope :with_user, -> { } # XXX
 
 
   def completed?
     participants.pending.empty?
+  end
+
+
+  def accepted?
+    !participants.not_accepted.exists?
   end
 
 
@@ -18,12 +23,12 @@ class Trade < ActiveRecord::Base
 
 
   def waiting_for_approval?(user)
-    participants.not_yet_accepted.where(user: user).exists?
+    !participant(user).accepted_at?
   end
 
 
   def waiting_to_give_feedback?(user)
-    # XXX not right
+    accepted? and p = self.participant(user) and p.waiting_to_give_feedback?
   end
 
 
