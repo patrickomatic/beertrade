@@ -13,12 +13,12 @@ class Trade < ActiveRecord::Base
 
 
   def accepted?
-    !participants.not_yet_accepted.exists?
+    !participants.empty? && !participants.not_yet_accepted.exists?
   end
 
 
   def participant(user)
-    participants.where(user: user).first
+    participants.for_user(user).first
   end
 
 

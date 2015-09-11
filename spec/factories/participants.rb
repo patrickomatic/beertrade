@@ -9,19 +9,19 @@ FactoryGirl.define do
 
     trait :with_feedback do
       feedback "A+ great trader"
-      feedback_positive true
+      feedback_type :positive 
       accepted_at Time.now
     end
 
     trait :with_negative_feedback do
       feedback "this trade sucked"
-      feedback_negative true
+      feedback_type :negative 
       accepted_at Time.now
     end
 
     trait :with_neutral_feedback do
       feedback "it was netural"
-      feedback_neutral true
+      feedback_type :neutral 
       accepted_at Time.now
     end
   end
