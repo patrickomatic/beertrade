@@ -18,6 +18,7 @@ gem 'redd', github: 'patrickomatic/redd'
 group :production do
   gem 'pg'
   gem 'rails_12factor'
+  gem 'rollbar'
 end
 
 group :development, :test do
