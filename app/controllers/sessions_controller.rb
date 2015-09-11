@@ -7,13 +7,18 @@ class SessionsController < ApplicationController
   def create
     user = find_or_create_user(auth_hash.uid, auth_hash.info.name)
 
-    session[:user_id] = user.id
-    redirect_to user_path(user)
+    log_in_user(user)
+
+    if last_page = session.delete(:last_page)
+      redirect_to last_page
+    else
+      redirect_to user_path(user)
+    end
   end
 
 
   def destroy
-    session.delete(:user_id)
+    log_out_user
     redirect_to root_path
   end
 

@@ -10,7 +10,14 @@ class TradesController < ApplicationController
 
 
   def show
-    # XXX should require authentication if it's not yet accepted and only visible to those who are participants
+    if !@trade.accepted?
+      if !current_user
+        return requires_authentication!
+      elsif !@trade.waiting_for_approval?(current_user)
+        render status: :forbidden and return
+      end
+    end
+
     @trade = Trade.find(params[:id])
   end
 
@@ -34,7 +41,9 @@ class TradesController < ApplicationController
   def destroy 
     @trade = Trade.find(params[:id])
 
-    render status: 404 unless @trade.can_delete?(current_user)
+    unless @trade.can_delete?(current_user)
+      render status: :not_found and return
+    end
 
     @trade.destroy
 
