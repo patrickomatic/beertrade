@@ -25,9 +25,12 @@ class TradesController < ApplicationController
   def create
     @trade = Trade.new(trade_params)
 
-    if @trade.create_participants(current_user, params[:participant_username])
+    username = params[:participant_username]
+    if @trade.create_participants(current_user, username)
+      flash[:notice] = "Trade successfully requested.  Waiting on /u/#{username} to confirm it"
       redirect_to @trade
     else
+      flash[:alert] = @trade.errors.full_messages.first
       render 'new'
     end
   end

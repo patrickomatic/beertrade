@@ -43,13 +43,19 @@ class Trade < ActiveRecord::Base
 
 
   def create_participants(organizer_user, participant_reddit_username)
+    if organizer_user.username.downcase == participant_reddit_username
+      self.errors.add(:base, "You cannot request a trade with yourself")
+      raise ActiveRecord::RecordInvalid.new(self)
+    end
+
     participants.build(user: organizer_user, accepted_at: Time.now)
     to_invite = participants.build(user: User.find_or_create_by(username: participant_reddit_username))
     save!
+
     TradeInviteJob.perform_later to_invite.id
 
     true
-  rescue ActiveRecord::RecordInvalid
+  rescue ActiveRecord::RecordInvalid 
     false
   end
 
