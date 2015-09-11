@@ -12,6 +12,7 @@ gem 'jbuilder', '~> 2.0'
 gem 'sdoc', '~> 0.4.0', group: :doc
 gem 'kaminari'
 gem 'sidekiq'
+gem 'newrelic_rpm'
 
 gem 'omniauth-reddit', github: 'jackdempsey/omniauth-reddit'
 gem 'redd', github: 'patrickomatic/redd'
