@@ -10,6 +10,8 @@ class TradesController < ApplicationController
 
 
   def show
+    @trade = Trade.find(params[:id])
+
     if !@trade.accepted?
       if !current_user
         return requires_authentication!
@@ -17,8 +19,6 @@ class TradesController < ApplicationController
         render status: :forbidden and return
       end
     end
-
-    @trade = Trade.find(params[:id])
   end
 
 

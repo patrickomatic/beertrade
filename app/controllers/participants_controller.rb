@@ -1,7 +1,9 @@
 class ParticipantsController < ApplicationController
   def create
     @trade = Trade.find(params[:trade_id])
-    @participant = @trade.not_yet_accepted.participant(current_user)
+    @participant = @trade.participants.not_yet_accepted.where(user: current_user).first
+
+    render :forbidden and return unless @participant
     
     if !@participant.update_attributes(accepted_at: Time.now)
       flash[:alert] = @participant.errors
@@ -26,6 +28,7 @@ class ParticipantsController < ApplicationController
     params = @participant.user == current_user ? update_shipping_info_params : update_feedback_params
 
     # XXX trigger messages to other_participant
+    # XXX do we need any security checks?
     if @participant.update_attributes(params)
       flash[:notice] = "Successfully updated trade"
       redirect_to @trade

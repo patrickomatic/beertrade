@@ -1,11 +1,13 @@
 <h2><%= @trade %></h2>
 
-<% if @trade.completed? || @trade.participant(current_user) %>
+<% if @trade.completed? %>
   <ul>
     <% @trade.participants.each do |participant| %>
       <li class><%= participant.other_participant.user %> said: <%= participant.feedback %></li>
     <% end %>
   </ul>
+<% elsif @trade.accepted? %>
+  <h3>trade pending</h3>
 <% end %>
   
   
