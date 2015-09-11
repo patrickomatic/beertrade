@@ -16,13 +16,15 @@ class User < ActiveRecord::Base
 
 
   def update_reputation(feedback_type)
-    case feedback_type
-    when "positive"
+    case feedback_type.to_sym
+    when :positive
       increment!(:positive_feedback)
-    when "neutral"
+    when :neutral
       increment!(:neutral_feedback)
-    when "negative"
+    when :negative
       increment!(:negative_feedback)
+    else
+      raise "Invalid feedback_type: #{feedback_type}"
     end
   end
 

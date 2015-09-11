@@ -36,6 +36,43 @@ RSpec.describe User, type: :model do
   end
 
 
+  describe "#update_reputation" do
+    before do
+      user.update_reputation(feedback_type) 
+    end
+
+    context "with positive feedback" do
+      let(:feedback_type) { :positive }
+
+      it "should just update positive feedback" do
+        expect(user.positive_feedback).to eq (positive_feedback + 1) 
+        expect(user.neutral_feedback).to eq neutral_feedback
+        expect(user.negative_feedback).to eq negative_feedback
+      end
+    end
+
+    context "with neutral feedback" do
+      let(:feedback_type) { :neutral }
+
+      it "should just update positive feedback" do
+        expect(user.positive_feedback).to eq positive_feedback 
+        expect(user.neutral_feedback).to eq (neutral_feedback + 1)
+        expect(user.negative_feedback).to eq negative_feedback
+      end
+    end
+
+    context "with negative feedback" do
+      let(:feedback_type) { :negative }
+
+      it "should just update negative feedback" do
+        expect(user.positive_feedback).to eq positive_feedback 
+        expect(user.neutral_feedback).to eq neutral_feedback
+        expect(user.negative_feedback).to eq (negative_feedback + 1)
+      end
+    end
+  end
+
+
   describe "#reputation" do
     subject { user.reputation }
 
