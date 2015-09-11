@@ -26,7 +26,9 @@ class Trade < ActiveRecord::Base
 
 
   def waiting_for_approval?(user)
-    !participant(user).try(:accepted_at?)
+    participant = participant(user)
+    return false unless participant
+    !participant.accepted?
   end
 
 

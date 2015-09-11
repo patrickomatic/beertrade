@@ -18,6 +18,11 @@ class Participant < ActiveRecord::Base
   after_update :update_feedback
 
 
+  def accepted?
+    accepted_at?
+  end
+
+
   def other_participants
     trade.participants.reject {|p| p == self}
   end
