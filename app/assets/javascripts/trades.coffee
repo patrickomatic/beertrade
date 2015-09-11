@@ -1,11 +1,11 @@
 hideErrors = ->
-  $("#error_explanation").hide()
+  $(".alert").hide()
   $("#new_trade input[type=submit]").prop('disabled', false)
 
 
 showErrors = (error) ->
-  $("#error_explanation").show()
-  $("#trade_errors").html(error)
+  $(".alert").show()
+  $(".alert").html(error)
   $("#new_trade input[type=submit]").prop('disabled', true)
 
 
@@ -19,12 +19,13 @@ ready = ->
     clearTimeout timer
     timer = setTimeout (->
       username = $username.val()
+      return if username == ''
 
       $.getJSON("https://api.reddit.com/user/#{username}/about.json")
       .success (json, resp) ->
         hideErrors()
       .error ->
-        showErrors("<li>#{username} not found, please try again</li>")
+        showErrors("#{username} not found, please try again")
     ), 250
 
     false

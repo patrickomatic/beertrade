@@ -1,4 +1,3 @@
-- [ ] seems like the name verifier doesnt work
 - [ ] send notifications when any participants update anything (shipping info, feedback)
 - [ ] make a README
 - [ ] specs
