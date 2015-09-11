@@ -14,12 +14,11 @@ $main-width: 900px;
 
 @mixin action-list {
   padding-left: 0;
+  padding-right: 0;
   list-style: none;
   display: block;
-  float: left;
 
   li {
-    padding-left: 1em;
     display: inline;
   }
 }
@@ -35,16 +34,19 @@ nav {
 
   #left-nav {
     @include action-list;
+    float: left;
+    
+    li {
+      padding-left: 1em;
+    }
   }
 
   #right-nav {
-    list-style: none;
-    display: block;
+    @include action-list;
     float: right;
 
     li {
       padding-right: 1em;
-      display: inline;
     }
   }
 }
