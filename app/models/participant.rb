@@ -6,10 +6,11 @@ class Participant < ActiveRecord::Base
 
   validates :trade, presence: true
   validates :user, presence: true
-  validate :full_feedback?
+  validate :validates_full_feedback
 
   enum feedback_type: [:negative, :neutral, :positive]
 
+  scope :for_user,          ->(user){ where(user_id: user.id) }
   scope :pending,           ->{ where(feedback: nil) }
   scope :completed,         ->{ where("feedback IS NOT NULL") }
   scope :not_yet_accepted,  ->{ where(accepted_at: nil) }
@@ -48,8 +49,13 @@ class Participant < ActiveRecord::Base
     end
 
 
+    def validates_full_feedback
+      errors.add(:base, "Must provide both feedback and feedback type") unless full_feedback?
+    end
+
     def full_feedback?
-      (feedback? || feedback_type?) && feedback? && feedback_type?
+      return feedback? && feedback_type? if feedback? || feedback_type?
+      true
     end
 
 
