@@ -46,6 +46,10 @@ class Participant < ActiveRecord::Base
     def update_feedback
       return unless feedback_changed?
       user.update_reputation(feedback_type)      
+
+      if trade.all_feedback_given?
+        trade.update_attributes(completed_at: Time.now)
+      end
     end
 
 

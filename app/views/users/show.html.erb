@@ -29,8 +29,8 @@
     <h2>Pending trades</h2>
 
     <ul>
-      <% @pending.each do |participant| %>
-        <li><%= link_to participant.trade, trade_path(participant.trade) %></li>
+      <% @pending.each do |trade| %>
+        <li><%= link_to trade, trade_path(trade) %></li>
       <% end %>
     </ul>
 
@@ -42,8 +42,8 @@
     <h2>Completed trades</h2>
 
     <ul>
-      <% @completed.each do |participant| %>
-        <li><%= link_to participant.trade, trade_path(participant.trade) %></li>
+      <% @completed.each do |trade| %>
+        <li><%= link_to trade, trade_path(trade) %></li>
       <% end %>
     </ul>
 

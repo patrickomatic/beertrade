@@ -1,8 +1,8 @@
 class UsersController < ApplicationController
   def show
     @user = User.find_by(username: params[:id])
-    @pending = @user.participants.pending.page(params[:pending_page])
-    @completed = @user.participants.completed.page(params[:completed_page])
+    @pending = Trade.with_user(@user).pending.page(params[:pending_page])
+    @completed = Trade.with_user(@user).completed.page(params[:completed_page])
   end
 
 

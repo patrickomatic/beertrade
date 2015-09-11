@@ -2,15 +2,19 @@ class Trade < ActiveRecord::Base
   has_many :participants, dependent: :destroy
   has_many :users, through: :participants
 
-  scope :last_completed, ->{ all } # XXX 
-  scope :completed, -> { joins(:participants).where(participants: {feedback: "foo"}).empty? } # XXX 
-  scope :with_user, -> { } # XXX
+  scope :last_completed,  ->{ order(completed_at: :desc) }
+  scope :completed,       ->{ where("completed_at IS NOT NULL") }
+  scope :pending,         ->{ where(completed_at: nil) }
+  scope :with_user,       ->(user) { joins(:participants).where(participants: {user_id: user.id}) }
 
 
   def completed?
-    participants.pending.empty?
+    completed_at?
   end
 
+  def all_feedback_given?
+    participants.pending.empty?
+  end
 
   def accepted?
     !participants.empty? && !participants.not_yet_accepted.exists?

@@ -3,6 +3,8 @@ FactoryGirl.define do
     agreement "yinlin for pliny"
 
     trait :completed do
+      completed_at Time.now
+
       after(:build) do |trade| 
         trade.participants << FactoryGirl.build(:participant, :with_feedback)
         trade.participants << FactoryGirl.build(:participant, :with_feedback)
