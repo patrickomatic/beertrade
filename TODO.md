@@ -1,3 +1,5 @@
+- [ ] make it so you cannot trade with yourself
+- [ ] send notifications when any participants update anything (shipping info, feedback)
 - [ ] make a README
 - [ ] specs
 - [ ] setting flair

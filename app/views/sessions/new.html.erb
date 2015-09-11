@@ -1,3 +1,9 @@
+<% if !current_user %>
+  <nav>
+    <h3><%= link_to "sign in with reddit", '/auth/reddit' %></h3>
+  </nav>
+<% end %>
+
 <p class="current-trades">
   <h2>latest trades</h2>
 
@@ -6,6 +12,6 @@
       <li><%= link_to trade, trade_path(trade) %></li>
     <% end %>
 
-    <%# paginate @last_completed %>
+    <%= paginate @last_completed %>
   </ul>
 </p>

@@ -8,8 +8,8 @@
   </head>
   <body>
     <div id="main">
-      <nav>
-        <% if current_user %>
+      <% if current_user %>
+        <nav>
           <ul id="left-nav">
             <li><%= link_to current_user.username, user_path(current_user) %></li>
             <li><%= link_to '+ request a trade', new_trade_path %></li>
@@ -18,12 +18,8 @@
           <ul id="right-nav">
             <li><%= link_to "logout", session_path(current_user), method: :delete %></li>
           </ul>
-        <% else %>
-          <ul id="left-nav">
-            <li><%= link_to "sign in with reddit", '/auth/reddit' %></li>
-          </ul>
-        <% end %>
-      </nav>
+        </nav>
+      <% end %>
 
       <p class="notice"><%= notice %></p>
       <p class="alert"><%= alert %></p>
