@@ -7,11 +7,11 @@
 <p class="current-trades">
   <h2>latest trades</h2>
 
-  <ul>
+  <ul class="trade-list">
     <% @last_completed.each do |trade| %>
       <li><%= link_to trade, trade_path(trade) %></li>
     <% end %>
-
-    <%= paginate @last_completed %>
   </ul>
+
+  <%= paginate @last_completed %>
 </p>
