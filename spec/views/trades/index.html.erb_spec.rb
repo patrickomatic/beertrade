@@ -3,8 +3,8 @@ require 'rails_helper'
 RSpec.describe "trades/index", type: :view do
   before(:each) do
     assign(:trades, [
-      Trade.create!(),
-      Trade.create!()
+           FactoryGirl.create(:trade),
+           FactoryGirl.create(:trade)
     ])
   end
 
