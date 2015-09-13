@@ -1,11 +1,11 @@
 hideErrors = ->
-  $(".alert").hide()
+  $(".username-warning").hide()
   $("#new_trade input[type=submit]").prop('disabled', false)
 
 
 showErrors = (error) ->
-  $(".alert").show()
-  $(".alert").html(error)
+  $(".username-warning").show()
+  $(".username-warning").html(error)
   $("#new_trade input[type=submit]").prop('disabled', true)
 
 
@@ -25,7 +25,7 @@ ready = ->
       .success (json, resp) ->
         hideErrors()
       .error ->
-        showErrors("#{username} not found, please try again")
+        showErrors("#{username} not found")
     ), 250
 
     false

@@ -22,6 +22,9 @@
   @include action-list;
 }
 
+.username-warning {
+  color: $bad-color;
+}
 
 .trade-list {
   list-style: none;
