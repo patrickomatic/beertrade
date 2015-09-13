@@ -25,21 +25,37 @@ class ParticipantsController < ApplicationController
     @trade = Trade.find(params[:trade_id])
     @participant = @trade.participants.find_by_id(params[:id])
 
-    params = @participant.user == current_user ? update_shipping_info_params : update_feedback_params
-
     # XXX trigger messages to other_participant
     # XXX do we need any security checks?
-    if @participant.update_attributes(params)
-      flash[:notice] = "Successfully updated trade"
-      redirect_to @trade
-    else 
-      flash[:alert] = "Error updating trade info: you must answer all fields"
-      redirect_to edit_trade_participant_path(@trade, @participant)
+    if @participant.user == current_user 
+      update_shipping_info
+    else
+      update_feedback
     end
   end
 
 
   private
+
+    def update_shipping_info
+      if @participant.update_attributes(update_shipping_info_params)
+        flash[:notice] = "successfully updated shipping info"
+        redirect_to @trade
+      else 
+        flash[:alert] = "tracking number is invalid"
+        render :edit
+      end
+    end
+
+    def update_feedback
+      if @participant.update_attributes(update_feedback_params)
+        flash[:notice] = "successfully left feedback"
+        redirect_to @trade
+      else 
+        flash[:alert] = "must complete all fields"
+        render :edit
+      end
+    end
 
     def update_shipping_info_params
       params.require(:participant).permit(:shipping_info)

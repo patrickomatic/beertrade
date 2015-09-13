@@ -16,6 +16,7 @@ gem 'newrelic_rpm'
 
 gem 'omniauth-reddit', github: 'jackdempsey/omniauth-reddit'
 gem 'redd', github: 'patrickomatic/redd'
+gem 'tracking_number'
 
 
 group :production do

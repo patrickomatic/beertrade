@@ -6,6 +6,7 @@ class Participant < ActiveRecord::Base
 
   validates :trade, presence: true
   validates :user, presence: true
+  validates :shipping_info, tracking_number: true
   validate :validates_full_feedback
 
   enum feedback_type: [:negative, :neutral, :positive]
@@ -38,14 +39,6 @@ class Participant < ActiveRecord::Base
   end
 
 
-  def send_invite
-    reddit_bot.compose_message(self.user.username, "/r/beertrade trade invite", 
-                               render_md_partial('participants/invite', 
-                                                  participant: self, 
-                                                  other_participant: other_participants.first))
-  end
-
-
   private
 
     def update_feedback
@@ -65,29 +58,5 @@ class Participant < ActiveRecord::Base
     def full_feedback?
       return feedback? && feedback_type? if feedback? || feedback_type?
       true
-    end
-
-
-    def reddit_bot
-      Redd.it(:script, 
-              Rails.application.secrets.bot_oauth_id, 
-              Rails.application.secrets.bot_oauth_secret,
-              Rails.application.secrets.bot_username, 
-              Rails.application.secrets.bot_password).tap {|r| r.authorize!}
-    end
-
-
-    def render_md_partial(partial, locals={})
-      action_view = ActionView::Base.new(Rails.configuration.paths["app/views"])
-      action_view.class_eval do 
-          include Rails.application.routes.url_helpers
-          include ApplicationHelper
-
-          def protect_against_forgery?
-            false
-          end
-      end
-
-      action_view.render(partial: partial, formats: [:md], locals: locals)
     end
 end
