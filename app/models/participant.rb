@@ -17,6 +17,7 @@ class Participant < ActiveRecord::Base
   scope :not_yet_accepted,  ->{ where(accepted_at: nil) }
 
   after_update :update_feedback
+  after_update :update_shipping_info
 
 
   def accepted?
@@ -41,15 +42,21 @@ class Participant < ActiveRecord::Base
 
   private
 
+    def update_shipping_info
+      return unless shipping_info_changed?
+      UpdateShippingInfoJob.perform_later(self.id)
+    end
+
     def update_feedback
       return unless feedback_changed?
       user.update_reputation(feedback_type)      
+
+      UpdateFeedbackJob.perform_later(self.id)
 
       if trade.all_feedback_given?
         trade.update_attributes(completed_at: Time.now)
       end
     end
-
 
     def validates_full_feedback
       errors.add(:base, "Must provide both feedback and feedback type") unless full_feedback?

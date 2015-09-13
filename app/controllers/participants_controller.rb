@@ -25,8 +25,7 @@ class ParticipantsController < ApplicationController
     @trade = Trade.find(params[:trade_id])
     @participant = @trade.participants.find_by_id(params[:id])
 
-    # XXX trigger messages to other_participant
-    # XXX do we need any security checks?
+    # XXX need security checks
     if @participant.user == current_user 
       update_shipping_info
     else
