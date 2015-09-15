@@ -38,6 +38,7 @@ class User < ActiveRecord::Base
     username
   end
 
+
   def to_s
     "/u/#{username}"
   end
@@ -48,6 +49,7 @@ class User < ActiveRecord::Base
   rescue ZeroDivisionError, FloatDomainError
     0
   end
+
 
   def total_completed_trades
     participants.completed.count

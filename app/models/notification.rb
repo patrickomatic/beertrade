@@ -23,8 +23,7 @@ class Notification < ActiveRecord::Base
   def self.send_invites(participants)
     participants.each do |p|
       reddit_pm(p.user.username, "/r/beertrade trade invite", 'notifications/invite', participant: p)
-
-      Notification.create!(user: p.user, message: "you have been invited to a trade", _path: trade_path(p.trade))
+      Notification.create!(user: p.user, message: "you have been invited to a trade")#, XXX_path: trade_path(p.trade))
     end
   end
 
@@ -39,7 +38,7 @@ class Notification < ActiveRecord::Base
   private
 
     def self.reddit_pm(to, subject, partial, locals={})
-      reddit_bot.compose_message(to, subject, render_md_partial(partial, locals))
+      reddit_bot.user_from_name(to).send_message(subject, render_md_partial(partial, locals))
     end
 
 
