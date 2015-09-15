@@ -1,1 +1,3 @@
-Hi, wanted to let you know that <%= participant.user.username %> has left feedback for you
+Hi, wanted to let you know that <%= participant.other_participant.user.username %> has left <%= participant.feedback_type %> feedback for you:
+
+<%= participant.feedback %>

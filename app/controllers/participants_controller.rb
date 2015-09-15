@@ -6,9 +6,9 @@ class ParticipantsController < ApplicationController
     render :forbidden and return unless @participant
     
     if !@participant.update_attributes(accepted_at: Time.now)
-      flash[:alert] = @participant.errors
+      flash[:alert] = @participant.errors.full_messsaes.join(", ")
     else
-      flash[:notice] = "Successfully confirmed trade"
+      flash[:notice] = "successfully confirmed trade"
     end
 
     redirect_to trade_path(@trade)

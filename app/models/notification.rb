@@ -2,6 +2,8 @@ class Notification < ActiveRecord::Base
   belongs_to :user
   validates :message, presence: true
 
+  scope :for_user, ->(user) { where(user_id: user.id) }
+
 
   def seen?
     seen_at?
@@ -13,7 +15,7 @@ class Notification < ActiveRecord::Base
 
     participant.other_participants.each do |p|
       reddit_pm(p.user.username, "#{username} has shipped", 'notifications/updated_shipping')
-      Notifications.create!(user: p.user, message: "#{username} has shipped a package, here is the tracking number: #{participant.shipping_info}")
+      Notification.create!(user: p.user, message: "#{username} has shipped a package, here is the tracking number: #{participant.shipping_info}")
     end
   end
 
@@ -22,15 +24,15 @@ class Notification < ActiveRecord::Base
     participants.each do |p|
       reddit_pm(p.user.username, "/r/beertrade trade invite", 'notifications/invite', participant: p)
 
-      Notifications.create!(user: participant.user, message: "XXX")
+      Notification.create!(user: participant.user, message: "XXX")
     end
   end
 
 
   def self.left_feedback(participant)
     username = participant.user.username
-    reddit_pm(p.user.username, "#{username} has left you feedback", "notifications/left_feedback", participant: participant)
-    Notifications.create!(user: participant.user, message: "XXX")
+    reddit_pm(username, "#{username} has left you feedback", "notifications/left_feedback", participant: participant)
+    Notification.create!(user: participant.user, message: "XXX")
   end
 
 

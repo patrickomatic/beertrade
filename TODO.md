@@ -1,4 +1,4 @@
-- [ ] send notifications when any participants update anything (shipping info, feedback)
+- [ ] security checks in the feedback controller that they havent given feedback before
 - [ ] make a README
 - [ ] specs
 - [ ] setting flair

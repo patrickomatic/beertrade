@@ -24,6 +24,15 @@ RSpec.describe Participant, type: :model do
 
       it { is_expected.to be_valid }
     end
+
+    context "with negative feedback" do
+      before do 
+        participant.feedback = "some feedback" 
+        participant.feedback_type = :negative
+      end
+
+      it { is_expected.to be_valid }
+    end
   end
 
 
