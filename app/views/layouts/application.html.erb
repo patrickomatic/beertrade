@@ -16,7 +16,7 @@
           </ul>
 
           <ul id="right-nav">
-            <li><%= link_to current_user.username, user_path(current_user) %></li>
+            <li><%= link_to current_user, user_path(current_user) %></li>
             <li><%= link_to "logout", session_path(current_user), method: :delete %></li>
           </ul>
         </nav>
