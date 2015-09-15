@@ -30,7 +30,7 @@ class User < ActiveRecord::Base
 
 
   def update_flair
-    reddit_bot.subreddit_from_name("beertrade").set_flair(username, :user, reputation.to_s)
+    reddit_bot.subreddit_from_name("beertrade").set_flair(username, :user, "#{reputation}% positive feedback")
   end
 
 
