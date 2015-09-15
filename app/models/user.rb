@@ -29,6 +29,11 @@ class User < ActiveRecord::Base
   end
 
 
+  def update_flair
+    reddit_bot.subreddit_from_name("beertrade").set_flair(username, :user, reputation.to_s)
+  end
+
+
   def to_param
     username
   end
@@ -47,4 +52,15 @@ class User < ActiveRecord::Base
   def total_completed_trades
     participants.completed.count
   end
+
+
+  private
+
+    def reddit_bot
+      Redd.it(:script, 
+              Rails.application.secrets.bot_oauth_id, 
+              Rails.application.secrets.bot_oauth_secret,
+              Rails.application.secrets.bot_username, 
+              Rails.application.secrets.bot_password).tap {|r| r.authorize!}
+    end
 end

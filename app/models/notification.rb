@@ -24,7 +24,7 @@ class Notification < ActiveRecord::Base
     participants.each do |p|
       reddit_pm(p.user.username, "/r/beertrade trade invite", 'notifications/invite', participant: p)
 
-      Notification.create!(user: participant.user, message: "XXX")
+      Notification.create!(user: p.user, message: "you have been invited to a trade", _path: trade_path(p.trade))
     end
   end
 

@@ -6,7 +6,7 @@ Rails.application.routes.draw do
   resources :users, only: [:index, :show]
   resources :sessions, only: [:create, :new, :destroy]
 
-  get '/auth/:provider/callback', to: 'sessions#create'
+  get '/auth/:provider/callback', to: 'sessions#create', as: :oauth_callback
 
   root to: 'sessions#new'
 end

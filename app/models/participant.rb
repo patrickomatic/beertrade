@@ -52,6 +52,7 @@ class Participant < ActiveRecord::Base
       user.update_reputation(feedback_type)      
 
       UpdateFeedbackJob.perform_later(self.id)
+      UpdateFlairJob.perform_later(user.id)
 
       if trade.all_feedback_given?
         trade.update_attributes(completed_at: Time.now)
