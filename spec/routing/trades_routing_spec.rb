@@ -14,10 +14,6 @@ RSpec.describe TradesController, type: :routing do
       expect(get: "/trades/1").to route_to("trades#show", id: "1")
     end
 
-    it "routes to #edit" do
-      expect(get: "/trades/1/edit").to route_to("trades#edit", id: "1")
-    end
-
     it "routes to #create" do
       expect(post: "/trades").to route_to("trades#create")
     end
