@@ -15,7 +15,7 @@
   
 <% if @trade.waiting_for_approval? current_user %>
   <div id="trade-approval">
-    This trade is pending your approval.  Please select Yes or No:
+    this trade is pending your approval.  please select Yes or No:
 
     <ul id="trade-yes-no">
       <li><%= link_to "Yes", trade_participants_path(@trade), method: :post %></li>
