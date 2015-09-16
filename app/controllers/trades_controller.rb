@@ -17,9 +17,9 @@ class TradesController < ApplicationController
 
     if !@trade.accepted?
       if !current_user
-        return requires_authentication!
+        requires_authentication!
       elsif !@trade.waiting_for_approval?(current_user)
-        render status: :forbidden and return
+        render_forbidden!
       end
     end
   end
@@ -34,7 +34,7 @@ class TradesController < ApplicationController
       redirect_to current_user
     else
       flash[:alert] = @trade.errors.full_messages.first
-      render 'new'
+      render :new
     end
   end
 
@@ -43,7 +43,7 @@ class TradesController < ApplicationController
     @trade = Trade.find(params[:id])
 
     unless @trade.can_delete?(current_user)
-      render status: :forbidden, body: :nothing and return
+      render_forbidden! and return
     end
 
     @trade.destroy
