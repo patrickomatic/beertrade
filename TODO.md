@@ -1,5 +1,4 @@
 - [ ] display notifications
 - [ ] display shipping info
 - [ ] make a way to import old history, with a validation on agreement after a certain created_at
-- [ ] security checks in the feedback controller that they havent given feedback before
 - [ ] N+1 query on user show page

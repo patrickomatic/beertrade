@@ -35,6 +35,15 @@ class Participant < ActiveRecord::Base
   end
 
 
+  def can_update_shipping_info?(user)
+    self.user == user
+  end
+
+  def can_update_feedback?(user)
+    other_participant.user == user
+  end
+
+
   def waiting_to_give_feedback?
     !other_participant.feedback?
   end
