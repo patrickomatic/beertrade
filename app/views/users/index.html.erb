@@ -1,0 +1,13 @@
+<h1>all users</h1>
+
+<ul class="user-list">
+  <% @users.each do |user| %>
+    <li>
+      <%= link_to user, user_path(user) %>
+      <%= succeed(user.reputation, "% positive feedback") %>
+      out of <%= user.total_completed_trades %> trades
+    </li>
+  <% end %>
+
+  <%= paginate @users %>
+</ul>

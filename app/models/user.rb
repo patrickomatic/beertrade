@@ -7,7 +7,7 @@ class User < ActiveRecord::Base
   validates :neutral_feedback, presence: true, numericality: {greater_than_or_equal_to: 0}
   validates :negative_feedback, presence: true, numericality: {greater_than_or_equal_to: 0}
 
-  scope :by_feedback, -> { order(XXX) }
+  scope :by_feedback, -> { order(positive_feedback: :desc) }
 
   
   def self.find_by_username(username)
