@@ -11,9 +11,11 @@ class Trade < ActiveRecord::Base
     completed_at?
   end
 
+
   def all_feedback_given?
-    participants.pending.empty?
+    !participants.empty? && participants.pending.empty?
   end
+
 
   def accepted?
     !participants.empty? && !participants.not_yet_accepted.exists?
@@ -21,6 +23,7 @@ class Trade < ActiveRecord::Base
 
 
   def participant(user)
+    return nil if user.nil?
     participants.for_user(user).first
   end
 

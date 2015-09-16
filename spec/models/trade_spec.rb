@@ -3,7 +3,6 @@ require 'rails_helper'
 RSpec.describe Trade, type: :model do
   describe "#completed?" do
     let(:trade) { FactoryGirl.create(:trade, :completed) }
-
     subject { trade.completed? }
 
 
@@ -16,9 +15,52 @@ RSpec.describe Trade, type: :model do
   end
 
 
+  describe "#all_feedback_given?" do
+    let(:trade) { FactoryGirl.create(:trade) } 
+
+    subject { trade.all_feedback_given? }
+
+
+    it { is_expected.to be false }
+
+    context "with an accepted trade" do
+      let(:trade) { FactoryGirl.create(:trade, :accepted) } 
+      it { is_expected.to be false }
+    end
+
+    context "with a completed trade" do
+      let(:trade) { FactoryGirl.create(:trade, :completed) } 
+      it { is_expected.to be true }
+    end
+  end
+
+  
+  describe "#participant" do
+    let(:trade) { FactoryGirl.create(:trade, :accepted) }
+    let(:user) { FactoryGirl.create(:participant).user }
+
+    subject { trade.participant(user) }
+
+
+    it { is_expected.to be_nil }
+
+    context "when user is nil" do
+      let(:user) { nil }
+
+      it { is_expected.to be_nil }
+    end
+
+    context "when participant exists" do
+      let(:participant) { trade.participants.first }
+      let(:user) { participant.user }
+
+      it { is_expected.to eq participant }
+    end
+  end
+
+
   describe "#accepted?" do
     let(:trade) { FactoryGirl.create(:trade) }
-
     subject { trade.accepted? }
 
 
