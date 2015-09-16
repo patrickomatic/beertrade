@@ -28,5 +28,9 @@ class ApplicationController < ActionController::Base
   end
 
 
+  def render_forbidden!
+    render status: :forbidden, body: :nothing
+  end
+
   helper_method :current_user
 end
