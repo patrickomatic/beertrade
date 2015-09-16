@@ -29,8 +29,29 @@ class User < ActiveRecord::Base
   end
 
 
+  def flair_css_class
+    return nil unless positive_feedback > 0
+    "repLevel" << case positive_feedback
+                  when 1..4
+                    "1"
+                  when 5..9
+                    "2"
+                  when 10..39
+                    "3"
+                  when 40..99
+                    "4"
+                  else
+                    "5"
+                  end
+  end
+
+
   def update_flair
-    reddit_bot.subreddit_from_name("beertrade").set_flair(username, :user, "#{reputation}% positive feedback")
+    return unless reputation
+
+    reddit_bot.subreddit_from_name("beertrade").set_flair(username, :user, 
+                                                          text: "#{reputation}% positive", 
+                                                          css_class: flair_css_class)
   end
 
 
