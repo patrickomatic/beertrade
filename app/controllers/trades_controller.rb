@@ -1,4 +1,7 @@
 class TradesController < ApplicationController
+  before_filter :requires_authentication!, except: [:index, :show]
+
+
   def new
     @trade = Trade.new
   end
@@ -27,8 +30,8 @@ class TradesController < ApplicationController
 
     username = params[:participant_username]
     if @trade.create_participants(current_user, username)
-      flash[:notice] = "Trade successfully requested.  Waiting on /u/#{username} to confirm it"
-      redirect_to @trade
+      flash[:notice] = "trade successfully requested.  Waiting on /u/#{username} to confirm it"
+      redirect_to current_user
     else
       flash[:alert] = @trade.errors.full_messages.first
       render 'new'
@@ -40,12 +43,12 @@ class TradesController < ApplicationController
     @trade = Trade.find(params[:id])
 
     unless @trade.can_delete?(current_user)
-      render status: :not_found and return
+      render status: :forbidden, body: :nothing and return
     end
 
     @trade.destroy
 
-    flash[:notice] = "Trade cancelled"
+    flash[:notice] = "trade cancelled"
     redirect_to user_path(current_user)
   end
 
