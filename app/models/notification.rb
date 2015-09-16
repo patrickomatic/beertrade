@@ -14,24 +14,24 @@ class Notification < ActiveRecord::Base
     username = participant.user.username
 
     participant.other_participants.each do |p|
-      reddit_pm(p.user.username, "#{username} has shipped", 'notifications/updated_shipping')
       Notification.create!(user: p.user, message: "#{username} has shipped a package, here is the tracking number: #{participant.shipping_info}")
+      reddit_pm(p.user.username, "#{username} has shipped", 'notifications/updated_shipping')
     end
   end
 
 
   def self.send_invites(participants)
     participants.each do |p|
-      reddit_pm(p.user.username, "/r/beertrade trade invite", 'notifications/invite', participant: p)
       Notification.create!(user: p.user, message: "you have been invited to a trade")#, XXX_path: trade_path(p.trade))
+      reddit_pm(p.user.username, "/r/beertrade trade invite", 'notifications/invite', participant: p)
     end
   end
 
 
   def self.left_feedback(participant)
     username = participant.user.username
-    reddit_pm(username, "#{username} has left you feedback", "notifications/left_feedback", participant: participant)
     Notification.create!(user: participant.user, message: "XXX")
+    reddit_pm(username, "#{username} has left you feedback", "notifications/left_feedback", participant: participant)
   end
 
 
