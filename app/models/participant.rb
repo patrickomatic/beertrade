@@ -1,15 +1,15 @@
 class Participant < ActiveRecord::Base
   paginates_per 20
 
+  enum feedback_type: [:negative, :neutral, :positive]
+
   belongs_to :trade
   belongs_to :user
 
   validates :trade, presence: true
   validates :user, presence: true
   validates :shipping_info, tracking_number: true
-  validate :validates_full_feedback
-
-  enum feedback_type: [:negative, :neutral, :positive]
+  validate  :validates_full_feedback
 
   scope :for_user,          ->(user){ where(user_id: user.id) }
   scope :pending,           ->{ where(feedback: nil) }
