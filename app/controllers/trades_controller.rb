@@ -36,11 +36,6 @@ class TradesController < ApplicationController
   end
 
 
-  def edit
-    @trade = Trade.find(params[:id])
-  end
-
-
   def destroy 
     @trade = Trade.find(params[:id])
 
