@@ -1,5 +1,4 @@
 - [ ] make it so mods have to approve negative feedback (it fires off a mod mail message with approval link)
 - [ ] requesting mod status through oauth
-- [ ] display notifications
 - [ ] make a way to import old history, with a validation on agreement after a certain created_at
 - [ ] N+1 query on user show page

@@ -1,52 +1,19 @@
-<div id="reputation">
-  <h3>Reputation - <%= @user.reputation %>%</h3>
-
-  <table>
-    <tr>
-      <td>Completed trades</td>
-      <td><%= @user.total_completed_trades %></td>
-    </tr>
-    <tr class="good-trades">
-      <td>Positive</td>
-      <td><%= @user.positive_feedback %></td>
-    </tr>
-    <tr class="neutral-trades">
-      <td>Neutral</td>
-      <td><%= @user.neutral_feedback %></td>
-    </tr>
-    <tr class="bad-trades">
-      <td>Negative</td>
-      <td><%= @user.negative_feedback %></td>
-    </tr>
-  </table>
-</div>
-
+<%= render partial: "reputation", locals: {user: @user} %>
 
 <h1><%= @user %></h1>
 
-<div class="user-info">
-  <% unless @pending.empty? %>
-    <h2>pending trades</h2>
+<% unless @notifications.empty? %>
+  <h2>notifications</h2>
+  
+  <ul class="notifications-list">
+    <% @notifications.each do |notification| %>
+      <%= render notification %>
+    <% end %>
+  </ul>
 
-    <ul>
-      <% @pending.each do |trade| %>
-        <li><%= link_to trade, trade_path(trade) %></li>
-      <% end %>
-    </ul>
+  <%= paginate @notifications, param_name: :notification_page %>
+<% end %>
 
-    <%= paginate @pending, param_name: :pending_page %>
-  <% end %>
+<%= render partial: "trades/trade_list", locals: {trades: @pending, type: "pending", pagination_param: :pending_page} %>
 
-
-  <% unless @completed.empty? %>
-    <h2>completed trades</h2>
-
-    <ul>
-      <% @completed.each do |trade| %>
-        <li><%= link_to trade, trade_path(trade) %></li>
-      <% end %>
-    </ul>
-
-    <%= paginate @completed, param_name: :completed_page %>
-  <% end %>
-</div>
+<%= render partial: "trades/trade_list", locals: {trades: @completed, type: "completed", pagination_param: :completed_page} %>

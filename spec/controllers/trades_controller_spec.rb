@@ -43,6 +43,20 @@ RSpec.describe TradesController, type: :controller do
       end
     end
 
+    context "with a notification_id param" do
+      let(:notification) { FactoryGirl.create(:notification) } 
+      let(:trade) { notification.trade } 
+
+      before do
+        log_in_as notification.user
+        get :show, id: trade.id, notification_id: notification.id 
+      end
+
+      it "should mark the notification as seen" do
+        notification.reload
+        expect(notification).to be_seen
+      end
+    end
 
     context "when waiting for approval" do
       let(:trade) { FactoryGirl.create(:trade, :waiting_for_approval) } 

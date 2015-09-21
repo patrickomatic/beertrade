@@ -1,0 +1,22 @@
+<div id="reputation">
+  <h3>reputation - <%= user.reputation %>%</h3>
+
+  <table>
+    <tr>
+      <td>completed trades</td>
+      <td><%= user.total_completed_trades %></td>
+    </tr>
+    <tr class="good-trades">
+      <td>positive</td>
+      <td><%= user.positive_feedback %></td>
+    </tr>
+    <tr class="neutral-trades">
+      <td>neutral</td>
+      <td><%= user.neutral_feedback %></td>
+    </tr>
+    <tr class="bad-trades">
+      <td>negative</td>
+      <td><%= user.negative_feedback %></td>
+    </tr>
+  </table>
+</div>

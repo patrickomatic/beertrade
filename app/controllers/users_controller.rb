@@ -1,9 +1,14 @@
 class UsersController < ApplicationController
   def show
     @user = User.find_by(username: params[:id])
-    @pending = Trade.with_user(@user).not_completed_yet.page(params[:pending_page])
-    @completed = Trade.with_user(@user).completed.page(params[:completed_page])
-    @notifications = Notification.for_user(@user).page(params[:notification_page])
+    @pending = @user.trades.not_completed_yet.page(params[:pending_page])
+    @completed = @user.trades.completed.page(params[:completed_page])
+
+    @notifications = if current_user == @user
+                       @user.notifications.page(params[:notification_page])
+                     else
+                       []
+                     end
   end
 
 

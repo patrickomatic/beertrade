@@ -15,6 +15,11 @@ class TradesController < ApplicationController
   def show
     @trade = Trade.find(params[:id])
 
+    if params[:notification_id]
+      n = @trade.notifications.find(params[:notification_id])
+      n.mark_as_seen! if n.user == current_user
+    end
+
     if !@trade.accepted?
       if !current_user
         requires_authentication!

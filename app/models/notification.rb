@@ -1,4 +1,6 @@
 class Notification < ActiveRecord::Base
+  paginates_per 5
+
   belongs_to :user
   belongs_to :trade
 
@@ -11,6 +13,11 @@ class Notification < ActiveRecord::Base
 
   def seen?
     seen_at?
+  end
+
+
+  def mark_as_seen!
+    update_attributes(seen_at: Time.now)
   end
 
   

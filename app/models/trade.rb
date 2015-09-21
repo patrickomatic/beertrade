@@ -1,10 +1,10 @@
 class Trade < ActiveRecord::Base
   has_many :participants, dependent: :destroy
   has_many :users, through: :participants
+  has_many :notifications
 
   scope :completed,         ->{ where("completed_at IS NOT NULL").order(completed_at: :desc) }
   scope :not_completed_yet, ->{ where(completed_at: nil).order(created_at: :desc) }
-  scope :with_user,         ->(user) { joins(:participants).where(participants: {user_id: user.id}) }
 
 
   def completed?

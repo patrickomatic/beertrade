@@ -1,0 +1,13 @@
+<% unless trades.empty? %>
+  <h2><%= type %> trades</h2>
+
+  <ul>
+    <% trades.each do |trade| %>
+      <li><%= link_to trade, trade_path(trade) %></li>
+    <% end %>
+  </ul>
+
+  <%= paginate trades, param_name: pagination_param %>
+<% end %>
+
+
