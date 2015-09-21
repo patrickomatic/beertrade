@@ -14,6 +14,7 @@
   <%= paginate @notifications, param_name: :notification_page %>
 <% end %>
 
+
 <%= render partial: "trades/trade_list", locals: {trades: @pending, type: "pending", pagination_param: :pending_page} %>
 
 <%= render partial: "trades/trade_list", locals: {trades: @completed, type: "completed", pagination_param: :completed_page} %>

@@ -108,10 +108,11 @@ RSpec.describe Participant, type: :model do
   describe "#update_feedback" do
     let(:trade) { FactoryGirl.create(:trade, :accepted) }
     let(:participant) { trade.participants.first }
+    let(:feedback_type) { :positive }
 
     before do
       participant.feedback = "Great trade" 
-      participant.feedback_type = :positive
+      participant.feedback_type = feedback_type
     end
 
 
@@ -130,6 +131,31 @@ RSpec.describe Participant, type: :model do
       participant.other_participant.update_attributes(feedback: "ok trader", feedback_type: :neutral)
 
       expect { participant.save }.to change { participant.trade.completed_at }
+    end
+
+
+    context "with negative feedback" do
+      let(:feedback_type) { :negative }
+
+      it "should trigger a bad trade report" do
+        expect(BadTradeReportedJob).to receive(:perform_later).with(participant.id)
+        participant.save
+      end
+
+      context "when approved by a moderator" do
+        before { participant.moderator_approved_at = Time.now }
+
+        it "should update reputation" do
+          expect { participant.save }.to change { participant.user.negative_feedback }.by 1
+        end
+
+        it "should trigger background jobs" do
+          expect(UpdateFeedbackJob).to receive(:perform_later).with(participant.id)
+          expect(UpdateFlairJob).to receive(:perform_later).with(participant.user.id)
+
+          participant.save
+        end
+      end
     end
   end
 

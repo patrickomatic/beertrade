@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150913173256) do
+ActiveRecord::Schema.define(version: 20150921224909) do
 
   create_table "notifications", force: :cascade do |t|
     t.integer  "user_id",    null: false
@@ -23,14 +23,15 @@ ActiveRecord::Schema.define(version: 20150913173256) do
   end
 
   create_table "participants", force: :cascade do |t|
-    t.integer  "user_id",       null: false
-    t.integer  "trade_id",      null: false
+    t.integer  "user_id",              null: false
+    t.integer  "trade_id",             null: false
     t.text     "shipping_info"
     t.text     "feedback"
     t.integer  "feedback_type"
     t.datetime "accepted_at"
-    t.datetime "created_at",    null: false
-    t.datetime "updated_at",    null: false
+    t.datetime "created_at",           null: false
+    t.datetime "updated_at",           null: false
+    t.datetime "feedback_approved_at"
   end
 
   add_index "participants", ["trade_id"], name: "index_participants_on_trade_id"

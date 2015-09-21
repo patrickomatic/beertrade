@@ -33,5 +33,4 @@ class Reddit
 
       action_view.render(partial: partial, formats: [:md], locals: locals)
     end
-
 end

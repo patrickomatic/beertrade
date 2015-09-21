@@ -1,4 +1,5 @@
-- [ ] make it so mods have to approve negative feedback (it fires off a mod mail message with approval link)
+- [ ] it feels like a user can edit a trades feedback after its been completed, verify and fix this
 - [ ] requesting mod status through oauth
 - [ ] make a way to import old history, with a validation on agreement after a certain created_at
+- [ ] clean up all the auth checks scattered through controllers
 - [ ] N+1 query on user show page

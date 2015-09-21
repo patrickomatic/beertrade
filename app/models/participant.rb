@@ -40,8 +40,9 @@ class Participant < ActiveRecord::Base
     self.user == user
   end
 
+
   def can_update_feedback?(user)
-    other_participant.user == user
+    other_participant.user == user || user.is_moderator?
   end
 
 
@@ -50,6 +51,24 @@ class Participant < ActiveRecord::Base
   end
 
 
+  def finalize_participant!
+    user.update_reputation(feedback_type)
+    update_attributes(feedback_approved_at: @moderator_approved_at || Time.now)
+
+    UpdateFeedbackJob.perform_later(self.id)
+    UpdateFlairJob.perform_later(user.id)
+
+    if trade.all_feedback_given?
+      trade.update_attributes(completed_at: Time.now)
+    end
+  end
+
+
+  def moderator_approved_at=(time)
+    @moderator_approved_at = time
+  end
+
+ 
   private
 
     def update_shipping_info
@@ -58,14 +77,12 @@ class Participant < ActiveRecord::Base
     end
 
     def update_feedback
-      return unless feedback_changed?
-      user.update_reputation(feedback_type)      
-
-      UpdateFeedbackJob.perform_later(self.id)
-      UpdateFlairJob.perform_later(user.id)
-
-      if trade.all_feedback_given?
-        trade.update_attributes(completed_at: Time.now)
+      return if !feedback_changed? || feedback_approved_at?
+      
+      if !@moderator_approved_at && negative?
+        BadTradeReportedJob.perform_later(self.id)
+      else
+        finalize_participant!
       end
     end
 

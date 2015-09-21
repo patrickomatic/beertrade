@@ -1,13 +1,17 @@
 <%= form_for [@trade, @participant] do |f| %>
   <% if @participant.user == current_user %>
-    <h1>update shipping info</h1>
+    <h2>update shipping info</h2>
 
     <div class="form-row">
       <%= f.label :shipping_info %>
       <%= f.text_field :shipping_info %>
     </div>
   <% else %>
-    <h1>provide feedback for <%= @participant.user %></h1>
+    <% if current_user.is_moderator? && !@trade.participant(current_user) %>
+      <h2>approve or modify this feedback for <%= @participant.user %></h2>
+    <% else %>
+      <h2>provide feedback for <%= @participant.user %></h2>
+    <% end %>
 
     <div class="form-row">
       <%= f.radio_button :feedback_type, 'positive', checked: true %>
