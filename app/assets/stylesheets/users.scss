@@ -26,3 +26,10 @@
 .bad-trades {
   color: $bad-color;
 }
+
+.unseen-notifications-count {
+  background-color: $bad-color;
+  color: $neutral-color;
+  border-radius: 1.0em;
+  padding: 0.5em;
+}

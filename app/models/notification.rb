@@ -6,7 +6,7 @@ class Notification < ActiveRecord::Base
   validates :message, presence: true
   validates :trade,   presence: true
 
-  scope :for_user, ->(user) { where(user_id: user.id) }
+  scope :unseen,    ->{ where("seen_at IS NOT NULL") }
 
 
   def seen?
