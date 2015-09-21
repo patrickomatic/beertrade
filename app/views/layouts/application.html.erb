@@ -1,38 +1,21 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>/r/beertrade</title>
+    <title>/r/beertrade trade tracker</title>
     <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
     <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
     <%= csrf_meta_tags %>
   </head>
   <body>
     <div id="main">
-      <% if current_user %>
-        <nav>
-          <ul id="left-nav">
-            <li><%= link_to 'home', root_path %></li>
-            <li><%= link_to '+ request a trade', new_trade_path %></li>
-          </ul>
-
-          <ul id="right-nav">
-            <li><%= link_to current_user, user_path(current_user) %></li>
-            <li><%= link_to "logout", session_path(current_user), method: :delete %></li>
-          </ul>
-        </nav>
-      <% end %>
+      <%= render partial: "layouts/header" %>
 
       <p class="notice"><%= notice %></p>
       <p class="alert"><%= alert %></p>
 
       <%= yield %>
 
-      <footer>
-        <ul>
-          <li><%= link_to "message the moderators", "https://www.reddit.com/message/compose?to=%2Fr%2Fbeertrade&subject=&message=" %></li>
-          <li><%= link_to "open source", "https://github.com/patrickomatic/beertrade" %></li>
-        </ul>
-      </footer>
+      <%= render partial: "layouts/footer" %>
     </div>
   </body>
 </html>
