@@ -16,6 +16,12 @@ class User < ActiveRecord::Base
   end
 
 
+  def is_moderator?
+    # XXX need to pull this info in from reddit's oauth and add a column to store it
+    false
+  end
+
+
   def unseen_notifications_count
     notifications.unseen.count
   end
@@ -38,22 +44,17 @@ class User < ActiveRecord::Base
   def flair_css_class
     return nil unless positive_feedback > 0
     "repLevel" << case positive_feedback
-                  when 1..4
-                    "1"
-                  when 5..9
-                    "2"
-                  when 10..39
-                    "3"
-                  when 40..99
-                    "4"
-                  else
-                    "5"
+                  when 1..4;    "1"
+                  when 5..9;    "2"
+                  when 10..39;  "3"
+                  when 40..99;  "4"
+                  else;         "5"
                   end
   end
 
 
   def update_flair
-    Reddit.set_flair(username, "#{reputation}% positive", flair_css_class) unless reputation > 0
+    Reddit.set_flair(username, "#{reputation}% positive", flair_css_class) if reputation > 0
   end
 
 

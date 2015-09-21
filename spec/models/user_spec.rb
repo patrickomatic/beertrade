@@ -32,6 +32,11 @@ RSpec.describe User, type: :model do
   end
 
 
+  describe "#is_moderator?" do
+    pending
+  end
+
+
   describe "#to_param" do
     subject { user.to_param }
 
@@ -111,7 +116,21 @@ RSpec.describe User, type: :model do
 
 
   describe "#update_flair" do
-    pending
+    let(:user) { FactoryGirl.create(:user, positive_feedback: 1) }
+
+    it "should call Reddit.set_flair" do
+      expect(Reddit).to receive(:set_flair).with(user.username, "100% positive", "repLevel1")
+      user.update_flair
+    end
+
+    context "with no reputation" do
+      let(:user) { FactoryGirl.create(:user) }
+
+      it "should not call Reddit.set_flair" do
+        expect(Reddit).not_to receive(:set_flair)
+        user.update_flair
+      end
+    end
   end
 
 
