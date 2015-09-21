@@ -7,7 +7,7 @@ RSpec.describe "trades/show", type: :view do
   end
 
   it "renders attributes in <p>" do
-    puts "class=#{self.inspect}"
+    pending
     render
   end
 end

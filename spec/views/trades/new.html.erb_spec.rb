@@ -6,6 +6,8 @@ RSpec.describe "trades/new", type: :view do
   end
 
   it "renders new trade form" do
+    pending
+
     render
 
     assert_select "form[action=?][method=?]", trades_path, "post" do
