@@ -1,9 +1,12 @@
 <h2><%= @trade %></h2>
 
+
 <% if @trade.completed? %>
   <ul>
     <% @trade.participants.each do |participant| %>
-      <li class><%= participant.other_participant.user %> said: <%= participant.feedback %></li>
+      <li>
+        <%= participant.other_participant.user %> said: <%= participant.feedback %>
+      </li>
     <% end %>
   </ul>
 <% elsif @trade.accepted? %>
@@ -12,7 +15,23 @@
   <h3>trade not yet accepted</h3>
 <% end %>
   
+
+<% if @trade.has_shipping_info? %>
+  <div id="shipping-info">
+    <h3>shipping info</h3>
+    <ul>
+      <% @trade.participants.each do |participant| %>
+        <% if participant.shipping_info? %>
+          <li>
+            provided by <%= participant.user %>: <%= participant.shipping_info %>
+          </li>
+        <% end %>
+      <% end %>
+    </ul>
+  </div>
+<% end %>
   
+
 <% if @trade.waiting_for_approval? current_user %>
   <div id="trade-approval">
     this trade is pending your approval.  please select Yes or No:

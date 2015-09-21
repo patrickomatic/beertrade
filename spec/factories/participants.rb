@@ -3,6 +3,7 @@ FactoryGirl.define do
     user
     trade
 
+
     trait :accepted do
       accepted_at Time.now
     end
@@ -23,6 +24,10 @@ FactoryGirl.define do
       feedback "it was netural"
       feedback_type :neutral 
       accepted_at Time.now
+    end
+
+    trait :with_shipping_info do
+      shipping_info "774397776602"
     end
   end
 end

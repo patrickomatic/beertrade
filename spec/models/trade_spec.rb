@@ -34,6 +34,21 @@ RSpec.describe Trade, type: :model do
     end
   end
 
+
+  describe "#has_shipping_info?" do
+    let(:trade) { FactoryGirl.create(:trade, :accepted) }
+
+    subject { trade.has_shipping_info? }
+
+
+    it { is_expected.to be false }
+
+    context "with participants with shipping_info" do
+      before { trade.participants << FactoryGirl.create(:participant, :with_shipping_info) }
+      it { is_expected.to be true }
+    end
+  end
+
   
   describe "#participant" do
     let(:trade) { FactoryGirl.create(:trade, :accepted) }

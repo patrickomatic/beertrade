@@ -1,4 +1,5 @@
+- [ ] requesting mod status through oauth
+- [ ] a bad trader list that can be managed by mods
 - [ ] display notifications
-- [ ] display shipping info
 - [ ] make a way to import old history, with a validation on agreement after a certain created_at
 - [ ] N+1 query on user show page

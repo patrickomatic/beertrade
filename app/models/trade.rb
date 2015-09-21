@@ -17,6 +17,11 @@ class Trade < ActiveRecord::Base
   end
 
 
+  def has_shipping_info?
+    !participants.empty? && participants.with_shipping_info.exists?
+  end
+
+
   def accepted?
     !participants.empty? && !participants.not_yet_accepted.exists?
   end
