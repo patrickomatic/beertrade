@@ -1,6 +1,6 @@
 class SessionsController < ApplicationController
   def new
-    @last_completed = Trade.order(created_at: :desc).page(params[:page])
+    @last_completed = Trade.completed.order(created_at: :desc).page(params[:page])
   end
 
 

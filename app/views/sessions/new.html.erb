@@ -1,17 +1,3 @@
-<% if !current_user %>
-  <nav>
-    <h3><%= link_to "sign in with reddit", '/auth/reddit' %></h3>
-  </nav>
-<% end %>
-
 <p class="current-trades">
-  <h2>latest trades</h2>
-
-  <ul class="trade-list">
-    <% @last_completed.each do |trade| %>
-      <li><%= link_to trade, trade_path(trade) %></li>
-    <% end %>
-  </ul>
-
-  <%= paginate @last_completed %>
+  <%= render partial: "trades/trade_list", locals: {trades: @last_completed, type: "latest", pagination_param: :page} %>
 </p>

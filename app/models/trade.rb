@@ -1,4 +1,6 @@
 class Trade < ActiveRecord::Base
+  paginates_per 15
+
   has_many :participants, dependent: :destroy
   has_many :users, through: :participants
   has_many :notifications

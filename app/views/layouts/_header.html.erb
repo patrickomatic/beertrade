@@ -1,20 +1,22 @@
-<% if current_user %>
-  <nav>
-    <ul id="left-nav">
-      <li><%= link_to 'home', root_path %></li>
-      <li><%= link_to '+ request a trade', new_trade_path %></li>
-    </ul>
+<nav>
+  <% if current_user %>
+      <ul id="left-nav">
+        <li><%= link_to 'home', root_path %></li>
+        <li><%= link_to '+ request a trade', new_trade_path %></li>
+      </ul>
 
-    <ul id="right-nav">
-      <li>
-        <%= link_to current_user, user_path(current_user) %>
+      <ul id="right-nav">
+        <li>
+          <%= link_to current_user, user_path(current_user) %>
 
-        <% notification_count = current_user.unseen_notifications_count %>
-        <% if notification_count > 0 %>
-          <%= link_to notification_count, user_path(current_user), title: "you have #{notification_count} unseen notifications", class: "unseen-notifications-count" %>
-        <% end %>
-      </li>
-      <li><%= link_to "logout", session_path(current_user), method: :delete %></li>
-    </ul>
-  </nav>
-<% end %>
+          <% notification_count = current_user.unseen_notifications_count %>
+          <% if notification_count > 0 %>
+            <%= link_to notification_count, user_path(current_user), title: "you have #{notification_count} unseen notifications", class: "unseen-notifications-count" %>
+          <% end %>
+        </li>
+        <li><%= link_to "logout", session_path(current_user), method: :delete %></li>
+      </ul>
+  <% else %>
+    <h3><%= link_to "sign in with reddit", '/auth/reddit' %></h3>
+  <% end %>
+</nav>
