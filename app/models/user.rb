@@ -47,11 +47,7 @@ class User < ActiveRecord::Base
 
 
   def update_flair
-    return unless reputation
-
-    reddit_bot.subreddit_from_name("beertrade").set_flair(username, :user, 
-                                                          text: "#{reputation}% positive", 
-                                                          css_class: flair_css_class)
+    Reddit.set_flair(username, "#{reputation}% positive", flair_css_class) unless reputation > 0
   end
 
 
@@ -75,15 +71,4 @@ class User < ActiveRecord::Base
   def total_completed_trades
     participants.completed.count
   end
-
-
-  private
-
-    def reddit_bot
-      Redd.it(:script, 
-              Rails.application.secrets.bot_oauth_id, 
-              Rails.application.secrets.bot_oauth_secret,
-              Rails.application.secrets.bot_username, 
-              Rails.application.secrets.bot_password).tap {|r| r.authorize!}
-    end
 end

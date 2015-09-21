@@ -17,7 +17,7 @@ RSpec.describe Notification, type: :model do
 
 
   describe "::updated_shipping" do
-    before { expect(Notification).to receive(:reddit_pm) }
+    before { expect(Reddit).to receive(:pm) }
 
     let(:trade) { FactoryGirl.create(:trade, :accepted) }
     let(:participant) { trade.participants.first }
@@ -29,7 +29,7 @@ RSpec.describe Notification, type: :model do
 
 
   describe "::send_invites" do
-    before { expect(Notification).to receive(:reddit_pm) }
+    before { expect(Reddit).to receive(:pm) }
 
     let(:participant) { FactoryGirl.create(:participant) }
 
@@ -40,7 +40,7 @@ RSpec.describe Notification, type: :model do
 
   
   describe "::left_feedback" do
-    before { expect(Notification).to receive(:reddit_pm) }
+    before { expect(Reddit).to receive(:pm) }
 
     let(:trade) { FactoryGirl.create(:trade, :accepted) }
     let(:participant) { trade.participants.first }
