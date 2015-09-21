@@ -42,7 +42,8 @@ RSpec.describe Notification, type: :model do
   describe "::left_feedback" do
     before { expect(Notification).to receive(:reddit_pm) }
 
-    let(:participant) { FactoryGirl.create(:participant) }
+    let(:trade) { FactoryGirl.create(:trade, :accepted) }
+    let(:participant) { trade.participants.first }
 
     it "should create Notification objects" do
       expect { Notification.left_feedback(participant) }.to change { Notification.count }.by 1
