@@ -7,7 +7,7 @@
       <%= f.text_field :shipping_info %>
     </div>
   <% else %>
-    <% if current_user.is_moderator? && !@trade.participant(current_user) %>
+    <% if current_user && current_user.is_moderator? && !@trade.participant(current_user) %>
       <h2>approve or modify this feedback for <%= @participant.user %></h2>
     <% else %>
       <h2>provide feedback for <%= @participant.user %></h2>

@@ -1,4 +1,4 @@
-<% if current_user.is_moderator? %>
+<% if current_user && current_user.is_moderator? %>
   <% @need_approval = Participant.needing_moderator_approval %>
   <% if !@need_approval.empty? %>
     <h2>the following participants have negative feedback and need moderator approval:</h2>
