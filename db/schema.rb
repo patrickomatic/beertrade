@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150921224909) do
+ActiveRecord::Schema.define(version: 20150929230040) do
 
   create_table "notifications", force: :cascade do |t|
     t.integer  "user_id",    null: false
@@ -20,6 +20,7 @@ ActiveRecord::Schema.define(version: 20150921224909) do
     t.datetime "seen_at"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.text     "hashcode",   null: false
   end
 
   create_table "participants", force: :cascade do |t|

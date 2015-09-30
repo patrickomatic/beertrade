@@ -1,6 +1,28 @@
 require 'rails_helper'
 
 RSpec.describe Notification, type: :model do
+  describe "#create_hash" do
+    subject { FactoryGirl.build(:notification, hashcode: nil) }
+
+
+    it { is_expected.to be_valid }
+
+    it "should set #hashcode" do
+      subject.save
+      expect(subject.hashcode).not_to be_nil
+    end
+
+    context "with an existing #hashcode" do
+      let!(:notification) { subject.clone }
+
+      it "should not be valid" do
+        subject.save
+        expect(notification).not_to be_valid
+      end
+    end
+  end
+
+
   describe "#seen?" do
     let(:notification) { FactoryGirl.build(:notification) }
 
@@ -16,14 +38,40 @@ RSpec.describe Notification, type: :model do
   end
 
 
+  # TODO use a shared example to test all the reddit api calls
   describe "::updated_shipping" do
     before { expect(Reddit).to receive(:pm) }
 
     let(:trade) { FactoryGirl.create(:trade, :accepted) }
     let(:participant) { trade.participants.first }
 
+    def update_shipping 
+      Notification.updated_shipping(participant) 
+    end
+
     it "should create Notification objects" do
-      expect { Notification.updated_shipping(participant) }.to change { Notification.count }.by 1
+      expect { update_shipping }.to change { Notification.count }.by 1
+    end
+
+    it "should have sent a PM" do
+      pending
+      update_shipping
+      expect(Reddit).to have_received(:pm)
+    end
+
+    context "when called multiple times" do
+      let(:multiple_update_shipping) { 5.times { update_shipping } }
+
+      it "should create Notification objects" do
+        pending
+        expect { multiple_update_shipping }.to change { Notification.count }.by 1
+      end
+
+      it "should have sent a PM" do
+        pending
+        multiple_update_shipping
+        expect(Reddit).to have_received(:pm)
+      end
     end
   end
 
