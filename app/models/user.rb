@@ -16,12 +16,6 @@ class User < ActiveRecord::Base
   end
 
 
-  def is_moderator?
-    # XXX need to pull this info in from reddit's oauth and add a column to store it
-    false
-  end
-
-
   def unseen_notifications_count
     notifications.unseen.count
   end
@@ -58,6 +52,11 @@ class User < ActiveRecord::Base
   end
 
 
+  def check_if_moderator
+    self.update_attributes(moderator: moderators.include?(self.username.downcase))
+  end
+
+
   def to_param
     username
   end
@@ -78,4 +77,13 @@ class User < ActiveRecord::Base
   def total_completed_trades
     participants.completed.count
   end
+
+
+  private
+
+    def moderators
+      Rails.cache.fetch("beertrade_moderators", expires_in: 6.hours) do
+        Reddit.get_moderator_info.map(&:name).map(&:downcase)
+      end
+    end
 end

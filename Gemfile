@@ -17,7 +17,7 @@ gem 'sidekiq'
 gem 'newrelic_rpm'
 
 gem 'omniauth-reddit', github: 'jackdempsey/omniauth-reddit'
-gem 'redd'
+gem 'redd', github: 'patrickomatic/redd', branch: 'list-moderators'
 gem 'tracking_number'
 
 

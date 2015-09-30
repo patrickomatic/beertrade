@@ -46,13 +46,14 @@ ActiveRecord::Schema.define(version: 20150929230040) do
   end
 
   create_table "users", force: :cascade do |t|
-    t.text     "username",                      null: false
+    t.text     "username",                          null: false
     t.string   "auth_uid"
     t.integer  "positive_feedback", default: 0
     t.integer  "neutral_feedback",  default: 0
     t.integer  "negative_feedback", default: 0
-    t.datetime "created_at",                    null: false
-    t.datetime "updated_at",                    null: false
+    t.datetime "created_at",                        null: false
+    t.datetime "updated_at",                        null: false
+    t.boolean  "moderator",         default: false
   end
 
   add_index "users", ["auth_uid"], name: "index_users_on_auth_uid"

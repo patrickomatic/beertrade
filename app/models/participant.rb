@@ -11,11 +11,11 @@ class Participant < ActiveRecord::Base
   validates :shipping_info, tracking_number: true
   validate  :validates_full_feedback
 
-  scope :for_user,            ->(user){ where(user_id: user.id) }
-  scope :pending,             ->{ where(feedback: nil) }
-  scope :completed,           ->{ where("feedback IS NOT NULL") }
-  scope :not_yet_accepted,    ->{ where(accepted_at: nil) }
-  scope :with_shipping_info,  ->{ where("shipping_info IS NOT NULL") }
+  scope :pending,                    ->{ where(feedback: nil) }
+  scope :completed,                  ->{ where("feedback IS NOT NULL") }
+  scope :not_yet_accepted,           ->{ where(accepted_at: nil) }
+  scope :with_shipping_info,         ->{ where("shipping_info IS NOT NULL") }
+  scope :needing_moderator_approval, ->{ where("feedback_type = 0 AND feedback_approved_at IS NULL") }
 
   after_update :update_feedback
   after_update :update_shipping_info
@@ -42,7 +42,7 @@ class Participant < ActiveRecord::Base
 
 
   def can_update_feedback?(user)
-    other_participant.user == user || user.is_moderator?
+    other_participant.user == user || user.moderator?
   end
 
 

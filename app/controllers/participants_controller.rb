@@ -23,15 +23,15 @@ class ParticipantsController < ApplicationController
     @trade = Trade.find(params[:trade_id])
     @participant = @trade.participant(current_user)
 
-    render_forbidden! unless @participant || current_user.is_moderator?
+    render_forbidden! unless @participant || current_user.moderator?
   end
 
 
   def update
     @trade = Trade.find(params[:trade_id])
-    @participant = @trade.participants.find_by_id(params[:id])
+    @participant = @trade.participants.find_by(id: params[:id])
 
-    render_forbidden! and return unless @trade.participant(current_user) || current_user.is_moderator?
+    render_forbidden! and return unless @trade.participant(current_user) || current_user.moderator?
 
     if @participant.user == current_user 
       update_shipping_info
@@ -58,7 +58,7 @@ class ParticipantsController < ApplicationController
     def update_feedback
       render_forbidden! and return unless @participant.can_update_feedback?(current_user)
 
-      @participant.moderator_approved_at = Time.now if current_user.is_moderator?
+      @participant.moderator_approved_at = Time.now if current_user.moderator?
 
       if @participant.update_attributes(update_feedback_params)
         flash[:notice] = "successfully left feedback"

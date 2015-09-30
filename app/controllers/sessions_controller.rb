@@ -34,6 +34,8 @@ class SessionsController < ApplicationController
         end
       end
 
+      CheckIfModeratorJob.perform_later(user.id)
+
       user
     end
 

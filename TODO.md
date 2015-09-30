@@ -1,5 +1,5 @@
 - [ ] it feels like a user can edit a trades feedback after its been completed, verify and fix this
-- [ ] requesting mod status through oauth
 - [ ] make a way to import old history, with a validation on agreement after a certain created_at
 - [ ] clean up all the auth checks scattered through controllers
+- [ ] make a legend/explanation of flair
 - [ ] N+1 query on user show page

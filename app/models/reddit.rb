@@ -9,6 +9,11 @@ class Reddit
   end
 
 
+  def self.get_moderator_info
+    reddit_bot.subreddit_from_name("beertrade").moderator_about
+  end
+
+
   private
 
     def self.reddit_bot
