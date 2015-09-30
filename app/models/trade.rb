@@ -31,7 +31,7 @@ class Trade < ActiveRecord::Base
 
   def participant(user)
     return nil if user.nil?
-    participants.for_user(user).first
+    participants.find_by(user_id: user.id)
   end
 
 

@@ -7,7 +7,7 @@ class ParticipantsController < ApplicationController
 
     render_forbidden! and return unless @trade.waiting_for_approval?(current_user)
 
-    @participant = @trade.participants.not_yet_accepted.for_user(current_user).first
+    @participant = @trade.participants.not_yet_accepted.find_by(user_id: current_user.id)
     
     if !@participant.update_attributes(accepted_at: Time.now)
       flash[:alert] = @participant.errors.full_messsaes.join(", ")
