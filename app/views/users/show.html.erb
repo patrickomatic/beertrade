@@ -1,20 +1,22 @@
 <%= render partial: "reputation", locals: {user: @user} %>
 
-<h1><%= @user %></h1>
+<div class="user-info">
+  <h1><%= @user %></h1>
 
-<% unless @notifications.empty? %>
-  <h2>notifications</h2>
-  
-  <ul class="notifications-list">
-    <% @notifications.each do |notification| %>
-      <%= render notification %>
-    <% end %>
-  </ul>
+  <% unless @notifications.empty? %>
+    <h2>notifications</h2>
+    
+    <ul class="notifications-list">
+      <% @notifications.each do |notification| %>
+        <%= render notification %>
+      <% end %>
+    </ul>
 
-  <%= paginate @notifications, param_name: :notification_page %>
-<% end %>
+    <%= paginate @notifications, param_name: :notification_page %>
+  <% end %>
 
 
-<%= render partial: "trades/trade_list", locals: {trades: @pending, type: "pending", pagination_param: :pending_page} %>
+  <%= render partial: "trades/trade_list", locals: {trades: @pending, type: "pending", pagination_param: :pending_page} %>
 
-<%= render partial: "trades/trade_list", locals: {trades: @completed, type: "completed", pagination_param: :completed_page} %>
+  <%= render partial: "trades/trade_list", locals: {trades: @completed, type: "completed", pagination_param: :completed_page} %>
+</div>
