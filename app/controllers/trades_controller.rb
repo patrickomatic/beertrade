@@ -20,11 +20,11 @@ class TradesController < ApplicationController
       n.mark_as_seen! if n.user == current_user
     end
 
-    if !@trade.accepted?
-      if !current_user
+    if !@trade.can_see?(current_user) 
+      if current_user
+        render_forbidden! 
+      else
         requires_authentication!
-      elsif !@trade.waiting_for_approval?(current_user)
-        render_forbidden!
       end
     end
   end

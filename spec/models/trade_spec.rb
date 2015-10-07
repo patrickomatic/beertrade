@@ -140,6 +140,49 @@ RSpec.describe Trade, type: :model do
   end
 
 
+  describe "#can_see?" do
+    let(:user) { nil }
+
+    subject { trade.can_see?(user) }
+
+    context "with a completed trade" do
+      let(:trade) { FactoryGirl.create(:trade, :completed) }
+
+      it { is_expected.to be true }
+
+      context "with a logged in user" do
+        let(:user) { FactoryGirl.create(:user) }
+
+        it { is_expected.to be true }
+      end
+
+      context "with a logged in user that is a participant" do
+        let(:user) { trade.participants.first.user }
+
+        it { is_expected.to be true }
+      end
+    end
+
+    context "with a trade waiting for approval" do
+      let(:trade) { FactoryGirl.create(:trade, :waiting_for_approval) }
+
+      it { is_expected.to be false }
+
+      context "with a logged in user" do
+        let(:user) { FactoryGirl.create(:user) }
+
+        it { is_expected.to be false }
+      end
+
+      context "with a logged in user that is a participant" do
+        let(:user) { trade.participants.first.user }
+
+        it { is_expected.to be true }
+      end
+    end
+  end
+
+
   describe "#can_delete?" do
     let(:trade) { FactoryGirl.create(:trade, :waiting_for_approval) }
     let(:pending_for) { trade.participants.first.user }

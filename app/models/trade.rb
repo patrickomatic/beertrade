@@ -5,8 +5,14 @@ class Trade < ActiveRecord::Base
   has_many :users, through: :participants
   has_many :notifications
 
-  scope :completed,         ->{ where("completed_at IS NOT NULL").order(completed_at: :desc) }
-  scope :not_completed_yet, ->{ where(completed_at: nil).order(created_at: :desc) }
+  scope :completed,         ->                { where("completed_at IS NOT NULL").order(completed_at: :desc) }
+  scope :with_feedback,     ->(feedback_type) { joins(:participants).where(participants: {feedback_type: feedback_type}) }
+  scope :not_completed_yet, ->                { where(completed_at: nil).order(created_at: :desc) }
+
+
+  def can_see?(user)
+    accepted? || !participant(user).nil?
+  end
 
 
   def completed?

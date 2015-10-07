@@ -26,7 +26,7 @@ class ApplicationController < ActionController::Base
 
 
   def render_forbidden!
-    render status: :forbidden, body: :nothing
+    render status: :forbidden, text: "You do not have access to this page"
   end
 
   helper_method :current_user
