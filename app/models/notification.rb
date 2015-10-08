@@ -32,7 +32,8 @@ class Notification < ActiveRecord::Base
                              trade: p.trade)
 
         Reddit.pm(p.user.username, "#{participant.user} has shipped", 
-                  'notifications/updated_shipping', participant: participant)
+                  'notifications/updated_shipping', 
+                  participant: participant, notification: self)
       end
     end
   end
@@ -46,7 +47,8 @@ class Notification < ActiveRecord::Base
                              trade: p.trade)
 
         Reddit.pm(p.user.username, "/r/beertrade trade invite", 
-                  'notifications/invite', participant: p)
+                  'notifications/invite', 
+                  participant: p, notification: self)
       end
     end
   end
@@ -61,7 +63,8 @@ class Notification < ActiveRecord::Base
                            trade: participant.trade)
 
       Reddit.pm(participant.user.username, "#{other_username} has left you feedback", 
-                "notifications/left_feedback", participant: participant)
+                "notifications/left_feedback", 
+                participant: participant, notification: self)
     end
   end
 

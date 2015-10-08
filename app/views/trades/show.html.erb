@@ -37,8 +37,8 @@
     this trade is pending your approval.  please select Yes or No:
 
     <ul id="trade-yes-no">
-      <li><%= link_to "Yes", trade_participants_path(@trade), method: :post %></li>
-      <li><%= link_to "No", trade_path(@trade), method: :delete %></li>
+      <li class="yes"><%= link_to "Yes", trade_participants_path(@trade), method: :post %></li>
+      <li class="no"><%= link_to "No", trade_path(@trade), method: :delete %></li>
     </ul>
     <br style="clear: both;"/> <%# XXX ick %>
   </div>

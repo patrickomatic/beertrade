@@ -4,4 +4,4 @@ hi <%= participant.user %>, we're messaging you to let you know that <%= partici
   **the agreed trade was**: <%= participant.trade.agreement %>
 <% end %>
 
-to confirm this trade please visit this link: <%= trade_url(participant.trade) %>
+to confirm this trade please visit this link: <%= trade_url(participant.trade, notification_id: notification.id) %>
