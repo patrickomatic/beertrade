@@ -7,15 +7,15 @@
       <td><%= user.total_completed_trades %></td>
     </tr>
     <tr class="good-trades">
-      <td><%= link_to "positive", user_path(user, feedback: "positive") %></td>
+      <td><%= link_to "positive", user_participants_path(user, feedback: "positive") %></td>
       <td><%= user.positive_feedback %></td>
     </tr>
     <tr class="neutral-trades">
-      <td><%= link_to "neutral", user_path(user, feedback: "neutral") %></td>
+      <td><%= link_to "neutral", user_participants_path(user, feedback: "neutral") %></td>
       <td><%= user.neutral_feedback %></td>
     </tr>
     <tr class="bad-trades">
-      <td><%= link_to "negative", user_path(user, feedback: "negative") %></td>
+      <td><%= link_to "negative", user_participants_path(user, feedback: "negative") %></td>
       <td><%= user.negative_feedback %></td>
     </tr>
   </table>

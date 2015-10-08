@@ -1,11 +1,27 @@
 class ParticipantsController < ApplicationController
-  before_filter :requires_authentication!
+  before_filter :requires_authentication!, except: [:index]
    
+
+  def index
+    @user = User.find_by(username: params[:user_id])
+    
+    @participants = case @feedback_filter = feedback_filter_param
+                    when :positive
+                      @user.participants.with_positive_feedback.page(params[:page])
+                    when :neutral
+                      @user.participants.with_neutral_feedback.page(params[:page])
+                    when :negative
+                      @user.participants.with_negative_feedback.page(params[:page])
+                    else
+                      @user.participants.page(params[:page])
+                    end
+  end
+
 
   def create
     @trade = Trade.find(params[:trade_id])
 
-    render_forbidden! and return unless @trade.waiting_for_approval?(current_user)
+    return render_forbidden! unless @trade.waiting_for_approval?(current_user)
 
     @participant = @trade.participants.not_yet_accepted.find_by(user_id: current_user.id)
     
@@ -67,6 +83,7 @@ class ParticipantsController < ApplicationController
       end
     end
 
+
     def update_shipping_info_params
       params.require(:participant).permit(:shipping_info)
     end
@@ -74,4 +91,14 @@ class ParticipantsController < ApplicationController
     def update_feedback_params
       params.require(:participant).permit(:feedback, :feedback_type)
     end
+
+
+    def feedback_filter_param
+      if %w(positive neutral negative).include? params[:feedback].to_s
+        params[:feedback].to_sym
+      else
+        nil
+      end
+    end
 end
+

@@ -3,7 +3,10 @@ Rails.application.routes.draw do
     resources :participants, only: [:create, :edit, :update]
   end
 
-  resources :users, only: [:index, :show]
+  resources :users, only: [:index, :show] do
+    resources :participants, only: [:index]
+  end
+
   resources :sessions, only: [:new, :destroy]
 
   get '/auth/:provider/callback', to: 'sessions#create', as: :oauth_callback

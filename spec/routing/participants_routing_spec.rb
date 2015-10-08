@@ -2,6 +2,10 @@ require "rails_helper"
 
 RSpec.describe ParticipantsController, type: :routing do
   describe "routing" do
+    it "routes to #index" do
+      expect(get: "/users/patrickomatic/participants/").to route_to("participants#index", user_id: "patrickomatic")
+    end
+
     it "routes to #edit" do
       expect(get: "/trades/1/participants/1/edit").to route_to("participants#edit", trade_id: "1", id: "1")
     end

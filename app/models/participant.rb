@@ -16,6 +16,9 @@ class Participant < ActiveRecord::Base
   scope :not_yet_accepted,           ->{ where(accepted_at: nil) }
   scope :with_shipping_info,         ->{ where("shipping_info IS NOT NULL") }
   scope :needing_moderator_approval, ->{ where("feedback_type = 0 AND feedback_approved_at IS NULL") }
+  scope :with_positive_feedback,     ->{ where(feedback_type: 2) }
+  scope :with_neutral_feedback,      ->{ where(feedback_type: 1) }
+  scope :with_negative_feedback,     ->{ where(feedback_type: 0) }
 
   after_update :update_feedback
   after_update :update_shipping_info
