@@ -27,13 +27,13 @@ class Notification < ActiveRecord::Base
   def self.updated_shipping(participant)
     participant.other_participants.each do |p|
       if_not_already_sent do
-        Notification.create!(user: p.user, 
+        n = Notification.create!(user: p.user, 
                              message: "#{participant.user} has shipped",
                              trade: p.trade)
 
         Reddit.pm(p.user.username, "#{participant.user} has shipped", 
                   'notifications/updated_shipping', 
-                  participant: participant, notification: self)
+                  participant: participant, notification: n)
       end
     end
   end
@@ -42,13 +42,13 @@ class Notification < ActiveRecord::Base
   def self.send_invites(participants)
     participants.each do |p|
       if_not_already_sent do
-        Notification.create!(user: p.user, 
+        n = Notification.create!(user: p.user, 
                              message: "you have been invited to a trade",
                              trade: p.trade)
 
         Reddit.pm(p.user.username, "/r/beertrade trade invite", 
                   'notifications/invite', 
-                  participant: p, notification: self)
+                  participant: p, notification: n)
       end
     end
   end
@@ -58,13 +58,13 @@ class Notification < ActiveRecord::Base
     other_username = participant.other_participant.user.to_s
 
     if_not_already_sent do
-      Notification.create!(user: participant.user, 
+      n = Notification.create!(user: participant.user, 
                            message: "#{other_username} has left you feedback",
                            trade: participant.trade)
 
       Reddit.pm(participant.user.username, "#{other_username} has left you feedback", 
                 "notifications/left_feedback", 
-                participant: participant, notification: self)
+                participant: participant, notification: n)
     end
   end
 
