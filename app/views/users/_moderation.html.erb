@@ -1,14 +1,17 @@
-<% if current_user && current_user.moderator? %>
-  <% @need_approval = Participant.needing_moderator_approval %>
-  <% if !@need_approval.empty? %>
-    <h2>participants with negative feedback and need moderator approval</h2>
+<%# TODO this needs a lot of styling %>
+<% if false %>
+  <% if current_user && current_user.moderator? %>
+    <% @need_approval = Participant.needing_moderator_approval %>
+    <% if !@need_approval.empty? %>
+      <h2>participants with negative feedback and need moderator approval</h2>
 
-    <ul class="participants-needing-approval-list">
-      <% @need_approval.each do |participant| %>
-        <li>
-          <%= link_to participant.trade, edit_trade_participant_path(participant.trade, participant) %>
-        </li>
-      <% end %>
-    </ul>
+      <ul class="participants-needing-approval-list">
+        <% @need_approval.each do |participant| %>
+          <li>
+            <%= link_to participant.trade, edit_trade_participant_path(participant.trade, participant) %>
+          </li>
+        <% end %>
+      </ul>
+    <% end %>
   <% end %>
 <% end %>

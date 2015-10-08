@@ -6,7 +6,9 @@
       <%= f.label :shipping_info, "tracking #" %>
       <%= f.text_field :shipping_info %>
     </div>
-  <% elsif @participant.can_update_feedback?(current_user) %>
+  <% end %>
+
+  <% if @participant.can_update_feedback?(current_user) %>
     <% if current_user.moderator? %>
       <h2>approve or modify this feedback for <%= @participant.user %></h2>
     <% else %>
@@ -25,7 +27,7 @@
     </div>
 
     <div class="form-row">
-      <%= f.label :feedback %>
+      <%= f.label :feedback, "feedback" %>
       <%= f.text_area :feedback, maxlength: 1000 %>
     </div>
   <% end %>

@@ -15,6 +15,4 @@ class UsersController < ApplicationController
   def index
     @users = User.by_feedback.page(params[:page])
   end
-
-
 end

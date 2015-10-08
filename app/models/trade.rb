@@ -13,32 +13,29 @@ class Trade < ActiveRecord::Base
     accepted? || !participant(user).nil? || user.moderator?
   end
 
-
   def completed?
     completed_at?
   end
-
 
   def all_feedback_given?
     !participants.empty? && participants.pending.empty?
   end
 
-
   def has_shipping_info?
     !participants.empty? && participants.with_shipping_info.exists?
   end
-
 
   def accepted?
     !participants.empty? && !participants.not_yet_accepted.exists?
   end
 
-
-  def participant(user)
-    return nil if user.nil?
-    participants.find_by(user_id: user.id)
+  def waiting_to_give_feedback?(user)
+    accepted? and p = self.participant(user) and p.waiting_to_give_feedback?
   end
 
+  def can_delete?(user)
+    waiting_for_approval?(user)
+  end
 
   def waiting_for_approval?(user)
     participant = participant(user)
@@ -47,13 +44,9 @@ class Trade < ActiveRecord::Base
   end
 
 
-  def waiting_to_give_feedback?(user)
-    accepted? and p = self.participant(user) and p.waiting_to_give_feedback?
-  end
-
-
-  def can_delete?(user)
-    waiting_for_approval?(user)
+  def participant(user)
+    return nil if user.nil?
+    participants.find_by(user_id: user.id)
   end
 
 
