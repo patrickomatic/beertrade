@@ -26,12 +26,12 @@ class Notification < ActiveRecord::Base
   
   def self.updated_shipping(participant)
     participant.other_participants.each do |p|
-      Notification.transaction do
+      if_not_already_sent do
         Notification.create!(user: p.user, 
                              message: "#{participant.user} has shipped",
                              trade: p.trade)
 
-        Reddit.pm(p.user, "#{participant.user} has shipped", 
+        Reddit.pm(p.user.username, "#{participant.user} has shipped", 
                   'notifications/updated_shipping', participant: participant)
       end
     end
@@ -40,12 +40,12 @@ class Notification < ActiveRecord::Base
 
   def self.send_invites(participants)
     participants.each do |p|
-      Notification.transaction do
+      if_not_already_sent do
         Notification.create!(user: p.user, 
                              message: "you have been invited to a trade",
                              trade: p.trade)
 
-        Reddit.pm(p.user, "/r/beertrade trade invite", 
+        Reddit.pm(p.user.username, "/r/beertrade trade invite", 
                   'notifications/invite', participant: p)
       end
     end
@@ -55,12 +55,12 @@ class Notification < ActiveRecord::Base
   def self.left_feedback(participant)
     other_username = participant.other_participant.user.to_s
 
-    Notification.transaction do
+    if_not_already_sent do
       Notification.create!(user: participant.user, 
                            message: "#{other_username} has left you feedback",
                            trade: participant.trade)
 
-      Reddit.pm(participant.user, "#{other_username} has left you feedback", 
+      Reddit.pm(participant.user.username, "#{other_username} has left you feedback", 
                 "notifications/left_feedback", participant: participant)
     end
   end
@@ -68,7 +68,18 @@ class Notification < ActiveRecord::Base
 
   private
 
+    def self.if_not_already_sent
+      Notification.transaction do
+        begin
+          yield
+        rescue ActiveRecord::RecordInvalid => e
+          raise unless e.record.errors.messages.include?(:hashcode)
+        end
+      end
+    end
+
     def create_hashcode
+      return unless user
       self.hashcode = Digest::SHA1.hexdigest(user.id.to_s << message << trade.id.to_s)
     end
 end
