@@ -25,29 +25,29 @@ class Participant < ActiveRecord::Base
     accepted_at?
   end
 
+  def can_see?(user)
+    accepted? && (self.user.id == user.id || !trade.participant(user).nil? || user.moderator?)
+  end
+
+  def can_update_shipping_info?(user)
+    accepted? && self.user == user
+  end
+
+  def can_update_feedback?(user)
+    accepted? && !feedback? && (other_participant.user == user || user.moderator?)
+  end
+
+  def waiting_to_give_feedback?
+    !other_participant.feedback?
+  end
+
 
   def other_participants
     trade.participants.reject {|p| p == self}
   end
 
-
   def other_participant
     other_participants.first
-  end
-
-
-  def can_update_shipping_info?(user)
-    self.user == user
-  end
-
-
-  def can_update_feedback?(user)
-    other_participant.user == user || user.moderator?
-  end
-
-
-  def waiting_to_give_feedback?
-    !other_participant.feedback?
   end
 
 
@@ -91,7 +91,7 @@ class Participant < ActiveRecord::Base
     end
 
     def full_feedback?
-      return (!feedback.nil? && !feedback_type.nil?) if !feedback.nil? || !feedback_type.nil?
+      return (!feedback? && !feedback_type?) if !feedback? || !feedback_type?
       true
     end
 end

@@ -20,18 +20,16 @@ class ParticipantsController < ApplicationController
 
 
   def edit
-    @trade = Trade.find(params[:trade_id])
-    @participant = @trade.participant(current_user)
+    @participant = Participant.find(params[:id])
 
     render_forbidden! unless @participant || current_user.moderator?
   end
 
 
   def update
-    @trade = Trade.find(params[:trade_id])
-    @participant = @trade.participants.find_by(id: params[:id])
+    @participant = Participant.find(params[:id])
 
-    render_forbidden! and return unless @trade.participant(current_user) || current_user.moderator?
+    return render_forbidden! unless @participant.can_see?(current_user)
 
     if @participant.user == current_user 
       update_shipping_info
@@ -44,11 +42,11 @@ class ParticipantsController < ApplicationController
   private
 
     def update_shipping_info
-      render_forbidden! and return unless @participant.can_update_shipping_info?(current_user)
+      return render_forbidden! unless @participant.can_update_shipping_info?(current_user)
 
       if @participant.update_attributes(update_shipping_info_params)
         flash[:notice] = "successfully updated shipping info"
-        redirect_to @trade
+        redirect_to @participant.trade
       else 
         flash[:alert] = "tracking number is invalid"
         render :edit
@@ -56,13 +54,13 @@ class ParticipantsController < ApplicationController
     end
 
     def update_feedback
-      render_forbidden! and return unless @participant.can_update_feedback?(current_user)
+      return render_forbidden! unless @participant.can_update_feedback?(current_user)
 
       @participant.moderator_approved_at = Time.now if current_user.moderator?
 
       if @participant.update_attributes(update_feedback_params)
         flash[:notice] = "successfully left feedback"
-        redirect_to @trade
+        redirect_to @participant.trade
       else 
         flash[:alert] = "must complete all fields"
         render :edit

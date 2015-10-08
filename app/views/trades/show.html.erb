@@ -9,10 +9,10 @@
       </li>
     <% end %>
   </ul>
-<% elsif @trade.accepted? %>
-  <h3>trade pending</h3>
-<% else %>
+<% elsif !@trade.accepted? %>
   <h3>trade not yet accepted</h3>
+<% else %>
+  <h3>trade pending feedback</h3>
 <% end %>
   
 

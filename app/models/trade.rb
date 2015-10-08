@@ -11,7 +11,7 @@ class Trade < ActiveRecord::Base
 
 
   def can_see?(user)
-    accepted? || !participant(user).nil?
+    accepted? || !participant(user).nil? || user.moderator?
   end
 
 

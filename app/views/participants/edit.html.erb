@@ -1,13 +1,13 @@
-<%= form_for [@trade, @participant] do |f| %>
-  <% if @participant.user == current_user %>
+<%= form_for [@participant.trade, @participant] do |f| %>
+  <% if @participant.can_update_shipping_info?(current_user) %>
     <h2>update shipping info</h2>
 
     <div class="form-row">
-      <%= f.label :shipping_info %>
+      <%= f.label :shipping_info, "tracking #" %>
       <%= f.text_field :shipping_info %>
     </div>
-  <% else %>
-    <% if current_user && current_user.moderator? && !@trade.participant(current_user) %>
+  <% elsif @participant.can_update_feedback?(current_user) %>
+    <% if current_user.moderator? %>
       <h2>approve or modify this feedback for <%= @participant.user %></h2>
     <% else %>
       <h2>provide feedback for <%= @participant.user %></h2>
