@@ -15,8 +15,11 @@ class TradesController < ApplicationController
   def show
     @trade = Trade.find(params[:id])
 
+    logger.error "param=#{params}"
     if params[:notification_id]
+      logger.error "it is"
       n = @trade.notifications.find(params[:notification_id])
+      logger.error "found it"
       n.mark_as_seen! if n.user == current_user
     end
 

@@ -11,7 +11,7 @@ class UsersController < ApplicationController
                  end
 
     @notifications = if current_user == @user
-                       @user.notifications.page(params[:notification_page])
+                       @user.notifications.unseen.page(params[:notification_page])
                      else
                        []
                      end

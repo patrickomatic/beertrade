@@ -9,7 +9,7 @@ class Notification < ActiveRecord::Base
   validates :trade,     presence: true
   validates :hashcode,  presence: true, uniqueness: true
 
-  scope :unseen,    ->{ where("seen_at IS NOT NULL") }
+  scope :unseen,    ->{ where("seen_at IS NULL") }
 
   before_validation :create_hashcode
 
