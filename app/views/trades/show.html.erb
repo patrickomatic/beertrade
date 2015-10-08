@@ -4,7 +4,7 @@
 <% if @trade.completed? %>
   <ul>
     <% @trade.participants.each do |participant| %>
-      <li>
+      <li class="<%= participant.feedback_type %>-participant">
         <%= participant.other_participant.user %> said: <%= participant.feedback %>
       </li>
     <% end %>

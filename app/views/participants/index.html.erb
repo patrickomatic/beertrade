@@ -1,0 +1,11 @@
+<h1><%= @feedback_filter %> trades for <%= @user %></h1>
+
+<% if @participants.empty? %>
+  <p>nothing to see here</p>
+<% else %>
+  <ul class="participants-list">
+    <% @participants.each do |participant| %>
+      <li><%= link_to participant.trade, trade_path(participant.trade) %></li>
+    <% end %>
+  </ul>
+<% end %>

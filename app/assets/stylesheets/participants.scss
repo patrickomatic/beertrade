@@ -12,3 +12,15 @@ label[for=participant_feedback_type_neutral] {
 label[for=participant_feedback_type_negative] {
   color: $bad-color;
 }
+
+.positive-participant {
+  color: $dark-color;
+}
+
+.neutral-participant {
+  color: $neutral-color;
+}
+
+.negative-participant {
+  color: $bad-color;
+}
