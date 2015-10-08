@@ -17,14 +17,23 @@
 
 .good-trades {
   color: $good-color;
+  a { 
+    color: $good-color 
+  }
 }
 
 .neutral-trades {
   color: $neutral-color;
+  a { 
+    color: $neutral-color; 
+  }
 }
 
 .bad-trades {
   color: $bad-color;
+  a { 
+    color: $bad-color; 
+  }
 }
 
 .unseen-notifications-count {

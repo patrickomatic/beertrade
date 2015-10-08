@@ -4,15 +4,17 @@
   <h1><%= @user %></h1>
 
   <% unless @notifications.empty? %>
-    <h2>notifications</h2>
-    
-    <ul class="notifications-list">
-      <% @notifications.each do |notification| %>
-        <%= render notification %>
-      <% end %>
-    </ul>
+    <div id="notifications">
+      <h2>notifications</h2>
+      
+      <ul class="notifications-list">
+        <% @notifications.each do |notification| %>
+          <%= render notification %>
+        <% end %>
+      </ul>
 
-    <%= paginate @notifications, param_name: :notification_page %>
+      <%= paginate @notifications, param_name: :notification_page %>
+    </div>
   <% end %>
 
 
