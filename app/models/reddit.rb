@@ -1,6 +1,12 @@
 class Reddit
   def self.pm(username, subject, partial, locals={})
-    reddit_bot.user_from_name(username).send_message(subject, render_md_partial(partial, locals))
+    object = if username.start_with?("/r/")
+               reddit_bot.subreddit_from_name(username.gsub('/r/', ''))
+             else
+               reddit_bot.user_from_name(username)
+             end
+
+    object.send_message(subject, render_md_partial(partial, locals))
   end
 
 
