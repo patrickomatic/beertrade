@@ -1,3 +1,4 @@
+- [ ] auth framework
 - [ ] fix specs
 - [ ] links to update shipping and leave feedback are not prominent enough
 - [ ] google analytics

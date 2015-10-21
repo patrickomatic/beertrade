@@ -29,7 +29,7 @@ class Participant < ActiveRecord::Base
   end
 
   def can_see?(user)
-    accepted? && (self.user.id == user.id || !trade.participant(user).nil? || user.moderator?)
+    (user && user.moderator?) || can_update_shipping_info?(user) || can_update_feedback?(user)
   end
 
   def can_update_shipping_info?(user)
