@@ -36,9 +36,10 @@ class ParticipantsController < ApplicationController
 
 
   def edit
-    @participant = Participant.find(params[:id])
+    @trade = Trade.find(params[:trade_id])
+    @participant = @trade.participants.find(params[:id])
 
-    render_forbidden! unless @participant || current_user.moderator?
+    render_forbidden! if @trade.participant(current_user).nil? || current_user.moderator?
   end
 
 
