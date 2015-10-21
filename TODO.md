@@ -1,4 +1,5 @@
 - [ ] fix specs
+- [ ] google analytics
 - [ ] a way to search for users and see their feedback
 - [ ] better displaying and linking to shipping info
 - [ ] make a way to import old history, with a validation on agreement after a certain created_at

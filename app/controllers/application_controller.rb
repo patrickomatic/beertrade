@@ -20,13 +20,13 @@ class ApplicationController < ActionController::Base
     return if current_user
 
     session[:last_page] = request.original_url
-    flash[:alert] = "You need to log in to access that page"
+    flash[:alert] = "you need to log in to access that page"
     redirect_to new_session_path
   end
 
 
   def render_forbidden!
-    render status: :forbidden, text: "You do not have access to this page"
+    render status: :forbidden, text: "you do not have access to this page"
   end
 
   helper_method :current_user
