@@ -1,4 +1,5 @@
 - [ ] fix specs
+- [ ] links to update shipping and leave feedback are not prominent enough
 - [ ] google analytics
 - [ ] a way to search for users and see their feedback
 - [ ] better displaying and linking to shipping info
