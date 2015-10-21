@@ -16,6 +16,19 @@ class User < ActiveRecord::Base
   end
 
 
+  def self.find_from_auth_hash(auth_hash)
+    unless user = User.find_by(auth_uid: auth_hash.uid) 
+      if user = User.find_by_username(auth_hash.info.name)
+        user.update_attributes(auth_uid: auth_hash.uid, username: auth_hash.info.name)
+      else
+        user = User.create(auth_uid: auth_hash.uid, username: auth_hash.info.name)
+      end
+    end
+
+    user
+  end
+
+
   def unseen_notifications_count
     notifications.unseen.count
   end
