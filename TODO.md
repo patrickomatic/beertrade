@@ -1,3 +1,4 @@
+- [ ] logging/analytics/mp service that graphs trades by who (from the start)
 - [ ] auth framework
 - [ ] fix specs
 - [ ] links to update shipping and leave feedback are not prominent enough
