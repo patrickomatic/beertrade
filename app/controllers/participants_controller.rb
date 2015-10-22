@@ -39,7 +39,7 @@ class ParticipantsController < ApplicationController
     @trade = Trade.find(params[:trade_id])
     @participant = @trade.participants.find(params[:id])
 
-    render_forbidden! if @trade.participant(current_user).nil? || current_user.moderator?
+    render_forbidden! unless @participant.can_see?(current_user)
   end
 
 
