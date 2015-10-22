@@ -29,7 +29,7 @@ class Participant < ActiveRecord::Base
   end
 
   def can_see?(user)
-    (user && user.moderator?) || can_update_shipping_info?(user) || can_update_feedback?(user)
+    can_update_shipping_info?(user) || can_update_feedback?(user)
   end
 
   def can_update_shipping_info?(user)
@@ -37,7 +37,7 @@ class Participant < ActiveRecord::Base
   end
 
   def can_update_feedback?(user)
-    accepted? && !feedback? && (other_participant.user == user || user.moderator?)
+    accepted? && ((!feedback? && other_participant.user == user)) || user.moderator?)
   end
 
   def waiting_to_give_feedback?
