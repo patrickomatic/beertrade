@@ -56,6 +56,8 @@ class Participant < ActiveRecord::Base
 
 
   def finalize_participant!
+    return unless feedback?
+
     user.update_reputation(feedback_type)
     update_attributes(feedback_approved_at: @moderator_approved_at || Time.now)
 
