@@ -25,6 +25,7 @@ class Notification < ActiveRecord::Base
 
   
   def self.updated_shipping(participant)
+=begin
     participant.other_participants.each do |p|
       if_not_already_sent do
         n = Notification.create!(user: p.user, 
@@ -36,10 +37,12 @@ class Notification < ActiveRecord::Base
                   participant: participant, notification: n)
       end
     end
+=end
   end
 
 
   def self.send_invites(participants)
+=begin
     participants.each do |p|
       if_not_already_sent do
         n = Notification.create!(user: p.user, 
@@ -51,10 +54,12 @@ class Notification < ActiveRecord::Base
                   participant: p, notification: n)
       end
     end
+=end
   end
 
 
   def self.left_feedback(participant)
+=begin
     other_username = participant.other_participant.user.to_s
 
     if_not_already_sent do
@@ -66,6 +71,7 @@ class Notification < ActiveRecord::Base
                 "notifications/left_feedback", 
                 participant: participant, notification: n)
     end
+=end
   end
 
 
