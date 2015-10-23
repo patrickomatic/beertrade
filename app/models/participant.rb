@@ -20,7 +20,8 @@ class Participant < ActiveRecord::Base
   scope :with_neutral_feedback,      ->{ where(feedback_type: 1) }
   scope :with_negative_feedback,     ->{ where(feedback_type: 0) }
 
-  after_update :update_feedback
+  attr_accessor :feedback_updated
+  after_update :update_feedback, unless: "feedback_updated"
   after_update :update_shipping_info
 
 
@@ -80,7 +81,7 @@ class Participant < ActiveRecord::Base
     end
 
     def update_feedback
-      return if !feedback_changed? || feedback_approved_at?
+      self.feedback_updated = true
       
       if !@moderator_approved_at && negative?
         BadTradeReportedJob.perform_later(self.id)

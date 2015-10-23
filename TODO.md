@@ -1,6 +1,6 @@
 - [ ] logging/analytics/mp service that graphs trades by who (from the start)
 - [ ] auth framework
-- [ ] fix specs
+- [ ] fix specs and make sure they don't trigger reddit messages
 - [ ] links to update shipping and leave feedback are not prominent enough
 - [ ] google analytics
 - [ ] a way to search for users and see their feedback
