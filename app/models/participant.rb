@@ -12,8 +12,8 @@ class Participant < ActiveRecord::Base
   validate  :validates_full_feedback
 
   scope :pending,                    ->{ where(feedback: nil) }
-  scope :completed,                  ->{ where("feedback IS NOT NULL AND feedback_approved_at IS NOT NULL") }
   scope :not_yet_accepted,           ->{ where(accepted_at: nil) }
+  scope :completed,                  ->{ where("feedback IS NOT NULL AND feedback_approved_at IS NOT NULL") }
   scope :with_shipping_info,         ->{ where("shipping_info IS NOT NULL") }
   scope :needing_moderator_approval, ->{ where("feedback_type = 0 AND feedback_approved_at IS NULL") }
   scope :with_positive_feedback,     ->{ where(feedback_type: 2) }

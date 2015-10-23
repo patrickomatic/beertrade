@@ -74,7 +74,6 @@ class User < ActiveRecord::Base
     username
   end
 
-
   def to_s
     "/u/#{username}"
   end
