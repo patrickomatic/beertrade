@@ -15,6 +15,14 @@ class UsersController < ApplicationController
 
 
   def index
+    if params[:username_q]
+      if @searched_for = User.find_by_username(params[:username_q])
+        return redirect_to(@searched_for)
+      else
+        flash[:alert] = "user not found: #{params[:username_q]}"
+      end
+    end
+
     @users = User.by_feedback.page(params[:page])
   end
 end

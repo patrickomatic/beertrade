@@ -25,10 +25,27 @@ RSpec.describe UsersController, type: :controller do
 
 
   describe "GET index" do
-    before { get :index }
+    let(:params) { {} }
+    before { get :index, params }
 
     it "assigns @users" do
       expect(assigns[:users]).to include(user)
+    end
+
+
+    context "with a username_q param" do
+      let(:user) { FactoryGirl.create(:user) }
+      let(:params) { {username_q: user.username} }
+
+      before { get :index, params }
+
+
+      specify { expect(response).to redirect_to(user_path(user)) }
+
+      context "with non-existant user" do
+        let(:params) { {username_q: "foo"} }
+        specify { expect(flash[:alert]).not_to be_nil }
+      end
     end
   end
 end
