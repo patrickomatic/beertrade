@@ -1,9 +1,6 @@
 - [ ] update the rules: https://www.reddit.com/r/beertrade/comments/1qjm78/rules_of_rbeertrade/
-- [ ] put a link on the sidebar
 - [ ] remove rep list?
-- [ ] put a case insensitive index on username and apply it on the user show page
 - [ ] links to update shipping and leave feedback are not prominent enough
-- [ ] a way to search for users and see their feedback
 - [ ] better displaying and linking to shipping info
 - [ ] make a legend/explanation of flair
 - [ ] N+1 query on user show page
