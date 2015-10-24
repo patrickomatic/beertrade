@@ -1,3 +1,5 @@
-<p>Welcome to the <%= link_to "/r/beertrade", "http://reddit.com/r/beertrade" %> trade tracking app.  From here you can request beer trades with other reddit users.  Just sign in above to get started.</p>
+<p>welcome to the <%= link_to "/r/beertrade", "http://reddit.com/r/beertrade" %> trade tracking app.  from here you can request beer trades with other reddit users.  just sign in above to get started.</p>
 
 <%= render partial: "trades/trade_list", locals: {trades: @last_completed, type: "latest", pagination_param: :page} %>
+
+<%= render partial: "users/search" %>

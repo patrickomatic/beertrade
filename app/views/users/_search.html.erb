@@ -1,0 +1,8 @@
+<h2>search for reddit user</h2>
+
+<%= form_tag(users_path, method: :get) do %>
+  <%= label_tag(:username_q, "reddit username") %>
+  <%= text_field_tag(:username_q) %>
+
+  <%= submit_tag("search") %>
+<% end %>
