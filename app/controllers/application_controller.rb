@@ -2,6 +2,11 @@ class ApplicationController < ActionController::Base
   protect_from_forgery with: :exception
 
 
+  rescue_from ActiveRecord::RecordNotFound do |exception|
+    render status: :not_found, text: "the page you are requesting could not be found"
+  end
+
+
   def current_user
     User.find(session[:user_id]) rescue nil
   end
