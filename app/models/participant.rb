@@ -56,7 +56,7 @@ class Participant < ActiveRecord::Base
 
 
   def finalize_participant!
-    return #unless feedback?
+    return unless feedback?
 
     user.update_reputation(feedback_type)
     update_attributes(feedback_approved_at: @moderator_approved_at || Time.now)
@@ -79,16 +79,16 @@ class Participant < ActiveRecord::Base
 
     def update_shipping_info
       return unless shipping_info_changed?
-      #UpdateShippingInfoJob.perform_later(self.id)
+      UpdateShippingInfoJob.perform_later(self.id)
     end
 
     def update_feedback
       self.feedback_updated = true
       
       if !@moderator_approved_at && negative?
-        #BadTradeReportedJob.perform_later(self.id)
+        BadTradeReportedJob.perform_later(self.id)
       else
-        #finalize_participant!
+        finalize_participant!
       end
     end
 
