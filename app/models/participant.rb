@@ -61,8 +61,8 @@ class Participant < ActiveRecord::Base
     user.update_reputation(feedback_type)
     update_attributes(feedback_approved_at: @moderator_approved_at || Time.now)
 
-    #UpdateFeedbackJob.perform_later(self.id)
-    #UpdateFlairJob.perform_later(user.id)
+    UpdateFeedbackJob.perform_later(self.id)
+    UpdateFlairJob.perform_later(user.id)
 
     if trade.all_feedback_given?
       trade.update_attributes(completed_at: Time.now)
@@ -79,14 +79,14 @@ class Participant < ActiveRecord::Base
 
     def update_shipping_info
       return unless shipping_info_changed?
-      #UpdateShippingInfoJob.perform_later(self.id)
+      UpdateShippingInfoJob.perform_later(self.id)
     end
 
     def update_feedback
       self.feedback_updated = true
       
       if !@moderator_approved_at && negative?
-        #BadTradeReportedJob.perform_later(self.id)
+        BadTradeReportedJob.perform_later(self.id)
       else
         finalize_participant!
       end

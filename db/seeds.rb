@@ -2,6 +2,7 @@ require 'csv'
 require 'set'
 
 CSV.foreach(Rails.root.join("db/seed_data.csv")) do |row|
+  raise "must disable notifications!"
   date = DateTime.strptime(row[2], '%m/%d/%Y')
   user = User.find_or_create_by(username: row[0].strip.downcase)
 

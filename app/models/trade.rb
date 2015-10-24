@@ -60,7 +60,7 @@ class Trade < ActiveRecord::Base
     to_invite = participants.build(user: User.find_or_create_by(username: participant_reddit_username))
     save!
 
-    #TradeInviteJob.perform_later to_invite.id
+    TradeInviteJob.perform_later to_invite.id
 
     true
   rescue ActiveRecord::RecordInvalid 
