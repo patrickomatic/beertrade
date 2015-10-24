@@ -10,13 +10,12 @@ CSV.foreach(Rails.root.join("db/seed_data.csv")) do |row|
  
   participant = trade.participant(user)
   other_participant = participant.other_participant
-  other_participant.update_attributes(accepted_at: date)
 
   feedback = (row[3] || "").strip
   feedback = "successful trade on #{row[2]}" if feedback == ""
 
   participant.update_attributes(feedback: "successful trade on #{row[2]}", feedback_type: "positive")
-  other_participant.update_attributes(feedback: feedback, feedback_type: "positive")
+  other_participant.update_attributes(accepted_at: date, feedback: feedback, feedback_type: "positive")
 
   trade.update_attributes(completed_at: date)
 end
