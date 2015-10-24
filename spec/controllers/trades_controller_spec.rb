@@ -94,8 +94,8 @@ RSpec.describe TradesController, type: :controller do
         context "as the requester" do
           let(:user) { trade.participants.second }
 
-          it "should not be a success" do
-            expect(response).to be_forbidden
+          it "should be a success" do
+            expect(response).to be_success
           end
         end
       end

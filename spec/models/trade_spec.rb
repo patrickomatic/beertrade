@@ -166,7 +166,7 @@ RSpec.describe Trade, type: :model do
     context "with a trade waiting for approval" do
       let(:trade) { FactoryGirl.create(:trade, :waiting_for_approval) }
 
-      it { is_expected.to be false }
+      it { is_expected.to be_falsey }
 
       context "with a logged in user" do
         let(:user) { FactoryGirl.create(:user) }

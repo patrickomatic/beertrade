@@ -6,7 +6,7 @@ describe ParticipantsController, type: :controller do
 
     before do
       log_in_as approving_user
-      post :create, trade_id: trade.id
+      post :create, trade_id: trade
     end
 
 
@@ -41,17 +41,18 @@ describe ParticipantsController, type: :controller do
 
 
   describe "GET edit" do
-    let(:trade) { FactoryGirl.create(:trade, :waiting_for_approval) }
+    let(:trade) { FactoryGirl.create(:trade, :accepted) }
     let(:participant) { trade.participants.first }
 
-    before do
+    let(:get_edit) do
       log_in_as participant.user
-      get :edit, trade_id: trade.id, id: participant.id
+      get :edit, trade_id: trade, id: participant
     end
 
 
     context "as a participant" do
       it "should render :edit" do
+        get_edit
         expect(response).to render_template(:edit)
       end
     end
@@ -59,19 +60,19 @@ describe ParticipantsController, type: :controller do
     context "as a non-participant" do
       let(:participant) { FactoryGirl.create(:participant) }
 
-      it "should render :edit" do
-        expect(response).to be_forbidden
+      it "should be a 404" do
+        expect { get_edit }.to raise_error(ActiveRecord::RecordNotFound)
       end
     end
   end
 
 
   describe "PATCH update" do
-    let(:trade) { FactoryGirl.create(:trade, :waiting_for_approval) }
+    let(:trade) { FactoryGirl.create(:trade, :accepted) }
 
     before do
       log_in_as current_user
-      patch :update, trade_id: trade.id, id: participant.id, participant: params
+      patch :update, trade_id: trade, id: participant, participant: params
     end
 
 

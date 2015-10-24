@@ -1,6 +1,6 @@
 class UsersController < ApplicationController
   def show
-    @user           = User.find_by!(username: params[:id])
+    @user           = User.find_by_username(params[:id])
     @pending        = @user.trades.not_completed_yet.page(params[:pending_page])
     @completed      = @user.trades.completed.page(params[:completed_page])
 

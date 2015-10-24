@@ -32,7 +32,7 @@ RSpec.describe User, type: :model do
   end
 
 
-  describe "#is_moderator?" do
+  describe "#check_if_moderator" do
     pending
   end
 

@@ -63,7 +63,6 @@ RSpec.describe Notification, type: :model do
       let(:multiple_update_shipping) { 5.times { update_shipping } }
 
       it "should create Notification objects" do
-        pending
         expect { multiple_update_shipping }.to change { Notification.count }.by 1
       end
 
