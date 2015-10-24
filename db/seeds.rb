@@ -1,21 +1,21 @@
 require 'csv'
+require 'set'
 
 CSV.foreach(Rails.root.join("db/seed_data.csv")) do |row|
-  fail "disable notifications before running this!"
-  date = DateTime.strptime(row[0], '%m/%d/%Y %H:%M:%S')
-  user = User.find_or_create_by(username: row[1])
+  date = DateTime.strptime(row[2], '%m/%d/%Y')
+  user = User.find_or_create_by(username: row[0].strip.downcase)
 
-  trade = Trade.new(agreement: "Trade on #{row[1]}", created_at: date)
-  trade.create_participants(user, row[2])
-  
+  trade = Trade.new(agreement: "Trade on #{row[2]}", created_at: date)
+  trade.create_participants(user, row[1].strip.downcase)
+ 
   participant = trade.participant(user)
   other_participant = participant.other_participant
   other_participant.update_attributes(accepted_at: date)
 
   feedback = (row[3] || "").strip
-  feedback = "successful trade on #{row[0]}" if feedback == ""
+  feedback = "successful trade on #{row[2]}" if feedback == ""
 
-  participant.update_attributes(feedback: "successful trade on #{row[0]}", feedback_type: "positive")
+  participant.update_attributes(feedback: "successful trade on #{row[2]}", feedback_type: "positive")
   other_participant.update_attributes(feedback: feedback, feedback_type: "positive")
 
   trade.update_attributes(completed_at: date)

@@ -1,3 +1,4 @@
+- [ ] put a case insensitive index on username and apply it on the user show page
 - [ ] fix specs and make sure they don't trigger reddit messages
 - [ ] links to update shipping and leave feedback are not prominent enough
 - [ ] a way to search for users and see their feedback
