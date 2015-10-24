@@ -1,6 +1,2 @@
-- [ ] update the rules: https://www.reddit.com/r/beertrade/comments/1qjm78/rules_of_rbeertrade/
-- [ ] remove rep list?
 - [ ] links to update shipping and leave feedback are not prominent enough
 - [ ] better displaying and linking to shipping info
-- [ ] make a legend/explanation of flair
-- [ ] N+1 query on user show page
