@@ -8,4 +8,6 @@
       <li><%= link_to participant.trade, trade_path(participant.trade) %></li>
     <% end %>
   </ul>
+
+  <%= paginate @participants %>
 <% end %>
