@@ -44,7 +44,7 @@ describe ParticipantsController, type: :controller do
     let(:trade) { FactoryGirl.create(:trade, :accepted) }
     let(:participant) { trade.participants.first }
 
-    let(:get_edit) do
+    before do
       log_in_as participant.user
       get :edit, trade_id: trade, id: participant
     end
@@ -52,7 +52,6 @@ describe ParticipantsController, type: :controller do
 
     context "as a participant" do
       it "should render :edit" do
-        get_edit
         expect(response).to render_template(:edit)
       end
     end
@@ -61,7 +60,7 @@ describe ParticipantsController, type: :controller do
       let(:participant) { FactoryGirl.create(:participant) }
 
       it "should be a 404" do
-        expect { get_edit }.to raise_error(ActiveRecord::RecordNotFound)
+        expect(response).to be_not_found
       end
     end
   end

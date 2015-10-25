@@ -1,3 +1,4 @@
-- [ ] have specs not run jobs
+- [ ] have specs not run sidekiq jobs
 - [ ] links to update shipping and leave feedback are not prominent enough
 - [ ] better displaying and linking to shipping info
+- [ ] make more mobile friendly
