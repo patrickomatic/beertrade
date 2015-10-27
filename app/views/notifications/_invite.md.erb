@@ -1,6 +1,6 @@
 hi <%= participant.user %>, we're messaging you to let you know that <%= participant.other_participant.user %> has a requested a trade with you via the /r/beertrade subreddit. 
 
-<% if participant.trade.agreement %>
+<% if participant.trade.agreement? %>
   **the agreed trade was**: <%= participant.trade.agreement %>
 <% end %>
 
