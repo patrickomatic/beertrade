@@ -6,7 +6,7 @@
       <li>
         <%= link_to trade.participants.first.user, user_path(trade.participants.first.user) %> 
         and
-        <%= link_to trade.participants.second.user, user_path(trade.participants.second.user) %>: <%= link_to trade.agreement, trade_path(trade) %> 
+        <%= link_to trade.participants.second.user, user_path(trade.participants.second.user) %><% if trade.agreement? %>: <%= link_to trade.agreement, trade_path(trade) %><% end %>
       </li>
     <% end %>
   </ul>
