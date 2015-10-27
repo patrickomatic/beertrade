@@ -1,4 +1,5 @@
-- [ ] have specs not run sidekiq jobs
+- [ ] I think updating flair is broken
+- [ ] make it so you can bulk import trades
 - [ ] links to update shipping and leave feedback are not prominent enough
 - [ ] better displaying and linking to shipping info
 - [ ] make more mobile friendly
