@@ -8,15 +8,15 @@
     </tr>
     <tr class="good-trades">
       <td><%= link_to "positive", user_participants_path(user, feedback: "positive") %></td>
-      <td><%= user.positive_feedback %></td>
+      <td><%= user.positive_feedback_count %></td>
     </tr>
     <tr class="neutral-trades">
       <td><%= link_to "neutral", user_participants_path(user, feedback: "neutral") %></td>
-      <td><%= user.neutral_feedback %></td>
+      <td><%= user.neutral_feedback_count %></td>
     </tr>
     <tr class="bad-trades">
       <td><%= link_to "negative", user_participants_path(user, feedback: "negative") %></td>
-      <td><%= user.negative_feedback %></td>
+      <td><%= user.negative_feedback_count %></td>
     </tr>
   </table>
 </div>

@@ -1,14 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe User, type: :model do
-  let(:positive_feedback) { 20 } 
-  let(:neutral_feedback)  { 0  } 
-  let(:negative_feedback) { 0  } 
-  let(:user) { FactoryGirl.build(:user, 
-                                 positive_feedback: positive_feedback, 
-                                 neutral_feedback:  neutral_feedback, 
-                                 negative_feedback: negative_feedback) }
-
+  let(:user) { FactoryGirl.build(:user) }
 
   describe ".find_by_username" do
     let(:username) { "patrickomatic" }
@@ -44,52 +37,9 @@ RSpec.describe User, type: :model do
   end
 
 
-  describe "#update_reputation" do
-    context "with valid feedback_type" do
-      before { user.update_reputation(feedback_type) }
-
-      context "with positive feedback" do
-        let(:feedback_type) { :positive }
-
-        it "should just update positive feedback" do
-          expect(user.positive_feedback).to eq (positive_feedback + 1) 
-          expect(user.neutral_feedback).to eq neutral_feedback
-          expect(user.negative_feedback).to eq negative_feedback
-        end
-      end
-
-      context "with neutral feedback" do
-        let(:feedback_type) { :neutral }
-
-        it "should just update positive feedback" do
-          expect(user.positive_feedback).to eq positive_feedback 
-          expect(user.neutral_feedback).to eq (neutral_feedback + 1)
-          expect(user.negative_feedback).to eq negative_feedback
-        end
-      end
-
-      context "with negative feedback" do
-        let(:feedback_type) { :negative }
-
-        it "should just update negative feedback" do
-          expect(user.positive_feedback).to eq positive_feedback 
-          expect(user.neutral_feedback).to eq neutral_feedback
-          expect(user.negative_feedback).to eq (negative_feedback + 1)
-        end
-      end
-    end
-
-
-    context "with invalid feedback_type" do
-      it "should raise an exception" do
-        expect { user.update_feedback("invalid") }.to raise_error(String)
-      end
-    end
-  end
-
-
   describe "#flair_css_class" do
-    let(:positive_feedback) { 0 }
+    let(:trade_count) { 0 }
+    let(:user) { FactoryGirl.create(:user, :with_trades, positive_trade_count: trade_count) }
     subject { user.flair_css_class }
 
 
@@ -108,7 +58,7 @@ RSpec.describe User, type: :model do
       ["exactly 100",        100, "repLevel5"],
     ].each do |description, value, css_class|
       context description do
-        let(:positive_feedback) { value }
+        let(:trade_count) { value }
         it { is_expected.to eq css_class }
       end
     end
@@ -116,10 +66,10 @@ RSpec.describe User, type: :model do
 
 
   describe "#update_flair" do
-    let(:user) { FactoryGirl.create(:user, positive_feedback: 1) }
+    let(:user) { FactoryGirl.create(:user, :with_trades) }
 
     it "should call Reddit.set_flair" do
-      expect(Reddit).to receive(:set_flair).with(user.username, "100% positive", "repLevel1")
+      expect(Reddit).to receive(:set_flair).with(user.username, "100% positive", "repLevel1") 
       user.update_flair
     end
 
@@ -135,27 +85,26 @@ RSpec.describe User, type: :model do
 
 
   describe "#reputation" do
+    let(:user) { FactoryGirl.create(:user, :with_trades) }
     subject { user.reputation }
 
 
     it { is_expected.to eq 100 }
 
     context "with netural feedback" do
-      let(:netural_feedback) { 2 }
+      let(:user) { FactoryGirl.create(:user, :with_trades, neutral_trade_count: 2) }
 
       it { is_expected.to eq 100 }
     end
 
     context "with negative feedback" do
-      let(:negative_feedback) { 2 }
+      let(:user) { FactoryGirl.create(:user, :with_trades, positive_trade_count: 20, negative_trade_count: 2) }
 
       it { is_expected.to eq 91 }
     end
 
     context "with mixed feedback" do
-      let(:positive_feedback) { 8 }
-      let(:negative_feedback) { 1 }
-      let(:neutral_feedback) { 1 }
+      let(:user) { FactoryGirl.create(:user, :with_trades, positive_trade_count: 8, negative_trade_count: 1, neutral_trade_count: 1) }
 
       it { is_expected.to eq 89 }
     end

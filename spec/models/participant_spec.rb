@@ -116,10 +116,6 @@ RSpec.describe Participant, type: :model do
     end
 
 
-    it "should update reputation" do
-      expect { participant.save }.to change { participant.user.positive_feedback }.by 1
-    end
-
     it "should trigger background jobs" do
       expect(UpdateFeedbackJob).to receive(:perform_later).with(participant.id)
       expect(UpdateFlairJob).to receive(:perform_later).with(participant.user.id)
@@ -144,10 +140,6 @@ RSpec.describe Participant, type: :model do
 
       context "when approved by a moderator" do
         before { participant.moderator_approved_at = Time.now }
-
-        it "should update reputation" do
-          expect { participant.save }.to change { participant.user.negative_feedback }.by 1
-        end
 
         it "should trigger background jobs" do
           expect(UpdateFeedbackJob).to receive(:perform_later).with(participant.id)

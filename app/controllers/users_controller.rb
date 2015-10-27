@@ -23,6 +23,6 @@ class UsersController < ApplicationController
       end
     end
 
-    @users = User.by_feedback.page(params[:page])
+    @users = User.top_traders.page(params[:page])
   end
 end

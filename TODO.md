@@ -1,4 +1,6 @@
 - [ ] I think updating flair is broken
+- [ ] upgrade DB
+- [ ] make it able to merge a users history into anothers (for people who changed names)
 - [ ] make it so you can bulk import trades
 - [ ] links to update shipping and leave feedback are not prominent enough
 - [ ] better displaying and linking to shipping info

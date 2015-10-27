@@ -55,21 +55,6 @@ class Participant < ActiveRecord::Base
   end
 
 
-  def finalize_participant!
-    return unless feedback?
-
-    user.update_reputation(feedback_type)
-    update_attributes(feedback_approved_at: @moderator_approved_at || Time.now)
-
-    UpdateFeedbackJob.perform_later(self.id)
-    UpdateFlairJob.perform_later(user.id)
-
-    if trade.all_feedback_given?
-      trade.update_attributes(completed_at: Time.now)
-    end
-  end
-
-
   def moderator_approved_at=(time)
     @moderator_approved_at = time
   end
@@ -87,8 +72,15 @@ class Participant < ActiveRecord::Base
       
       if !@moderator_approved_at && negative?
         BadTradeReportedJob.perform_later(self.id)
-      else
-        finalize_participant!
+      elsif feedback?
+        update_attributes(feedback_approved_at: @moderator_approved_at || Time.now)
+
+        UpdateFeedbackJob.perform_later(self.id)
+        UpdateFlairJob.perform_later(user.id)
+
+        if trade.all_feedback_given?
+          trade.update_attributes(completed_at: Time.now)
+        end
       end
     end
 

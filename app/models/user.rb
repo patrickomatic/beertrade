@@ -4,11 +4,11 @@ class User < ActiveRecord::Base
   has_many :notifications
 
   validates :username,          presence: true
-  validates :positive_feedback, presence: true, numericality: {greater_than_or_equal_to: 0}
-  validates :neutral_feedback,  presence: true, numericality: {greater_than_or_equal_to: 0}
-  validates :negative_feedback, presence: true, numericality: {greater_than_or_equal_to: 0}
 
-  scope :by_feedback, -> { order(positive_feedback: :desc) }
+  scope :top_traders, ->{ select("users.*, count(participants.id) AS participants_counts")
+                          .joins(:participants)
+                          .group("users.id")
+                          .order("participants_counts DESC") }
 
   
   def self.find_by_username(username)
@@ -33,24 +33,22 @@ class User < ActiveRecord::Base
     notifications.unseen.count
   end
 
+  def positive_feedback_count
+    participants.completed.with_positive_feedback.count
+  end
 
-  def update_reputation(feedback_type)
-    case feedback_type.to_sym
-    when :positive
-      increment!(:positive_feedback)
-    when :neutral
-      increment!(:neutral_feedback)
-    when :negative
-      increment!(:negative_feedback)
-    else
-      raise "Invalid feedback_type: #{feedback_type}"
-    end
+  def neutral_feedback_count
+    participants.completed.with_neutral_feedback.count
+  end
+
+  def negative_feedback_count
+    participants.completed.with_negative_feedback.count
   end
 
 
   def flair_css_class
-    return nil unless positive_feedback > 0
-    "repLevel" << case positive_feedback
+    return nil unless positive_feedback_count > 0
+    "repLevel" << case positive_feedback_count
                   when 1..4;    "1"
                   when 5..9;    "2"
                   when 10..39;  "3"
@@ -80,13 +78,14 @@ class User < ActiveRecord::Base
 
 
   def reputation
-    ((positive_feedback / (positive_feedback + negative_feedback).to_f) * 100).round
+    ((positive_feedback_count / (positive_feedback_count + negative_feedback_count).to_f) * 100).round
   rescue ZeroDivisionError, FloatDomainError
     0
   end
 
 
   def total_completed_trades
+    # TODO should this not count neutral and negative?  perhaps evaluate where/how this is used
     participants.completed.count
   end
 
