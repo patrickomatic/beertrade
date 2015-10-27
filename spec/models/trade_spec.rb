@@ -210,16 +210,14 @@ RSpec.describe Trade, type: :model do
   describe "#to_s" do
     let(:agreement) { nil }
     let(:trade) { FactoryGirl.create(:trade, :accepted, agreement: agreement) }
-    let(:user1) { trade.participants.first.user }
-    let(:user2) { trade.participants.second.user }
 
     subject { trade.to_s }
 
-    it { is_expected.to eq "#{user1.username} and #{user2.username}" }
+    it { is_expected.to start_with("trade on ") }
 
     context "with an agreement" do 
       let(:agreement) { "yinlins and stuff" }
-      it { is_expected.to eq "#{user1.username} and #{user2.username}: #{agreement}" }
+      it { is_expected.to eq agreement }
     end
   end
 end

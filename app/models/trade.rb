@@ -69,6 +69,6 @@ class Trade < ActiveRecord::Base
 
 
   def to_s
-    users.map(&:username).join(' and ').tap {|s| s << ": #{agreement}" if agreement?}
+    agreement || "trade on #{created_at.strftime("%m/%d/%Y")}"
   end
 end
