@@ -22,6 +22,11 @@ class ApplicationController < ActionController::Base
   end
 
 
+  def requires_moderator!
+    return render_forbidden! unless current_user.try(:moderator?)
+  end
+
+
   def requires_authentication!
     return if current_user
 
