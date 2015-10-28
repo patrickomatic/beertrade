@@ -69,46 +69,79 @@ describe ParticipantsController, type: :controller do
   describe "PATCH update" do
     let(:trade) { FactoryGirl.create(:trade, :accepted) }
 
-    before do
-      log_in_as current_user
-      patch :update, trade_id: trade, id: participant, participant: params
-    end
-
-
     context "updating shipping info" do
       let(:participant) { trade.participants.first }
-      let(:current_user) { participant.user }
       let(:params) { {shpping_info: "774397776602"} }
 
-      it "should redirect to the trade" do
-        expect(response).to redirect_to(trade)
-      end
 
-      it "should set flash[:notice]" do
-        expect(flash[:notice]).not_to be_nil
-      end
+      context "as the user" do
+        let(:current_user) { participant.user }
 
+        before do
+          expect(UpdateShippingInfoJob).to receive(:perform_later).with(participant.id)
+      
+          log_in_as current_user
+          patch :update, trade_id: trade, id: participant, participant: params
+        end
+
+        it "should redirect to the trade" do
+          expect(response).to redirect_to(trade)
+        end
+
+        it "should set flash[:notice]" do
+          expect(flash[:notice]).not_to be_nil
+        end
+      end
 
       context "as non-participant" do
         let(:current_user) { FactoryGirl.create(:user) }
 
         it "should be forbidden" do
+          log_in_as current_user
+          patch :update, trade_id: trade, id: participant, participant: params
+
           expect(response).to be_forbidden
         end
       end
     end
 
+
     context "updating feedback" do
       let(:participant) { trade.participants.first }
       let(:current_user) { participant.other_participant.user }
-      let(:params) { {feedback: "great trade", feedback_type: "positive"} }
+      let(:feedback_type) { "positive" }
+      let(:params) { {feedback: "great trade", feedback_type: feedback_type} }
+      
+      let(:make_request) do
+        log_in_as current_user
+        patch :update, trade_id: trade, id: participant, participant: params
+      end
+
 
       it "should redirect to the trade" do
+        make_request
         expect(response).to redirect_to(trade)
       end
 
       it "should set flash[:notice]" do
+        make_request
         expect(flash[:notice]).not_to be_nil
+      end
+
+      it "should trigger background jobs" do
+        expect(UpdateFeedbackJob).to receive(:perform_later).with(participant.id)
+        expect(UpdateFlairJob).to receive(:perform_later).with(participant.user.id)
+
+        make_request
+      end
+
+      context "with negative feedback" do
+        let(:feedback_type) { "negative" }
+
+        it "should trigger background job" do
+          expect(BadTradeReportedJob).to receive(:perform_later).with(participant.id)
+          make_request
+        end
       end
 
 
@@ -116,6 +149,7 @@ describe ParticipantsController, type: :controller do
         let(:current_user) { FactoryGirl.create(:user) }
 
         it "should be forbidden" do
+          make_request
           expect(response).to be_forbidden
         end
       end

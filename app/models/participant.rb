@@ -22,7 +22,6 @@ class Participant < ActiveRecord::Base
 
   attr_accessor :feedback_updated
   after_update :update_feedback, unless: "feedback_updated"
-  after_update :update_shipping_info
 
 
   def accepted?
@@ -44,6 +43,10 @@ class Participant < ActiveRecord::Base
   def waiting_to_give_feedback?
     !other_participant.feedback?
   end
+  
+  def feedback_needs_moderator_approval?
+    negative? && !@moderator_approved_at
+  end
 
 
   def other_participants
@@ -62,21 +65,13 @@ class Participant < ActiveRecord::Base
  
   private
 
-    def update_shipping_info
-      return unless shipping_info_changed?
-      UpdateShippingInfoJob.perform_later(self.id)
-    end
-
     def update_feedback
       self.feedback_updated = true
       
-      if !@moderator_approved_at && negative?
-        BadTradeReportedJob.perform_later(self.id)
+      if negative? && !@moderator_approved_at 
+        return
       elsif feedback?
         update_attributes(feedback_approved_at: @moderator_approved_at || Time.now)
-
-        UpdateFeedbackJob.perform_later(self.id)
-        UpdateFlairJob.perform_later(user.id)
 
         if trade.all_feedback_given?
           trade.update_attributes(completed_at: Time.now)

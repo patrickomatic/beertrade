@@ -63,6 +63,8 @@ class ParticipantsController < ApplicationController
       return render_forbidden! unless @participant.can_update_shipping_info?(current_user)
 
       if @participant.update_attributes(update_shipping_info_params)
+        UpdateShippingInfoJob.perform_later(@participant.id)
+
         flash[:notice] = "successfully updated shipping info"
         redirect_to @participant.trade
       else 
@@ -77,7 +79,17 @@ class ParticipantsController < ApplicationController
       @participant.moderator_approved_at = Time.now if current_user.moderator?
 
       if @participant.update_attributes(update_feedback_params)
-        flash[:notice] = "successfully left feedback"
+        if @participant.feedback_needs_moderator_approval?
+          BadTradeReportedJob.perform_later(@participant.id)
+
+          flash[:notice] = "successfully left feedback - waiting for moderator approval"
+        else
+          UpdateFeedbackJob.perform_later(@participant.id)
+          UpdateFlairJob.perform_later(@participant.user.id)
+
+          flash[:notice] = "successfully left feedback"
+        end
+
         redirect_to @participant.trade
       else 
         flash[:alert] = "must complete all fields"
