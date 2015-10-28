@@ -4,14 +4,14 @@ RSpec.describe UsersController, type: :controller do
   let(:user) { FactoryGirl.create(:user, :with_trades) }
 
   describe "GET show" do
-    before { get :show, id: user.to_param }
+    before { get :show, id: user }
 
     it "assigns @user" do
       expect(assigns[:user]).to eq user
     end
 
     it "assigns @pending" do
-      expect(assigns[:pending]).not_to be_nil
+      expect(assigns[:pending]).to be_nil
     end
 
     it "assigns @completed" do
@@ -20,6 +20,18 @@ RSpec.describe UsersController, type: :controller do
 
     it "assigns @notifications" do
       expect(assigns[:notifications]).not_to be_nil
+    end
+
+
+    context "as the logged in user" do
+      before do
+        log_in_as(user) 
+        get :show, id: user
+      end
+
+      it "assigns @pending" do
+        expect(assigns[:pending]).not_to be_nil
+      end
     end
   end
 
