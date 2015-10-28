@@ -69,6 +69,10 @@ class Trade < ActiveRecord::Base
 
 
   def to_s
-    agreement || "trade on #{created_at.strftime("%m/%d/%Y")}"
+    if !agreement.blank?
+      agreement 
+    else
+      "trade on #{created_at.strftime("%m/%d/%Y")}"
+    end
   end
 end
