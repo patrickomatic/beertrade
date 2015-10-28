@@ -69,7 +69,7 @@ RSpec.describe User, type: :model do
     let(:user) { FactoryGirl.create(:user, :with_trades) }
 
     it "should call Reddit.set_flair" do
-      expect(Reddit).to receive(:set_flair).with(user.username, "100% positive", "repLevel1") 
+      expect(Reddit).to receive(:set_flair).with(user.username, nil, "repLevel1") 
       user.update_flair
     end
 

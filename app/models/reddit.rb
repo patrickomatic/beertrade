@@ -11,7 +11,7 @@ class Reddit
 
 
   def self.set_flair(username, text, css_class)
-    reddit_bot.subreddit_from_name("beertrade").set_flair(username, :user, text: text, css_class: css_class)
+    reddit_bot.subreddit_from_name("beertrade").set_flair(username, :user, text, css_class)
   end
 
 
