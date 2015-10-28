@@ -3,7 +3,7 @@ FactoryGirl.define do
     sequence(:username) {|n| "patrickomatic-#{n}"}
 
     trait :with_trades do
-      ignore do
+      transient do
         positive_trade_count 1
         neutral_trade_count 0
         negative_trade_count 0
