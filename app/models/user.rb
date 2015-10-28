@@ -34,15 +34,17 @@ class User < ActiveRecord::Base
   end
 
   def positive_feedback_count
-    participants.completed.with_positive_feedback.count
+    # TODO why aren't these queries being cached (noticed when running #update_flair
+    # in the console)
+    @positive_feedback ||= participants.completed.with_positive_feedback.count
   end
 
   def neutral_feedback_count
-    participants.completed.with_neutral_feedback.count
+    @neutral_feedback ||= participants.completed.with_neutral_feedback.count
   end
 
   def negative_feedback_count
-    participants.completed.with_negative_feedback.count
+    @negative_feedback ||= participants.completed.with_negative_feedback.count
   end
 
 
@@ -59,7 +61,7 @@ class User < ActiveRecord::Base
 
 
   def update_flair
-    Reddit.set_flair(username, "#{reputation}% positive", flair_css_class) if reputation > 0
+    Reddit.set_flair(username, nil, flair_css_class) if reputation > 0
   end
 
 
@@ -85,7 +87,6 @@ class User < ActiveRecord::Base
 
 
   def total_completed_trades
-    # TODO should this not count neutral and negative?  perhaps evaluate where/how this is used
     participants.completed.count
   end
 
