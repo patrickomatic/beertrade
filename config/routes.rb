@@ -9,6 +9,8 @@ Rails.application.routes.draw do
 
   resources :sessions, only: [:new, :destroy]
 
+  resources :moderators, only: [:index]
+
   get '/auth/:provider/callback', to: 'sessions#create', as: :oauth_callback
 
   root to: 'sessions#new'
