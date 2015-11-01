@@ -11,7 +11,7 @@ $border-color: $dark-color;
 
 $background-color: #D1D1D1;
 $foreground-color: $light-color;
-$main-width: 900px;
+$main-width: 90%;
 
 
 @mixin action-list {
@@ -26,7 +26,7 @@ $main-width: 900px;
 }
 
 
-nav.header-nav { 
+nav.header-nav {
   display: block;
   border-bottom: 2px solid $border-color;
   width: 100%;
@@ -37,7 +37,7 @@ nav.header-nav {
   #left-nav {
     @include action-list;
     float: left;
-    
+
     li {
       padding-left: 1em;
     }
@@ -83,7 +83,6 @@ div {
 
 body {
   font-family: verdana, arial, helvetica, sans-serif;
-  font-size: 0.75em;
   width: 100%;
   text-align: center;
   background-color: $background-color;
