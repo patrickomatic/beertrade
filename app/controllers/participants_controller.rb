@@ -3,7 +3,8 @@ class ParticipantsController < ApplicationController
    
 
   def index
-    @user = User.find_by(username: params[:user_id])
+    @user = User.find_by_username(params[:user_id])
+    return render_not_found! unless @user
     
     @participants = case @feedback_filter = feedback_filter_param
                     when :positive

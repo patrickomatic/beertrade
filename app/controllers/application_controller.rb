@@ -3,7 +3,7 @@ class ApplicationController < ActionController::Base
 
 
   rescue_from ActiveRecord::RecordNotFound do |exception|
-    render status: :not_found, text: "the page you are requesting could not be found"
+    render_not_found!
   end
 
 
@@ -30,6 +30,10 @@ class ApplicationController < ActionController::Base
     redirect_to new_session_path
   end
 
+
+  def render_not_found!
+    render status: :not_found, text: "the page you are requesting could not be found"
+  end
 
   def render_forbidden!
     render status: :forbidden, text: "you do not have access to this page"
