@@ -3,7 +3,7 @@ class User < ActiveRecord::Base
   has_many :trades, through: :participants
   has_many :notifications
 
-  validates :username,          presence: true
+  validates :username, presence: true, uniqueness: {case_sensitive: false}
 
   scope :top_traders, ->{ select("users.*, count(participants.id) AS participants_counts")
                           .joins(:participants)

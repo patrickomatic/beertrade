@@ -57,7 +57,10 @@ class Trade < ActiveRecord::Base
     end
 
     participants.build(user: organizer_user, accepted_at: Time.now)
-    to_invite = participants.build(user: User.find_or_create_by(username: participant_reddit_username))
+    
+    user = User.find_by_username(participant_reddit_username) || User.create(username: participant_reddit_username) 
+
+    to_invite = participants.build(user: user)
     save!
 
     TradeInviteJob.perform_later to_invite.id
