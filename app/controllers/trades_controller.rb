@@ -33,7 +33,7 @@ class TradesController < ApplicationController
   def create
     @trade = Trade.new(trade_params)
 
-    username = params[:participant_username]
+    username = params[:participant_username].strip
     if @trade.create_participants(current_user, username)
       flash[:notice] = "trade successfully requested.  waiting on /u/#{username} to confirm it"
       redirect_to current_user
@@ -47,9 +47,7 @@ class TradesController < ApplicationController
   def destroy 
     @trade = Trade.find(params[:id])
 
-    unless @trade.can_delete?(current_user)
-      render_forbidden! and return
-    end
+    return render_forbidden! unless @trade.can_delete?(current_user)
 
     @trade.destroy
 

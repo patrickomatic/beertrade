@@ -1,5 +1,6 @@
 class Reddit
   def self.pm(username, subject, partial, locals={})
+    username = username.strip
     object = if username.start_with?("/r/")
                reddit_bot.subreddit_from_name(username.gsub('/r/', ''))
              else
@@ -11,7 +12,7 @@ class Reddit
 
 
   def self.set_flair(username, text, css_class)
-    reddit_bot.subreddit_from_name("beertrade").set_flair(username, :user, text, css_class)
+    reddit_bot.subreddit_from_name("beertrade").set_flair(username.strip, :user, text, css_class)
   end
 
 
