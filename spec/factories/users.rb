@@ -1,6 +1,6 @@
 FactoryGirl.define do
   factory :user do
-    username "patrickomatic"    
+    sequence(:username) {|n| "patrickomatic-#{n}"}
 
     trait :with_trades do
       ignore do

@@ -4,7 +4,7 @@ RSpec.describe User, type: :model do
   let(:user) { FactoryGirl.build(:user) }
 
   describe ".find_by_username" do
-    let(:username) { "patrickomatic" }
+    let(:username) { user.username.downcase }
     before { user.save! }
 
     subject { User.find_by_username(username) }
@@ -12,7 +12,7 @@ RSpec.describe User, type: :model do
     it { is_expected.to eq(user) }
 
     context "with mixed case" do
-      let(:username) { "pAtrickOMATIC" }
+      let(:username) { user.username.upcase }
       it { is_expected.to eq(user) }
     end
   end
@@ -21,7 +21,7 @@ RSpec.describe User, type: :model do
   describe "#to_s" do
     subject { user.to_s }
 
-    it { is_expected.to eq("/u/patrickomatic") }
+    it { is_expected.to eq("/u/#{user.username}") }
   end
 
 
@@ -33,7 +33,7 @@ RSpec.describe User, type: :model do
   describe "#to_param" do
     subject { user.to_param }
 
-    it { is_expected.to eq("patrickomatic") }
+    it { is_expected.to eq(user.username) }
   end
 
 
