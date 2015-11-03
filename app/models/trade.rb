@@ -51,7 +51,7 @@ class Trade < ActiveRecord::Base
 
 
   def create_participants(organizer_user, participant_reddit_username)
-    if organizer_user.username.downcase == participant_reddit_username
+    if organizer_user.username.downcase == participant_reddit_username.downcase
       self.errors.add(:base, "You cannot request a trade with yourself")
       raise ActiveRecord::RecordInvalid.new(self)
     end

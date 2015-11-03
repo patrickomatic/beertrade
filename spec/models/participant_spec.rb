@@ -11,8 +11,22 @@ RSpec.describe Participant, type: :model do
 
     it { is_expected.to be_valid }
 
-    context "with partial feedback" do
+    context "with just feedback_type" do
+      before { participant.feedback_type = :negative }
+      it { is_expected.not_to be_valid }
+    end
+
+    context "with just feedback" do
       before { participant.feedback = "some feedback" }
+      it { is_expected.not_to be_valid }
+    end
+
+    context "with blank feedback" do
+      before do 
+        participant.feedback = "" 
+        participant.feedback_type = :positive
+      end
+
       it { is_expected.not_to be_valid }
     end
 

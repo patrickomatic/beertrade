@@ -89,7 +89,7 @@ class Participant < ActiveRecord::Base
     end
 
     def full_feedback?
-      return (!feedback.nil? && !feedback_type.nil?) if !feedback.nil? || !feedback_type.nil?
+      return (!feedback.blank? && !feedback_type.blank?) if !feedback.blank? || !feedback_type.blank?
       true
     end
 end
