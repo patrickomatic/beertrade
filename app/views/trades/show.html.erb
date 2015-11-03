@@ -16,7 +16,7 @@
 <% end %>
   
 
-<% if @trade.has_shipping_info? %>
+<% if @trade.has_shipping_info? && (@trade.participant(current_user) || current_user.try(:moderator?) %>
   <div id="shipping-info">
     <h3>shipping info</h3>
     <ul>

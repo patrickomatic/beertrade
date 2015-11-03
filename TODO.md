@@ -1,5 +1,5 @@
-- [ ] make sure it asks for feedback and validates
-- [ ] upgrade DB
+- [ ] on trade page, the "... says:" should link to their profile
+- [ ] need to display feedback level on the completed trade view (right now it just shows the feedback not positive/negative)
 - [ ] make it able to merge a users history into anothers (for people who changed names)
 - [ ] make it so you can bulk import trades
 - [ ] links to update shipping and leave feedback are not prominent enough
