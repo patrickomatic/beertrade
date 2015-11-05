@@ -111,10 +111,12 @@ body {
 }
 
 .notice {
+  padding: 0;
   color: $good-color;
 }
 
 .alert {
+  padding: 0;
   color: $bad-color;
 }
 

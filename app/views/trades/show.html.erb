@@ -33,21 +33,13 @@
   
 
 <% if @trade.waiting_for_approval? current_user %>
-  <div id="trade-approval">
-    this trade is pending your approval.  please select Yes or No:
+    this trade is pending your approval:
 
-    <ul id="trade-yes-no">
-      <li class="yes"><%= link_to "Yes", trade_participants_path(@trade), method: :post %></li>
-      <li class="no"><%= link_to "No", trade_path(@trade), method: :delete %></li>
-    </ul>
-    <br style="clear: both;"/> <%# XXX ick %>
-  </div>
+    <%= link_to "Yes", trade_participants_path(@trade), method: :post, class: "btn btn-success btn-lg" %>
+    <%= link_to "No", trade_path(@trade), method: :delete, class: "btn btn-danger btn-lg" %>
 <% elsif @trade.waiting_to_give_feedback? current_user %>
   <% participant = @trade.participant(current_user) %>
 
-  <ul class="trade-actions">
-    <li><%= link_to "update shipping info", edit_trade_participant_path(@trade, participant) %></li>
-    <li><%= link_to "leave feedback and complete trade", edit_trade_participant_path(@trade, participant.other_participant) %></li>
-  </ul>
-  <br style="clear: both;"/> <%# XXX ick %>
+  <%= link_to "update shipping info", edit_trade_participant_path(@trade, participant), class: "btn btn-default" %>
+  <%= link_to "leave feedback and complete trade", edit_trade_participant_path(@trade, participant.other_participant), class: "btn btn-default" %>
 <% end %>
