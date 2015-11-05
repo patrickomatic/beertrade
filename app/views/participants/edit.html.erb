@@ -2,9 +2,9 @@
   <% if @participant.can_update_shipping_info?(current_user) %>
     <h2>update shipping info</h2>
 
-    <div class="form-row">
-      <%= f.label :shipping_info, "tracking #" %>
-      <%= f.text_field :shipping_info %>
+    <div class="form-group">
+      <%= f.label :shipping_info, "tracking #", class: "control-label" %>
+      <%= f.text_field :shipping_info, class: "form-control" %>
     </div>
   <% end %>
 
@@ -15,7 +15,7 @@
       <h2>provide feedback for <%= @participant.user %></h2>
     <% end %>
 
-    <div class="form-row">
+    <div class="form-group">
       <%= f.radio_button :feedback_type, 'positive', checked: true %>
       <%= f.label :feedback_type, 'positive', value: 'positive' %>
 
@@ -26,9 +26,9 @@
       <%= f.label :feedback_type, 'negative', value: 'negative' %>
     </div>
 
-    <div class="form-row">
-      <%= f.label :feedback, "feedback" %>
-      <%= f.text_area :feedback, maxlength: 1000 %>
+    <div class="form-group">
+      <%= f.label :feedback, "feedback", class: "control-label" %>
+      <%= f.text_area :feedback, maxlength: 1000, class: "form-control" %>
     </div>
   <% end %>
 
