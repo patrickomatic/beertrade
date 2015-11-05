@@ -63,6 +63,9 @@ GEM
       debug_inspector (>= 0.0.1)
     bootstrap-sass (3.2.0.2)
       sass (~> 3.2)
+    bootstrap_kaminari (0.0.5)
+      kaminari (>= 0.12.4)
+      rails (>= 3.1.0)
     builder (3.2.2)
     byebug (6.0.2)
     celluloid (0.17.1.2)
@@ -283,6 +286,7 @@ PLATFORMS
 DEPENDENCIES
   autoprefixer-rails
   bootstrap-sass (~> 3.2.0)
+  bootstrap_kaminari
   byebug
   coffee-rails (~> 4.1.0)
   dotenv-rails
