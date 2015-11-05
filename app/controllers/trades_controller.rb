@@ -1,3 +1,5 @@
+require 'moderator_tools'
+
 class TradesController < ApplicationController
   before_filter :requires_authentication!, except: [:index, :show]
 
@@ -31,11 +33,15 @@ class TradesController < ApplicationController
 
 
   def create
+    return trade_import if current_user.moderator? && params[:users_to_import]
+
     @trade = Trade.new(trade_params)
 
     username = params[:participant_username].strip
-    if @trade.create_participants(current_user, username)
-      flash[:notice] = "trade successfully requested.  waiting on /u/#{username} to confirm it"
+    if new_participant = @trade.create_participants(current_user, username)
+      TradeInviteJob.perform_later(new_participant.id)
+
+      flash[:notice] = "trade successfully requested.  waiting on #{new_participant.user} to confirm it"
       redirect_to current_user
     else
       flash[:alert] = @trade.errors.full_messages.first
@@ -60,5 +66,19 @@ class TradesController < ApplicationController
 
     def trade_params
       params.require(:trade).permit(:agreement)
+    end
+
+    def trade_import
+      user = User.find_by_username(params[:participant_username])
+
+      if !user
+        flash[:alert] = "user not found"
+      elsif ModeratorTools.import_trades_for_user(user, params[:users_to_import])
+        flash[:notice] = "successfully imported trades"
+      else
+        flash[:alert] = "error importing trades"
+      end
+
+      redirect_to moderators_path
     end
 end

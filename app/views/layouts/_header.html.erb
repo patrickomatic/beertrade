@@ -14,6 +14,13 @@
             <%= link_to notification_count, user_path(current_user), title: "you have #{notification_count} unseen notifications", class: "unseen-notifications-count" %>
           <% end %>
         </li>
+
+        <% if current_user.moderator? %>
+          <li>
+            <%= link_to "mod stuff", moderators_path %>
+          </li>
+        <% end %>
+
         <li><%= link_to "logout", session_path(current_user), method: :delete %></li>
       </ul>
   <% else %>

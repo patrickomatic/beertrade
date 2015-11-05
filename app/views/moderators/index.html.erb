@@ -1,0 +1,16 @@
+<%= form_for(Trade.new) do |f| %>
+  <h2>bulk import trades for a user</h2>
+
+  <div class="form-group">
+    <%= f.label :participant_username, "reddit username that we're importing trades for:", class: "control-label" %>
+    <%= text_field_tag :participant_username, "", class: "form-control" %>
+    <span class="username-warning"></span>
+  </div>
+
+  <div class="form-group">
+    <%= f.label :users_to_import, "list of reddit usernames they traded with:", class: "control-label" %>
+    <%= text_area_tag :users_to_import, "", class: "form-control" %>
+  </div>
+
+  <%= f.submit "import trades", class: "btn btn-primary" %>
+<% end %>

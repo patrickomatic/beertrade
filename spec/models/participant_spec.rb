@@ -130,53 +130,10 @@ RSpec.describe Participant, type: :model do
     end
 
 
-    it "should trigger background jobs" do
-      expect(UpdateFeedbackJob).to receive(:perform_later).with(participant.id)
-      expect(UpdateFlairJob).to receive(:perform_later).with(participant.user.id)
-
-      participant.save
-    end
-
     it "should update completed_at" do
       participant.other_participant.update_attributes(feedback: "ok trader", feedback_type: :neutral)
 
       expect { participant.save }.to change { participant.trade.completed_at }
-    end
-
-
-    context "with negative feedback" do
-      let(:feedback_type) { :negative }
-
-      it "should trigger a bad trade report" do
-        expect(BadTradeReportedJob).to receive(:perform_later).with(participant.id)
-        participant.save
-      end
-
-      context "when approved by a moderator" do
-        before { participant.moderator_approved_at = Time.now }
-
-        it "should trigger background jobs" do
-          expect(UpdateFeedbackJob).to receive(:perform_later).with(participant.id)
-          expect(UpdateFlairJob).to receive(:perform_later).with(participant.user.id)
-
-          participant.save
-        end
-      end
-    end
-  end
-
-
-  describe "#update_shipping_info" do
-    let(:trade) { FactoryGirl.create(:trade, :accepted) }
-    let(:participant) { trade.participants.first }
-
-    before do
-      participant.shipping_info = "774397776602"
-    end
-
-    it "should trigger background jobs" do
-      expect(UpdateShippingInfoJob).to receive(:perform_later).with(participant.id)
-      participant.save
     end
   end
 end
