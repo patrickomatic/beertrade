@@ -1,3 +1,5 @@
+require 'moderator_tools'
+
 class TradesController < ApplicationController
   before_filter :requires_authentication!, except: [:index, :show]
 

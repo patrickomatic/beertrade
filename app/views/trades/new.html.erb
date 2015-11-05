@@ -1,15 +1,15 @@
 <h1>request a new beer trade</h1>
 
 <%= form_for(@trade) do |f| %>
-  <div class="form-row">
-    <%= f.label :participant_username, "who are you trading with? (reddit username)" %>
-    <%= text_field_tag :participant_username %>
+  <div class="form-group">
+    <%= f.label :participant_username, "who are you trading with? (reddit username)", class: "control-label" %>
+    <%= text_field_tag :participant_username, "", class: "form-control" %>
     <span class="username-warning"></span>
   </div>
 
-  <div class="form-row">
-    <%= f.label :agreement, "what did you agree to trade? (optional)" %>
-    <%= f.text_field :agreement %>
+  <div class="form-group">
+    <%= f.label :agreement, "what did you agree to trade? (optional)", class: "control-label" %>
+    <%= f.text_field :agreement, class: "form-control" %>
   </div>
 
   <div class="actions">
