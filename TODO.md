@@ -1,5 +1,5 @@
+- [ ] allow mods to delete trades
 - [ ] have bootstrap validation states in particular with reddit username search
 - [ ] on trade page, the "... says:" should link to their profile
 - [ ] need to display feedback level on the completed trade view (right now it just shows the feedback not positive/negative)
 - [ ] make it able to merge a users history into anothers (for people who changed names)
-- [ ] better displaying and linking to shipping info

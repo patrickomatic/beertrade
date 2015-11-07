@@ -23,7 +23,7 @@
       <% @trade.participants.each do |participant| %>
         <% if participant.shipping_info? %>
           <li>
-            provided by <%= participant.user %>: <%= participant.shipping_info %>
+            provided by <%= participant.user %>: <%= link_to participant.shipping_info, shipping_info_url(participant.shipping_info) %>
           </li>
         <% end %>
       <% end %>
