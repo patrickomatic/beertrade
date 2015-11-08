@@ -34,7 +34,7 @@ class Trade < ActiveRecord::Base
   end
 
   def can_delete?(user)
-    waiting_for_approval?(user)
+    waiting_for_approval?(user) || user.moderator?
   end
 
   def waiting_for_approval?(user)

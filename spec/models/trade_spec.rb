@@ -195,6 +195,11 @@ RSpec.describe Trade, type: :model do
       let(:pending_for) { trade.participants.second.user }
       it { is_expected.to be false }
     end
+
+    context "with a moderator" do
+      let(:pending_for) { FactoryGirl.create(:user, moderator: true) }
+      it { is_expected.to be true }
+    end
   end
 
 
