@@ -4,6 +4,7 @@ RSpec.describe TradesController, type: :routing do
   describe "routing" do
     it "routes to #index" do
       expect(get: "/trades").to route_to("trades#index")
+      expect(get: "/").to       route_to("trades#index")
     end
 
     it "routes to #new" do

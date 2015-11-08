@@ -7,11 +7,10 @@ Rails.application.routes.draw do
     resources :participants, only: [:index]
   end
 
-  resources :sessions, only: [:new, :destroy]
-
   resources :moderators, only: [:index]
 
+  resources :sessions, only: [:new, :destroy]
   get '/auth/:provider/callback', to: 'sessions#create', as: :oauth_callback
 
-  root to: 'sessions#new'
+  root to: 'trades#index'
 end

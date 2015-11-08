@@ -50,8 +50,8 @@ RSpec.describe ApplicationController, type: :controller do
       controller.requires_authentication! 
     end
 
-    it "should set a notice" do
-      expect(controller.flash[:alert]).not_to be_nil
+    it "should redirect" do
+      expect(response).to redirect_to(new_session_path)
     end
 
     it "should save the last page" do

@@ -1,7 +1,7 @@
 class SessionsController < ApplicationController
 
   def new
-    @last_completed = Trade.completed.order(created_at: :desc).page(params[:page])
+    flash.now[:alert] = 'you need to log in to access that page'
   end
 
 

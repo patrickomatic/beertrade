@@ -1,15 +1,5 @@
-<p id="notice"><%= notice %></p>
+<p>welcome to the <%= link_to "/r/beertrade", "http://reddit.com/r/beertrade" %> trade tracking app.  from here you can request beer trades with other reddit users.  just sign in above to get started.</p>
 
-<h1>Listing Trades</h1>
+<%= render partial: "trades/trade_list", locals: {trades: @trades, type: "latest", pagination_param: :page} %>
 
-<ul>
-  <% @trades.each do |trade| %>
-    <li>
-      <%= link_to trade, trade  %>
-    </li>
-  <% end %>
-</ul>
-
-<br>
-
-<%= link_to 'New Trade', new_trade_path %>
+<%= render partial: "users/search" %>

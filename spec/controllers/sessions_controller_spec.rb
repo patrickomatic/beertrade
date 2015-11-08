@@ -4,8 +4,12 @@ RSpec.describe SessionsController, type: :controller do
   describe "GET new" do
     before { get :new }
 
-    it "assigns @last_completed" do
-      expect(assigns[:last_completed]).not_to be_nil
+    it "is a success" do
+      expect(response).to be_success
+    end
+
+    it "sets a flash alert message" do
+      expect(flash.now[:alert]).to_not be_nil
     end
   end
 

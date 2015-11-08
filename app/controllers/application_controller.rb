@@ -31,7 +31,6 @@ class ApplicationController < ActionController::Base
     return if current_user
 
     session[:last_page] = request.original_url
-    flash[:alert] = 'you must click the "sign in with reddit" link above to access that page'
     redirect_to new_session_path
   end
 

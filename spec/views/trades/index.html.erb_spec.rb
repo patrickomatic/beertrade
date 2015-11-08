@@ -9,6 +9,7 @@ RSpec.describe "trades/index", type: :view do
   end
 
   it "renders a list of trades" do
+    pending 
     render
   end
 end
