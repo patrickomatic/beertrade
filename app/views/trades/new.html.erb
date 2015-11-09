@@ -3,16 +3,7 @@
 <%= form_for(@trade) do |f| %>
   <div class="reddit-username-input form-group has-feedback">
     <%= f.label :participant_username, "who are you trading with?", class: "control-label" %>
-    <%= text_field_tag :participant_username, "", placeholder: "reddit username", class: "form-control", "aria-described-by" => "reddit-username-status" %>
-
-    <span class="reddit-username-input-success">
-      <span class="glyphicon glyphicon-ok form-control-feedback" aria-hidden="true"></span>
-      <span id="reddit-username-status" class="sr-only">(success)</span>
-    </span>
-    <span class="reddit-username-input-error">
-      <span class="glyphicon glyphicon-remove form-control-feedback" aria-hidden="true"></span>
-      <span id="reddit-username-status" class="sr-only">(error)</span>
-    </span>
+    <%= render partial: "users/reddit_user_search" %>
   </div>
 
   <div class="form-group">

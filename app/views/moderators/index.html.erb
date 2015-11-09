@@ -1,10 +1,9 @@
 <%= form_for(Trade.new) do |f| %>
   <h2>bulk import trades for a user</h2>
 
-  <div class="form-group">
+  <div class="reddit-username-input form-group has-feedback">
     <%= f.label :participant_username, "reddit username that we're importing trades for:", class: "control-label" %>
-    <%= text_field_tag :participant_username, "", class: "form-control" %>
-    <span class="username-warning"></span>
+    <%= render partial: "users/reddit_user_search" %>
   </div>
 
   <div class="form-group">
