@@ -1,31 +1,53 @@
-hideErrors = ->
-  $(".username-warning").hide()
-  $("#new_trade input[type=submit]").prop('disabled', false)
-
-
-showErrors = (error) ->
-  $(".username-warning").show()
-  $(".username-warning").html(error)
-  $("#new_trade input[type=submit]").prop('disabled', true)
-
-
 ready = ->
-  $username = $("#participant_username")
+  $form_group = $(".reddit-username-input")
+  $error_glyph = $form_group.find(".reddit-username-input-error")
+  $success_glyph = $form_group.find(".reddit-username-input-success")
+  $username = $form_group.find("#participant_username")
 
-  hideErrors()
-  $("#new_trade input[type=submit]").prop('disabled', true)
+  hideGlyphs = ->
+    $success_glyph.hide()
+    $error_glyph.hide()
+    $form_group.removeClass("has-error")
+    $form_group.removeClass("has-success")
 
-  $username.keyup ->
+  disableForm = ->
+    $("#new_trade input[type=submit]").prop('disabled', true)
+
+  hideErrors = ->
+    $("#new_trade input[type=submit]").prop('disabled', false)
+    $form_group.addClass("has-success")
+    $form_group.removeClass("has-error")
+    $error_glyph.hide()
+    $success_glyph.show()
+
+
+  showErrors = ->
+    disableForm()
+    $form_group.addClass("has-error")
+    $form_group.removeClass("has-success")
+    $error_glyph.show()
+    $success_glyph.hide()
+
+
+  hideGlyphs()
+  disableForm()
+
+  $username.bind "keyup change input", ->
     clearTimeout timer
+
     timer = setTimeout (->
       username = $username.val()
-      return if username == ''
+      if username == ''
+        disableForm()
+        hideGlyphs()
+        return
+        
 
       $.getJSON("https://api.reddit.com/user/#{username}/about.json")
       .success (json, resp) ->
         hideErrors()
       .error ->
-        showErrors("#{username} not found")
+        showErrors()
     ), 250
 
     false
