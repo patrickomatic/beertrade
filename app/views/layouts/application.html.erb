@@ -11,8 +11,8 @@
     <div id="main" class="container">
       <%= render partial: "layouts/header" %>
 
-      <p class="notice"><%= notice %></p>
-      <p class="alert"><%= alert %></p>
+      <% if notice %><div class="notice bg-success"><%= notice %></div><% end %>
+      <% if alert %><div class="alert bg-danger"><%= alert %></div><% end %> 
 
       <%= render partial: "users/moderation" %>
 
