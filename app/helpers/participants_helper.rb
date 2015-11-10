@@ -15,4 +15,17 @@ module ParticipantsHelper
       logger.error "Unknown carrier for tracking number: #{shipping_info}"
     end
   end
+
+
+  def class_for_feedback_text(feedback_type)
+    {"positive"  => "text-success",
+     "neutral"   => "text-warning",
+     "negative"  => "text-danger", }[feedback_type]
+  end
+
+  def glyphicon_for_feedback(feedback_type)
+    {"positive"  => "glyphicon-ok",
+     "neutral"   => "glyphicon-minus",
+     "negative"  => "glyphicon-remove", }[feedback_type]
+  end
 end

@@ -1,49 +1,66 @@
-<h2><%= @trade %></h2>
+<div class="row">
+  <h2 class="col-md-6"><%= @trade %></h2>
 
+  <div class="col-md-6">
+    <div class="trade-action-buttons pull-right centered">
+      <% if @trade.waiting_for_approval? current_user %>
+        this trade is waiting your approval:
+
+        <%= link_to "accept", trade_participants_path(@trade), method: :post, class: "btn btn-success btn-lg" %>
+        <%= link_to "decline", trade_path(@trade), method: :delete, class: "btn btn-danger btn-lg" %>
+      <% elsif @trade.waiting_to_give_feedback? current_user %>
+        <% participant = @trade.participant(current_user) %>
+
+        <%= link_to "update shipping info", edit_trade_participant_path(@trade, participant), class: "btn btn-default" %>
+        <%= link_to "leave feedback and complete trade", edit_trade_participant_path(@trade, participant.other_participant), class: "btn btn-default" %>
+      <% end %>
+
+      <% if current_user.try(:moderator?) %>
+        <%= link_to "delete", trade_path(@trade), method: :delete, class: "btn btn-danger", data: {confirm: "are you sure?"} %>
+      <% end %>
+    </div>
+  </div>
+</div>
 
 <% if @trade.completed? %>
-  <ul>
+  <dl>
     <% @trade.participants.each do |participant| %>
-      <li class="<%= participant.feedback_type %>-participant">
-        <%= link_to participant.other_participant.user, user_path(participant.other_participant.user) %> said: <%= participant.feedback %>
-      </li>
+      <dt>
+        <%= link_to participant.other_participant.user, user_path(participant.other_participant.user) %> said
+      </dt>
+      <dd class="<%= class_for_feedback_text(participant.feedback_type) %>">
+        <%= participant.feedback %>
+        <span class="glyphicon <%= glyphicon_for_feedback(participant.feedback_type) %>" aria-hidden="true"></span>
+      </dd>
     <% end %>
-  </ul>
+  </dl>
 <% elsif !@trade.accepted? %>
   <h3>trade not yet accepted</h3>
 <% else %>
-  <h3>trade pending feedback</h3>
+  <h3>trade waiting for feedback</h3>
 <% end %>
   
 
 <% if @trade.has_shipping_info? && (@trade.participant(current_user) || current_user.try(:moderator?)) %>
   <div id="shipping-info">
     <h3>shipping info</h3>
-    <ul>
+    <dl>
       <% @trade.participants.each do |participant| %>
         <% if participant.shipping_info? %>
-          <li>
-            provided by <%= link_to participant.user, user_path(participant.user) %>: <%= link_to participant.shipping_info, shipping_info_url(participant.shipping_info) %>
-          </li>
+          <dt><%= link_to participant.user, user_path(participant.user) %> sent</dt>
+          <dd><%= link_to participant.shipping_info, shipping_info_url(participant.shipping_info) %></dd>
         <% end %>
       <% end %>
-    </ul>
+    </dl>
   </div>
 <% end %>
   
 
-<% if @trade.waiting_for_approval? current_user %>
-    this trade is pending your approval:
+<div class="small">
+  <strong>requested</strong> <%= time_ago_in_words(@trade.created_at) %> ago<%= "," if @trade.completed? %>
 
-    <%= link_to "accept", trade_participants_path(@trade), method: :post, class: "btn btn-success btn-lg" %>
-    <%= link_to "decline", trade_path(@trade), method: :delete, class: "btn btn-danger btn-lg" %>
-<% elsif @trade.waiting_to_give_feedback? current_user %>
-  <% participant = @trade.participant(current_user) %>
-
-  <%= link_to "update shipping info", edit_trade_participant_path(@trade, participant), class: "btn btn-default" %>
-  <%= link_to "leave feedback and complete trade", edit_trade_participant_path(@trade, participant.other_participant), class: "btn btn-default" %>
-<% end %>
-
-<% if current_user.try(:moderator?) %>
-  <%= link_to "delete", trade_path(@trade), method: :delete, class: "btn btn-danger", data: {confirm: "are you sure?"} %>
-<% end %>
+  <% if @trade.completed? %>
+    <strong>completed</strong>
+    <%= time_ago_in_words(@trade.completed_at) %> ago
+  <% end %>
+</div>
