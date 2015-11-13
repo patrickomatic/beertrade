@@ -1,13 +1,13 @@
 class UsersController < ApplicationController
   def show
-    @user           = User.find_by_username(params[:id])
+    @user = User.find_by_username(params[:id])
     raise ActiveRecord::RecordNotFound unless @user
 
     if @user == current_user || current_user.try(:moderator?)
-      @pending        = @user.trades.not_completed_yet.page(params[:pending_page])
+      @pending = @user.trades.not_completed_yet.page(params[:pending_page])
     end
 
-    @completed      = @user.trades.completed.page(params[:completed_page])
+    @completed = @user.trades.completed.page(params[:completed_page])
 
     @notifications = if current_user == @user
                        @user.notifications.unseen.page(params[:notification_page])
