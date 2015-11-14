@@ -120,7 +120,6 @@ a {
   }
 
   &:hover {
-    color: $light-color;
-    background-color: $dark-color;
+    text-decoration: underline;
   }
 }
