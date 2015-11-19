@@ -5,3 +5,5 @@ hi <%= participant.user %>, we're messaging you to let you know that <%= partici
 <% end %>
 
 to confirm this trade please visit this link: <%= trade_url(participant.trade, notification_id: notification.id) %>
+
+once you and <%= participant.other_participant.user %> have completed your trade, go back to the link above and leave them feedback to close the trade out
