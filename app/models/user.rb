@@ -61,7 +61,7 @@ class User < ActiveRecord::Base
 
 
   def update_flair
-    Reddit.set_flair(username, nil, flair_css_class) if reputation > 0
+    Reddit.set_flair(username, nil, flair_css_class) if positive_feedback_count > 0
   end
 
 
