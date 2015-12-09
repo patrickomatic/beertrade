@@ -1,11 +1,16 @@
-<%= text_field_tag :participant_username, "", placeholder: "reddit username", class: "form-control", "aria-described-by" => "reddit-username-status" %>
+<% field = local_assigns[:username_field] || :participant_username %>
+<% hide_validation = local_assigns[:hide_validation] || false %>
 
-<span class="reddit-username-input-success">
-  <span class="glyphicon glyphicon-ok form-control-feedback" aria-hidden="true"></span>
-  <span id="reddit-username-status" class="sr-only">(success)</span>
-</span>
-<span class="reddit-username-input-error">
-  <span class="glyphicon glyphicon-remove form-control-feedback" aria-hidden="true"></span>
-  <span id="reddit-username-status" class="sr-only">(error)</span>
-</span>
+<%= text_field_tag field, "", placeholder: "reddit username", class: "form-control reddit-username-input-element", "aria-described-by" => "reddit-username-status" %>
 
+<% unless hide_validation %>
+  <span class="reddit-username-input-success">
+    <span class="glyphicon glyphicon-ok form-control-feedback" aria-hidden="true"></span>
+    <span id="reddit-username-status" class="sr-only">(success)</span>
+  </span>
+
+  <span class="reddit-username-input-error">
+    <span class="glyphicon glyphicon-remove form-control-feedback" aria-hidden="true"></span>
+    <span id="reddit-username-status" class="sr-only">(error)</span>
+  </span>
+<% end %>

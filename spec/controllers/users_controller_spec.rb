@@ -60,4 +60,10 @@ RSpec.describe UsersController, type: :controller do
       end
     end
   end
+
+
+  describe "POST create" do
+    # XXX 
+    pending
+  end
 end

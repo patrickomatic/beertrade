@@ -3,7 +3,7 @@ Rails.application.routes.draw do
     resources :participants, only: [:create, :edit, :update]
   end
 
-  resources :users, only: [:index, :show] do
+  resources :users, only: [:index, :show, :create] do
     resources :participants, only: [:index]
   end
 
