@@ -15,8 +15,19 @@ module ModeratorTools
       end
     end
 
-    def merge_trades_from_user(from_user, to_user)
-      # TODO handle the case where a user changes their username
+
+    def merge_trades_from_user(from_user, new_user)
+      Trade.transaction do 
+        from_user.trades.find_each do |trade|
+          participant = trade.participant(from_user)
+          participant.user = new_user
+          participant.save!
+        end
+      end
+
+      new_user.update_flair
+
+      return new_user
     end
 
 

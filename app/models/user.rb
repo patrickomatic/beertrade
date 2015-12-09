@@ -15,6 +15,10 @@ class User < ActiveRecord::Base
     User.where(["LOWER(username) = ?", username.downcase.strip]).first
   end
 
+  def self.find_or_create_by_username(username)
+    find_by_username(username) || User.create(username: username.downcase)
+  end
+
 
   def self.find_from_auth_hash(auth_hash)
     unless user = User.find_by(auth_uid: auth_hash.uid) 

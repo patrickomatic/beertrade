@@ -1,37 +1,38 @@
-ready = ->
-  $form_group = $(".reddit-username-input")
-  $error_glyph = $form_group.find(".reddit-username-input-error")
-  $success_glyph = $form_group.find(".reddit-username-input-success")
-  $username = $form_group.find("#participant_username")
-
-  hideGlyphs = ->
-    $success_glyph.hide()
-    $error_glyph.hide()
-    $form_group.removeClass("has-error")
-    $form_group.removeClass("has-success")
+redditUsernameSearch = ($formGroup) ->
+  $form = $formGroup.closest("form")
+  $submitButton = $form.find("input[type=submit]")
+  $errorGlyph = $formGroup.find(".reddit-username-input-error")
+  $successGlyph = $formGroup.find(".reddit-username-input-success")
 
   disableForm = ->
-    $("#new_trade input[type=submit]").prop('disabled', true)
+    $submitButton.prop('disabled', true)
+
+
+  hideGlyphs = ->
+    $successGlyph.hide()
+    $errorGlyph.hide()
+    $formGroup.removeClass("has-error")
+    $formGroup.removeClass("has-success")
 
   hideErrors = ->
-    $("#new_trade input[type=submit]").prop('disabled', false)
-    $form_group.addClass("has-success")
-    $form_group.removeClass("has-error")
-    $error_glyph.hide()
-    $success_glyph.show()
-
+    $submitButton.prop('disabled', false)
+    $formGroup.addClass("has-success")
+    $formGroup.removeClass("has-error")
+    $errorGlyph.hide()
+    $successGlyph.show()
 
   showErrors = ->
     disableForm()
-    $form_group.addClass("has-error")
-    $form_group.removeClass("has-success")
-    $error_glyph.show()
-    $success_glyph.hide()
+    $formGroup.addClass("has-error")
+    $formGroup.removeClass("has-success")
+    $errorGlyph.show()
+    $successGlyph.hide()
 
 
   hideGlyphs()
   disableForm()
 
+  $username = $formGroup.find(".reddit-username-input-element")
   $username.bind "keyup change input", ->
     clearTimeout timer
 
@@ -51,6 +52,11 @@ ready = ->
     ), 250
 
     false
+
+
+ready = ->
+  redditUsernameSearch($($el)) for $el in $(".reddit-username-input")
+
 
 $(document).on('page:load', ready)
 $ ready

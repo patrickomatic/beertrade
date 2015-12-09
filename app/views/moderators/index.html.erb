@@ -3,12 +3,31 @@
 
   <div class="reddit-username-input form-group has-feedback">
     <%= f.label :participant_username, "reddit username that we're importing trades for:", class: "control-label" %>
-    <%= render partial: "users/reddit_user_search" %>
+    <%= render "users/reddit_user_search" %>
   </div>
 
   <div class="form-group">
     <%= f.label :users_to_import, "list of reddit usernames they traded with:", class: "control-label" %>
     <%= text_area_tag :users_to_import, "", class: "form-control" %>
+  </div>
+
+  <%= f.submit "import trades", class: "btn btn-primary" %>
+<% end %>
+
+
+<%= form_for(User.new) do |f| %>
+  <h2>change username</h2>
+
+  <p>this will carry over the trades from the old username to the new one. note that this will remove the trades from the old user</p>
+
+  <div class="form-group has-feedback">
+    <%= f.label :username, "old reddit username:", class: "control-label" %>
+    <%= render "users/reddit_user_search", {username_field: "user[username]", hide_validation: true} %>
+  </div>
+
+  <div class="reddit-username-input form-group has-feedback">
+    <%= f.label :new_username, "new reddit username:", class: "control-label" %>
+    <%= render "users/reddit_user_search", {username_field: "user[new_username]"} %>
   </div>
 
   <%= f.submit "import trades", class: "btn btn-primary" %>
