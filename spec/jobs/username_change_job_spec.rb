@@ -6,10 +6,11 @@ RSpec.describe UsernameChangeJob, type: :job do
 
   describe "#perform" do
     let(:user) { FactoryGirl.create(:user) }
+    let(:new_user) { FactoryGirl.create(:user) }
 
     it "should call ModeratorTools.merge_trades_from_user" do
       expect(ModeratorTools).to receive(:merge_trades_from_user)
-      job.perform(user.id, "new-username")
+      job.perform(user.id, new_user.id)
     end
   end
 end
