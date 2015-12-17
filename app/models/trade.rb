@@ -3,7 +3,7 @@ class Trade < ActiveRecord::Base
 
   has_many :participants, dependent: :destroy
   has_many :users, through: :participants
-  has_many :notifications
+  has_many :notifications, dependent: :destroy
 
   scope :completed,         ->{ where("completed_at IS NOT NULL").includes(:participants).includes(:users).order(completed_at: :desc) }
   scope :not_completed_yet, ->{ where(completed_at: nil).includes(:participants).includes(:users).order(created_at: :desc) }
