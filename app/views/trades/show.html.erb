@@ -1,11 +1,6 @@
 <div>
   <div class="trade-action-buttons pull-right">
-    <% if @trade.waiting_for_approval? current_user %>
-      this trade is waiting your approval:
-
-      <%= link_to "accept", trade_participants_path(@trade), method: :post, class: "btn btn-success btn-lg" %>
-      <%= link_to "decline", trade_path(@trade), method: :delete, class: "btn btn-danger btn-lg" %>
-    <% elsif @trade.waiting_to_give_feedback? current_user %>
+    <% if @trade.waiting_to_give_feedback? current_user %>
       <% participant = @trade.participant(current_user) %>
 
       <%= link_to "update shipping info", edit_trade_participant_path(@trade, participant), class: "btn btn-default" %>
@@ -21,6 +16,16 @@
 
   <br style="clear: both;"/>
 </div>
+
+
+<% if @trade.waiting_for_approval? current_user %>
+  <div id="approve-trade">
+    this trade is waiting your approval:
+
+    <%= link_to "accept", trade_participants_path(@trade), method: :post, class: "btn btn-success btn-lg" %>
+    <%= link_to "decline", trade_path(@trade), method: :delete, class: "btn btn-danger btn-lg" %>
+  </div>
+<% end %>
 
 
 <% if @trade.completed? %>
