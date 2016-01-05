@@ -11,7 +11,10 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151113004355) do
+ActiveRecord::Schema.define(version: 20160104214502) do
+
+  # These are extensions that must be enabled in order to support this database
+  enable_extension "plpgsql"
 
   create_table "notifications", force: :cascade do |t|
     t.integer  "user_id",    null: false
@@ -35,10 +38,8 @@ ActiveRecord::Schema.define(version: 20151113004355) do
     t.datetime "feedback_approved_at"
   end
 
-  add_index "participants", ["feedback", "feedback_approved_at"], name: "index_participants_on_feedback_idx"
-  add_index "participants", ["feedback_type", "feedback_approved_at"], name: "index_participants_on_feedback_type_idx"
-  add_index "participants", ["trade_id"], name: "index_participants_on_trade_id"
-  add_index "participants", ["user_id"], name: "index_participants_on_user_id"
+  add_index "participants", ["trade_id"], name: "index_participants_on_trade_id", using: :btree
+  add_index "participants", ["user_id"], name: "index_participants_on_user_id", using: :btree
 
   create_table "trades", force: :cascade do |t|
     t.text     "agreement"
@@ -48,13 +49,16 @@ ActiveRecord::Schema.define(version: 20151113004355) do
   end
 
   create_table "users", force: :cascade do |t|
-    t.text     "username",                   null: false
+    t.text     "username",                                null: false
     t.string   "auth_uid"
-    t.datetime "created_at",                 null: false
-    t.datetime "updated_at",                 null: false
-    t.boolean  "moderator",  default: false
+    t.datetime "created_at",                              null: false
+    t.datetime "updated_at",                              null: false
+    t.boolean  "moderator",               default: false
+    t.integer  "positive_feedback_count", default: 0,     null: false
+    t.integer  "neutral_feedback_count",  default: 0,     null: false
+    t.integer  "negative_feedback_count", default: 0,     null: false
   end
 
-  add_index "users", ["auth_uid"], name: "index_users_on_auth_uid"
+  add_index "users", ["auth_uid"], name: "index_users_on_auth_uid", using: :btree
 
 end

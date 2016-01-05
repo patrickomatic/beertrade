@@ -10,7 +10,7 @@ class User < ActiveRecord::Base
                           .group("users.id")
                           .order("participants_counts DESC") }
 
-  
+
   def self.find_by_username(username)
     User.where(["LOWER(username) = ?", username.downcase.strip]).first
   end
@@ -21,7 +21,7 @@ class User < ActiveRecord::Base
 
 
   def self.find_from_auth_hash(auth_hash)
-    unless user = User.find_by(auth_uid: auth_hash.uid) 
+    unless user = User.find_by(auth_uid: auth_hash.uid)
       if user = User.find_by_username(auth_hash.info.name.strip)
         user.update_attributes(auth_uid: auth_hash.uid, username: auth_hash.info.name)
       else
@@ -36,21 +36,6 @@ class User < ActiveRecord::Base
   def unseen_notifications_count
     notifications.unseen.count
   end
-
-  def positive_feedback_count
-    # TODO why aren't these queries being cached (noticed when running #update_flair
-    # in the console)
-    @positive_feedback ||= participants.completed.with_positive_feedback.count
-  end
-
-  def neutral_feedback_count
-    @neutral_feedback ||= participants.completed.with_neutral_feedback.count
-  end
-
-  def negative_feedback_count
-    @negative_feedback ||= participants.completed.with_negative_feedback.count
-  end
-
 
   def flair_css_class
     return nil unless positive_feedback_count > 0

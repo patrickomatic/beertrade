@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe User, type: :model do
-  let(:user) { FactoryGirl.build(:user) }
+  let(:user) { FactoryGirl.create(:user) }
 
   describe ".find_by_username" do
     let(:username) { user.username.downcase }
