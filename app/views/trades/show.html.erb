@@ -3,8 +3,8 @@
     <% if @trade.waiting_to_give_feedback? current_user %>
       <% participant = @trade.participant(current_user) %>
 
-      <%= link_to "update shipping info", edit_trade_participant_path(@trade, participant), class: "btn btn-default" %>
-      <%= link_to "leave feedback and complete trade", edit_trade_participant_path(@trade, participant.other_participant), class: "btn btn-default" %>
+      <%= link_to "update shipping info", edit_trade_participant_path(@trade, participant), class: "btn btn-primary" %>
+      <%= link_to "leave feedback and complete trade", edit_trade_participant_path(@trade, participant.other_participant), class: "btn btn-primary" %>
     <% end %>
 
     <% if current_user.try(:moderator?) %>
