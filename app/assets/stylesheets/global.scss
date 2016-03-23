@@ -125,3 +125,7 @@ a {
     text-decoration: underline;
   }
 }
+
+.btn {
+  color: #FFF !important; /* TODO this should be loading after bootstrap and not need !important */
+}
