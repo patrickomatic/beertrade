@@ -28,4 +28,20 @@ module ParticipantsHelper
      "neutral"   => "glyphicon-minus",
      "negative"  => "glyphicon-remove", }[feedback_type]
   end
+
+
+  def trade_status_message(trade)
+    return nil if trade.completed?
+
+    waiting_for = if trade.accepted?
+                    trade.participants.pending.map(&:other_participant).map(&:user)
+                  else
+                    trade.participants.not_yet_accepted.map(&:user)
+                  end
+
+    waiting_for = waiting_for.map {|u| link_to u.username, u}.join(' and ')
+
+    ((trade.accepted? ? "waiting for feedback from "
+                      : "trade not yet accepted by ") << waiting_for).html_safe
+  end
 end

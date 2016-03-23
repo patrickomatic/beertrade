@@ -40,12 +40,10 @@
       </dd>
     <% end %>
   </dl>
-<% elsif !@trade.accepted? %>
-  <h3>trade not yet accepted</h3>
 <% else %>
-  <h3>trade waiting for feedback</h3>
+  <h3><%= trade_status_message(@trade) %></h3>
 <% end %>
-  
+
 
 <% if @trade.has_shipping_info? && (@trade.participant(current_user) || current_user.try(:moderator?)) %>
   <div id="shipping-info">
