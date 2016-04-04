@@ -1,3 +1,4 @@
+* notifications are super ugly
 * send a message when somebody accepts a trade
 * have it delay feedback until both sides complete
 * glyphicons for shipping and maybe other statuses
