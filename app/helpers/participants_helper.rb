@@ -17,6 +17,15 @@ module ParticipantsHelper
   end
 
 
+  def feedback_text(feedback_type, exclude_type=nil, &block)
+    return yield if feedback_type == exclude_type
+
+    content_tag(:span, class: class_for_feedback_text(feedback_type)) do
+      capture(&block) << content_tag(:span, '', "class"       => "glyphicon #{glyphicon_for_feedback(feedback_type)}", 
+                                                "aria-hidden" => true)
+    end
+  end
+
   def class_for_feedback_text(feedback_type)
     {"positive"  => "text-success",
      "neutral"   => "text-warning",

@@ -34,9 +34,10 @@
       <dt>
         <%= link_to participant.other_participant.user, user_path(participant.other_participant.user) %> said
       </dt>
-      <dd class="<%= class_for_feedback_text(participant.feedback_type) %>">
-        <%= participant.feedback %>
-        <span class="glyphicon <%= glyphicon_for_feedback(participant.feedback_type) %>" aria-hidden="true"></span>
+      <dd>
+        <%= feedback_text(participant.feedback_type) do %>
+          <%= participant.feedback %>
+        <% end %>
       </dd>
     <% end %>
   </dl>

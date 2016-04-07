@@ -9,6 +9,10 @@ class Trade < ActiveRecord::Base
   scope :not_completed_yet, ->{ where(completed_at: nil).includes(:participants).includes(:users).order(created_at: :desc) }
 
 
+  def lowest_feedback
+    participants.min_by {|p| p.feedback_type.to_i }.feedback_type 
+  end
+
   def can_see?(user)
     accepted? || !participant(user).nil? || (user && user.moderator?)
   end
