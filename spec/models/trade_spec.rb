@@ -1,6 +1,25 @@
 require 'rails_helper'
 
 RSpec.describe Trade, type: :model do
+  describe "#lowest_feedback" do
+    let(:trade) { FactoryGirl.create(:trade, :completed) }
+    subject { trade.lowest_feedback }
+
+
+    it { is_expected.to eq "positive" }
+
+    context "with bad feedback" do
+      before { trade.participants.first.feedback_type = :negative }
+      it { is_expected.to eq "negative" }
+    end
+
+    context "with an uncompleted trade" do
+      let(:trade) { FactoryGirl.create(:trade, :waiting_for_approval) }
+      it { is_expected.to be_nil }
+    end
+  end
+
+
   describe "#completed?" do
     let(:trade) { FactoryGirl.create(:trade, :completed) }
     subject { trade.completed? }
