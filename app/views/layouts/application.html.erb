@@ -14,8 +14,6 @@
       <% if notice %><div class="notice bg-success"><%= notice %></div><% end %>
       <% if alert %><div class="alert bg-danger"><%= alert %></div><% end %> 
 
-      <%= render partial: "users/moderation" %>
-
       <%= yield %>
 
       <%= render partial: "layouts/footer" %>
