@@ -6,6 +6,17 @@
     <%= render partial: "users/reddit_user_search" %>
   </div>
 
+  <div class="alert alert-warning fade in">
+    <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+    <strong>warning</strong> this user has received neutral feedback in the past.  perhaps you should <a href="#">review their feedback</a> before finalizing a trade with them
+  </div>
+
+  <div class="alert alert-danger fade in">
+    <strong>Fuck</strong> this guy!
+  </div>
+
+
+
   <div class="form-group">
     <%= f.label :agreement, "what did you agree to trade?", class: "control-label" %>
     <%= f.text_field :agreement, placeholder: "(optional)", class: "form-control" %>
