@@ -19,6 +19,7 @@ gem 'kaminari'
 gem 'sidekiq'
 gem 'newrelic_rpm'
 
+gem 'omniauth-oauth2', '~> 1.3.1'
 gem 'omniauth-reddit', github: 'jackdempsey/omniauth-reddit'
 gem 'redd', github: 'patrickomatic/redd', branch: 'list-moderators'
 gem 'tracking_number'
