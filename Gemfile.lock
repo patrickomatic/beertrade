@@ -242,7 +242,7 @@ DEPENDENCIES
   coffee-rails (~> 4.1.0)
   dotenv-rails
   factory_girl_rails
-  jbuilder (~> 2.0)
+  jbuilder
   jquery-rails
   kaminari
   kaminari-bootstrap

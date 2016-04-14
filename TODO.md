@@ -1,3 +1,4 @@
+* something in the trade listing query isn't indexed
 * when requesting a trade, show a message if they don't have any trades, a yellow message if they have neutral feedback and a red message if they have negative
 * notifications are super ugly
 * send a message when somebody accepts a trade
