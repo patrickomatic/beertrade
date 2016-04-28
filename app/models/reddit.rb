@@ -1,4 +1,6 @@
 class Reddit
+  USER_AGENT = "/r/beertrade app, ran by /u/patrickomatic - please contact at patrick @ patrickomatic.com"
+
   def self.pm(username, subject, partial, locals={})
     username = username.strip
     object = if username.start_with?("/r/")
@@ -28,7 +30,8 @@ class Reddit
               Rails.application.secrets.bot_oauth_id, 
               Rails.application.secrets.bot_oauth_secret,
               Rails.application.secrets.bot_username, 
-              Rails.application.secrets.bot_password).tap {|r| r.authorize!}
+              Rails.application.secrets.bot_password,
+              user_agent: USER_AGENT).tap {|r| r.authorize!}
     end
 
 
