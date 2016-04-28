@@ -78,6 +78,8 @@ class ParticipantsController < ApplicationController
 
       @participant.moderator_approved_at = Time.now if current_user.moderator?
 
+      flair_class_before = @participant.user.flair_css_class
+
       if @participant.update_attributes(update_feedback_params)
         if @participant.feedback_needs_moderator_approval?
           BadTradeReportedJob.perform_later(@participant.id)
@@ -85,7 +87,8 @@ class ParticipantsController < ApplicationController
           flash[:notice] = "successfully left feedback - waiting for moderator approval"
         else
           UpdateFeedbackJob.perform_later(@participant.id)
-          UpdateFlairJob.perform_later(@participant.user.id)
+          puts "before=#{flair_class_before} afer=#{@participant.user.flair_css_class}"
+          UpdateFlairJob.perform_later(@participant.user.id) if @participant.user.flair_css_class != flair_class_before
 
           flash[:notice] = "successfully left feedback"
         end

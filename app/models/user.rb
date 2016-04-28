@@ -38,17 +38,15 @@ class User < ActiveRecord::Base
   end
 
   def positive_feedback_count
-    # TODO why aren't these queries being cached (noticed when running #update_flair
-    # in the console)
-    @positive_feedback ||= participants.completed.with_positive_feedback.count
+    participants.completed.with_positive_feedback.count
   end
 
   def neutral_feedback_count
-    @neutral_feedback ||= participants.completed.with_neutral_feedback.count
+    participants.completed.with_neutral_feedback.count
   end
 
   def negative_feedback_count
-    @negative_feedback ||= participants.completed.with_negative_feedback.count
+    participants.completed.with_negative_feedback.count
   end
 
 
