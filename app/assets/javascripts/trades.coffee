@@ -3,52 +3,52 @@ redditUsernameSearch = ($formGroup) ->
   $submitButton = $form.find("input[type=submit]")
   $errorGlyph = $formGroup.find(".reddit-username-input-error")
   $successGlyph = $formGroup.find(".reddit-username-input-success")
+  $messages = $form.find(".trader-alert")
 
-  disableForm = ->
+
+  resetForm = ->
+    $successGlyph.hide()
+    $errorGlyph.hide()
+    $messages.addClass("hidden");
+    $formGroup.removeClass("has-error")
+    $formGroup.removeClass("has-success")
     $submitButton.prop('disabled', true)
 
 
-  hideGlyphs = ->
-    $successGlyph.hide()
-    $errorGlyph.hide()
-    $formGroup.removeClass("has-error")
-    $formGroup.removeClass("has-success")
-
-  hideErrors = ->
-    $submitButton.prop('disabled', false)
-    $formGroup.addClass("has-success")
-    $formGroup.removeClass("has-error")
-    $errorGlyph.hide()
-    $successGlyph.show()
-
-  showErrors = ->
-    disableForm()
-    $formGroup.addClass("has-error")
-    $formGroup.removeClass("has-success")
-    $errorGlyph.show()
-    $successGlyph.hide()
-
-
-  hideGlyphs()
-  disableForm()
+  resetForm()
 
   $username = $formGroup.find(".reddit-username-input-element")
-  $username.bind "keyup change input", ->
+  timer = null
+
+  $username.bind "keyup change", ->
+    resetForm()
+
     clearTimeout timer
 
     timer = setTimeout (->
       username = $username.val()
       if username == ''
         disableForm()
-        hideGlyphs()
         return
-        
 
-      $.getJSON("https://api.reddit.com/user/#{username}/about.json")
-      .success (json, resp) ->
-        hideErrors()
-      .error ->
-        showErrors()
+      BT.User.find(username)
+      .done (user) ->
+        $submitButton.prop('disabled', false);
+
+        $(".trader-link").attr('href', user.path)
+
+        if user.hasNoTrades()
+          $("#no-trades-message").removeClass("hidden");
+        else if user.isQuestionableTrader()
+          $("#neutral-trades-message").removeClass("hidden");
+        else if user.isBadTrader()
+          $("#bad-trades-message").removeClass("hidden");
+        else
+          $formGroup.addClass("has-success")
+          $successGlyph.show()
+      .fail ->
+        $formGroup.addClass("has-error")
+        $errorGlyph.show()
     ), 250
 
     false

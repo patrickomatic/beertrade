@@ -6,13 +6,19 @@
     <%= render partial: "users/reddit_user_search" %>
   </div>
 
-  <div class="alert alert-warning fade in">
+  <div id="no-trades-message" class="hidden trader-alert alert alert-info fade in">
     <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-    <strong>warning</strong> this user has received neutral feedback in the past.  perhaps you should <a href="#">review their feedback</a> before finalizing a trade with them
+    <strong>warning</strong> this user has no reported feedback.  consider having the user send their end of the deal first and/or send pictures and tracking numbers.
   </div>
 
-  <div class="alert alert-danger fade in">
-    <strong>Fuck</strong> this guy!
+  <div id="neutral-trades-message" class="hidden trader-alert alert alert-warning fade in">
+    <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+    <strong>warning</strong> this user has received neutral feedback in the past.  perhaps you should <a class="trader-link" href="#">review their feedback</a> before finalizing a trade with them
+  </div>
+
+  <div id="bad-trades-message" class="hidden trader-alert alert alert-danger fade in">
+    <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+    <strong>warning</strong> this user has received bad feedback in the past.  perhaps you should <a class="trader-link" href="#">review their feedback</a> before finalizing a trade with them
   </div>
 
 
