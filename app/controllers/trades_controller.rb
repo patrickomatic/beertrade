@@ -12,7 +12,7 @@ class TradesController < ApplicationController
   def index
     @last_completed = Trade.completed.order(created_at: :desc).page(params[:page])
     @trades = Trade.completed.order(created_at: :desc).page(params[:page])
-  end 
+  end
 
 
   def show
@@ -23,9 +23,9 @@ class TradesController < ApplicationController
       n.mark_as_seen! if n.user == current_user
     end
 
-    if !@trade.can_see?(current_user) 
+    if !@trade.can_see?(current_user)
       if current_user
-        render_forbidden! 
+        render_forbidden!
       else
         requires_authentication!
       end
@@ -51,7 +51,7 @@ class TradesController < ApplicationController
   end
 
 
-  def destroy 
+  def destroy
     @trade = Trade.find(params[:id])
 
     return render_forbidden! unless @trade.can_delete?(current_user)
@@ -62,8 +62,15 @@ class TradesController < ApplicationController
     redirect_to user_path(current_user)
   end
 
+  def search
+    @results = Trade.completed.basic_search(agreement: search_params)
+  end
 
   private
+
+    def search_params
+      params.require(:text)
+    end
 
     def trade_params
       params.require(:trade).permit(:agreement)

@@ -5,23 +5,23 @@ FactoryGirl.define do
     trait :completed do
       completed_at Time.now
 
-      after(:build) do |trade| 
-        trade.participants << FactoryGirl.build(:participant, :with_feedback)
-        trade.participants << FactoryGirl.build(:participant, :with_feedback)
+      after(:build) do |trade|
+        trade.participants << FactoryGirl.build(:participant, :with_feedback, trade: trade)
+        trade.participants << FactoryGirl.build(:participant, :with_feedback, trade: trade)
       end
     end
 
     trait :accepted do
-      after(:build) do |trade| 
-        trade.participants << FactoryGirl.build(:participant, :accepted)
-        trade.participants << FactoryGirl.build(:participant, :accepted)
+      after(:build) do |trade|
+        trade.participants << FactoryGirl.build(:participant, :accepted, trade: trade)
+        trade.participants << FactoryGirl.build(:participant, :accepted, trade: trade)
       end
     end
 
     trait :waiting_for_approval do
-      after(:build) do |trade| 
-        trade.participants << FactoryGirl.build(:participant)
-        trade.participants << FactoryGirl.build(:participant, :accepted)
+      after(:build) do |trade|
+        trade.participants << FactoryGirl.build(:participant, trade: trade)
+        trade.participants << FactoryGirl.build(:participant, :accepted, trade: trade)
       end
     end
   end
