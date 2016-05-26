@@ -1,24 +1,28 @@
-<%= render partial: "reputation", locals: {user: @user} %>
+<div id="user-show">
+  <%= render partial: "reputation", locals: {user: @user} %>
 
-<div class="user-info">
-  <h1><%= @user %></h1>
+  <div class="user-info">
+    <h1><%= @user %></h1>
 
-  <% unless @notifications.empty? %>
-    <div id="notifications">
-      <h2>notifications</h2>
-      
-      <ul class="notifications-list">
-        <% @notifications.each do |notification| %>
-          <%= render notification %>
-        <% end %>
-      </ul>
+    <% unless @notifications.empty? %>
+      <div class="bordered alert alert-info fade in">
+        <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
 
-      <%= paginate @notifications, param_name: :notification_page %>
-    </div>
-  <% end %>
+        <h2>notifications</h2>
+        
+        <ul class="notifications-list">
+          <% @notifications.each do |notification| %>
+            <%= render notification %>
+          <% end %>
+        </ul>
+
+        <%= paginate @notifications, param_name: :notification_page %>
+      </div>
+    <% end %>
 
 
-  <%= render partial: "trades/trade_list", locals: {trades: @pending, type: "pending", pagination_param: :pending_page} %>
+    <%= render partial: "trades/trade_list", locals: {trades: @pending, type: "pending", pagination_param: :pending_page} %>
 
-  <%= render partial: "trades/trade_list", locals: {trades: @completed, type: "completed", pagination_param: :completed_page} %>
+    <%= render partial: "trades/trade_list", locals: {trades: @completed, type: "completed", pagination_param: :completed_page} %>
+  </div>
 </div>

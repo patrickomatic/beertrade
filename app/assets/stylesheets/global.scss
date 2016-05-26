@@ -117,3 +117,7 @@ a {
 .btn {
   color: #FFF !important; /* TODO this should be loading after bootstrap and not need !important */
 }
+
+.bordered {
+  border: 2px solid $neutral-color;
+}

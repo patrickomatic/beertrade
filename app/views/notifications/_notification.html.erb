@@ -1,3 +1,3 @@
-<li class='<%= notification.seen? ? 'seen-notification' : 'unseen-notification' %>'>
+<li class="unseen-notification'">
   <%= link_to notification.message, trade_path(id: notification.trade, notification_id: notification.id) %>
 </li>

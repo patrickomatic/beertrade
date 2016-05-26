@@ -11,7 +11,7 @@
 
           <% notification_count = current_user.unseen_notifications_count %>
           <% if notification_count > 0 %>
-            <%= link_to notification_count, user_path(current_user), title: "you have #{notification_count} unseen notifications", class: "unseen-notifications-count" %>
+            <%= link_to notification_count, user_path(current_user), title: "you have #{notification_count} unseen notifications", class: "alert alert-info unseen-notifications-count" %>
           <% end %>
         </li>
 
