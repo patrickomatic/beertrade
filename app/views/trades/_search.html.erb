@@ -1,0 +1,6 @@
+<h3>search completed trades</h3>
+
+<%= form_tag(search_trades_path, method: :get) do %>
+  <%= text_field_tag(:query, "", placeholder: "beer name", type: "search") %>
+  <%= submit_tag("search", class: "btn btn-primary") %>
+<% end %>
