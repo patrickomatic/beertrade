@@ -7,7 +7,7 @@ RSpec.describe TradesController, type: :controller do
   describe "GET new" do
     before do
       log_in_as user
-      get :new 
+      get :new
     end
 
     it "assigns @trade" do
@@ -19,7 +19,7 @@ RSpec.describe TradesController, type: :controller do
   describe "GET index" do
     before do
       FactoryGirl.create(:trade, :completed)
-      get :index 
+      get :index
     end
 
     it "assigns @trades" do
@@ -30,7 +30,7 @@ RSpec.describe TradesController, type: :controller do
 
   describe "GET show" do
     context "with a completed trade" do
-      let(:trade) { FactoryGirl.create(:trade, :completed) } 
+      let(:trade) { FactoryGirl.create(:trade, :completed) }
 
       before { get :show, id: trade.id }
 
@@ -44,12 +44,12 @@ RSpec.describe TradesController, type: :controller do
     end
 
     context "with a notification_id param" do
-      let(:notification) { FactoryGirl.create(:notification) } 
-      let(:trade) { notification.trade } 
+      let(:notification) { FactoryGirl.create(:notification) }
+      let(:trade) { notification.trade }
 
       before do
         log_in_as notification.user
-        get :show, id: trade.id, notification_id: notification.id 
+        get :show, id: trade.id, notification_id: notification.id
       end
 
       it "should mark the notification as seen" do
@@ -59,7 +59,7 @@ RSpec.describe TradesController, type: :controller do
     end
 
     context "when waiting for approval" do
-      let(:trade) { FactoryGirl.create(:trade, :waiting_for_approval) } 
+      let(:trade) { FactoryGirl.create(:trade, :waiting_for_approval) }
 
       context "not logged in" do
         before { get :show, id: trade.id }
@@ -84,7 +84,7 @@ RSpec.describe TradesController, type: :controller do
         end
 
         context "as the approver" do
-          let(:user) { trade.participants.first }
+          let(:user) { trade.participants.first.user }
 
           it "should be a success" do
             expect(response).to be_success
@@ -92,7 +92,7 @@ RSpec.describe TradesController, type: :controller do
         end
 
         context "as the requester" do
-          let(:user) { trade.participants.second }
+          let(:user) { trade.participants.second.user }
 
           it "should be a success" do
             expect(response).to be_success
@@ -140,7 +140,7 @@ RSpec.describe TradesController, type: :controller do
 
 
   describe "DELETE destroy" do
-    let(:trade) { FactoryGirl.create(:trade, :waiting_for_approval) } 
+    let(:trade) { FactoryGirl.create(:trade, :waiting_for_approval) }
 
     before do
       log_in_as user
@@ -164,7 +164,35 @@ RSpec.describe TradesController, type: :controller do
       let(:user) { trade.participants.second.user }
 
       it "should be forbidden" do
-        expect(response).to be_forbidden 
+        expect(response).to be_forbidden
+      end
+    end
+  end
+
+  describe 'GET search' do
+    let(:trade) { FactoryGirl.create(:trade, :completed) }
+    let(:user) { FactoryGirl.create(:user) }
+
+    context "as a logged in user" do
+      before do
+        log_in_as user
+        get :search, query: 'pliny'
+      end
+
+      it "should be a success" do
+        expect(response).to be_success
+      end
+
+      it "should assign @trade" do
+        expect(assigns[:results]).to eq [trade]
+      end
+    end
+
+    context "as a not logged in user" do
+      before { get :search, query: 'pliny' }
+
+      it "should be a redirect response" do
+        expect(response).to redirect_to(new_session_path)
       end
     end
   end

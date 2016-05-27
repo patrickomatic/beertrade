@@ -69,7 +69,7 @@ class TradesController < ApplicationController
   private
 
     def search_params
-      params.require(:text)
+      params.require(:query)
     end
 
     def trade_params
