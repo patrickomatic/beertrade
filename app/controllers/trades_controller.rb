@@ -64,7 +64,7 @@ class TradesController < ApplicationController
 
   def search
     @results = Trade.completed.basic_search(agreement: search_params).page(params[:page])
-    unless @results.any?
+    if @results.empty?
       flash[:alert] = "no results found"
     end
   end
