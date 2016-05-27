@@ -63,7 +63,7 @@ class TradesController < ApplicationController
   end
 
   def search
-    @results = Trade.completed.basic_search(agreement: search_params)
+    @results = Trade.completed.basic_search(agreement: search_params).page(params[:page])
   end
 
   private
