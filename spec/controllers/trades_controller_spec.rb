@@ -176,15 +176,26 @@ RSpec.describe TradesController, type: :controller do
     context "as a logged in user" do
       before do
         log_in_as user
-        get :search, query: 'pliny'
       end
 
-      it "should be a success" do
-        expect(response).to be_success
+      context 'with at least one search result' do
+        before { get :search, query: 'pliny' }
+
+        it "should be a success" do
+          expect(response).to be_success
+        end
+
+        it "should assign @results" do
+          expect(assigns[:results]).to eq [trade]
+        end
       end
 
-      it "should assign @trade" do
-        expect(assigns[:results]).to eq [trade]
+      context 'with no search results' do
+        before { get :search, query: 'foo' }
+
+        it "should set flash[:alert]" do
+          expect(flash[:alert]).not_to be_nil
+        end
       end
     end
 
