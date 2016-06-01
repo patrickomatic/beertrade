@@ -1,6 +1,30 @@
 require 'rails_helper'
 
 RSpec.describe Trade, type: :model do
+  describe '.basic_search' do
+    subject { Trade.completed.basic_search(agreement: 'pliny') }
+
+    context 'with a completed trade' do
+      let(:matched_trade_1) { FactoryGirl.create(:trade, :completed, agreement: 'pliny for foo') }
+      let(:matched_trade_2) { FactoryGirl.create(:trade, :completed, agreement: 'pliny for bar') }
+      let(:unmatched_trade_1) { FactoryGirl.create(:trade, :completed, agreement: 'foo for bar') }
+
+      it { is_expected.to match_array [matched_trade_1, matched_trade_2] }
+    end
+
+    context 'with an accepted trade' do
+      let!(:matched_trade) { FactoryGirl.create(:trade, :accepted, agreement: 'pliny for foo') }
+
+      it { is_expected.to be_empty }
+    end
+
+    context 'with a trade awaiting approval' do
+      let!(:matched_trade) { FactoryGirl.create(:trade, :waiting_for_approval, agreement: 'pliny for foo') }
+
+      it { is_expected.to be_empty }
+    end
+  end
+
   describe "#lowest_feedback" do
     let(:trade) { FactoryGirl.create(:trade, :completed) }
     subject { trade.lowest_feedback }
@@ -35,7 +59,7 @@ RSpec.describe Trade, type: :model do
 
 
   describe "#all_feedback_given?" do
-    let(:trade) { FactoryGirl.create(:trade) } 
+    let(:trade) { FactoryGirl.create(:trade) }
 
     subject { trade.all_feedback_given? }
 
@@ -43,12 +67,12 @@ RSpec.describe Trade, type: :model do
     it { is_expected.to be false }
 
     context "with an accepted trade" do
-      let(:trade) { FactoryGirl.create(:trade, :accepted) } 
+      let(:trade) { FactoryGirl.create(:trade, :accepted) }
       it { is_expected.to be false }
     end
 
     context "with a completed trade" do
-      let(:trade) { FactoryGirl.create(:trade, :completed) } 
+      let(:trade) { FactoryGirl.create(:trade, :completed) }
       it { is_expected.to be true }
     end
   end
@@ -68,7 +92,7 @@ RSpec.describe Trade, type: :model do
     end
   end
 
-  
+
   describe "#participant" do
     let(:trade) { FactoryGirl.create(:trade, :accepted) }
     let(:user) { FactoryGirl.create(:participant).user }
@@ -146,8 +170,8 @@ RSpec.describe Trade, type: :model do
       let(:participant1) { trade.participants.first }
       let(:participant2) { participant1.other_participant }
 
-      before do 
-        participant1.update_attributes(feedback: "feedback", feedback_type: :positive) 
+      before do
+        participant1.update_attributes(feedback: "feedback", feedback_type: :positive)
       end
 
 
@@ -226,7 +250,7 @@ RSpec.describe Trade, type: :model do
     let(:trade) { FactoryGirl.build(:trade) }
     let(:requester) { FactoryGirl.create(:user) }
     let(:requestee) { FactoryGirl.create(:user) }
-    
+
     pending # XXX will need to stub api calls
   end
 
@@ -239,7 +263,7 @@ RSpec.describe Trade, type: :model do
 
     it { is_expected.to start_with("trade on ") }
 
-    context "with an agreement" do 
+    context "with an agreement" do
       let(:agreement) { "yinlins and stuff" }
       it { is_expected.to eq agreement }
     end

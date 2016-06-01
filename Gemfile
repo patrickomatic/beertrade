@@ -19,6 +19,7 @@ gem 'kaminari-bootstrap'
 gem 'kaminari'
 gem 'sidekiq'
 gem 'newrelic_rpm'
+gem 'textacular', '~> 3.0'
 
 gem 'omniauth-oauth2', '~> 1.3.1'
 gem 'omniauth-reddit', github: 'jackdempsey/omniauth-reddit'
