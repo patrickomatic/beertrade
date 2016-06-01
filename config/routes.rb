@@ -1,5 +1,8 @@
 Rails.application.routes.draw do
   resources :trades, except: [:edit, :update] do
+    collection do
+      get :search
+    end
     resources :participants, only: [:create, :edit, :update]
   end
 

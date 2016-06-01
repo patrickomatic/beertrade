@@ -2,4 +2,7 @@
 
 <%= render partial: "trades/trade_list", locals: {trades: @trades, type: "latest", pagination_param: :page} %>
 
-<%= render partial: "users/search" %>
+<div class="clearfix">
+  <%= render partial: "users/search" %>
+  <%= render partial: "trades/search" %>
+</div>
