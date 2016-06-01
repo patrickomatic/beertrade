@@ -9,6 +9,7 @@ gem 'coffee-rails', '~> 4.1.0'
 gem 'puma'
 gem 'bootstrap-sass', '~> 3.2.0'
 gem 'autoprefixer-rails'
+gem 'pg'
 
 gem 'jquery-rails'
 gem 'turbolinks'
@@ -26,7 +27,6 @@ gem 'tracking_number'
 
 
 group :production do
-  gem 'pg'
   gem 'rails_12factor'
   gem 'rollbar'
 end
@@ -38,8 +38,8 @@ end
 group :development, :test do
   gem 'byebug'
   gem 'spring'
-  gem 'sqlite3'
   gem 'rspec-rails'
   gem 'dotenv-rails'
   gem 'factory_girl_rails'
+  gem 'pry'
 end
