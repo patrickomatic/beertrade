@@ -3,4 +3,4 @@ services:
   - postgresql
   - redis-server
 before_script:
-  - psql -c 'create database rbeertrade-test;' -U postgres
+  - psql -c 'create database rbeertrade_test;' -U postgres
