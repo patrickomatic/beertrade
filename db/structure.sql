@@ -2,12 +2,16 @@
 -- PostgreSQL database dump
 --
 
+-- Dumped from database version 9.5.1
+-- Dumped by pg_dump version 9.5.1
+
 SET statement_timeout = 0;
 SET lock_timeout = 0;
 SET client_encoding = 'UTF8';
 SET standard_conforming_strings = on;
 SET check_function_bodies = false;
 SET client_min_messages = warning;
+SET row_security = off;
 
 --
 -- Name: plpgsql; Type: EXTENSION; Schema: -; Owner: -
@@ -30,7 +34,7 @@ SET default_tablespace = '';
 SET default_with_oids = false;
 
 --
--- Name: notifications; Type: TABLE; Schema: public; Owner: -; Tablespace: 
+-- Name: notifications; Type: TABLE; Schema: public; Owner: -
 --
 
 CREATE TABLE notifications (
@@ -65,7 +69,7 @@ ALTER SEQUENCE notifications_id_seq OWNED BY notifications.id;
 
 
 --
--- Name: participants; Type: TABLE; Schema: public; Owner: -; Tablespace: 
+-- Name: participants; Type: TABLE; Schema: public; Owner: -
 --
 
 CREATE TABLE participants (
@@ -102,7 +106,7 @@ ALTER SEQUENCE participants_id_seq OWNED BY participants.id;
 
 
 --
--- Name: schema_migrations; Type: TABLE; Schema: public; Owner: -; Tablespace: 
+-- Name: schema_migrations; Type: TABLE; Schema: public; Owner: -
 --
 
 CREATE TABLE schema_migrations (
@@ -111,7 +115,7 @@ CREATE TABLE schema_migrations (
 
 
 --
--- Name: trades; Type: TABLE; Schema: public; Owner: -; Tablespace: 
+-- Name: trades; Type: TABLE; Schema: public; Owner: -
 --
 
 CREATE TABLE trades (
@@ -143,7 +147,7 @@ ALTER SEQUENCE trades_id_seq OWNED BY trades.id;
 
 
 --
--- Name: users; Type: TABLE; Schema: public; Owner: -; Tablespace: 
+-- Name: users; Type: TABLE; Schema: public; Owner: -
 --
 
 CREATE TABLE users (
@@ -204,7 +208,7 @@ ALTER TABLE ONLY users ALTER COLUMN id SET DEFAULT nextval('users_id_seq'::regcl
 
 
 --
--- Name: notifications_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
+-- Name: notifications_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY notifications
@@ -212,7 +216,7 @@ ALTER TABLE ONLY notifications
 
 
 --
--- Name: participants_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
+-- Name: participants_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY participants
@@ -220,7 +224,7 @@ ALTER TABLE ONLY participants
 
 
 --
--- Name: trades_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
+-- Name: trades_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY trades
@@ -228,7 +232,7 @@ ALTER TABLE ONLY trades
 
 
 --
--- Name: users_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
+-- Name: users_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY users
@@ -236,42 +240,42 @@ ALTER TABLE ONLY users
 
 
 --
--- Name: index_participants_on_trade_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+-- Name: index_participants_on_trade_id; Type: INDEX; Schema: public; Owner: -
 --
 
 CREATE INDEX index_participants_on_trade_id ON participants USING btree (trade_id);
 
 
 --
--- Name: index_participants_on_user_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+-- Name: index_participants_on_user_id; Type: INDEX; Schema: public; Owner: -
 --
 
 CREATE INDEX index_participants_on_user_id ON participants USING btree (user_id);
 
 
 --
--- Name: index_trade_on_agreement; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+-- Name: index_trade_on_agreement; Type: INDEX; Schema: public; Owner: -
 --
 
 CREATE INDEX index_trade_on_agreement ON trades USING gin (to_tsvector('english'::regconfig, agreement));
 
 
 --
--- Name: index_users_on_auth_uid; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+-- Name: index_users_on_auth_uid; Type: INDEX; Schema: public; Owner: -
 --
 
 CREATE INDEX index_users_on_auth_uid ON users USING btree (auth_uid);
 
 
 --
--- Name: index_users_on_lower_username; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+-- Name: index_users_on_lower_username; Type: INDEX; Schema: public; Owner: -
 --
 
 CREATE UNIQUE INDEX index_users_on_lower_username ON users USING btree (lower(username));
 
 
 --
--- Name: unique_schema_migrations; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+-- Name: unique_schema_migrations; Type: INDEX; Schema: public; Owner: -
 --
 
 CREATE UNIQUE INDEX unique_schema_migrations ON schema_migrations USING btree (version);
@@ -281,7 +285,7 @@ CREATE UNIQUE INDEX unique_schema_migrations ON schema_migrations USING btree (v
 -- PostgreSQL database dump complete
 --
 
-SET search_path TO "$user",public;
+SET search_path TO "$user", public;
 
 INSERT INTO schema_migrations (version) VALUES ('20150807013545');
 
