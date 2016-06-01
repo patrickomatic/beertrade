@@ -1,3 +1,4 @@
+* A UI in the admin area for listing uncompleted trades and trades waiting feedback 
 * something in the trade listing query isn't indexed
 * a way to search completed trades
 * send a message when somebody accepts a trade
