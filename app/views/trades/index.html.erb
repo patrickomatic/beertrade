@@ -6,10 +6,6 @@
   </div>
 <% end %>
 
-<% if params.include? [:q] %>
-  search results for: <%= params[:q] %>
-<% end %>
-
-<%= render partial: "trades/trade_list", locals: {trades: @trades, type: "latest", pagination_param: :page} %>
+<%= render partial: "trades/trade_list", locals: {trades: @trades, type: "latest", pagination_param: :page, show_search: true} %>
 
 <%= render partial: "users/search" %>

@@ -1,6 +1,7 @@
+* Add some responsive media query breakpoint things for different screen sizes - feels too wide at full screen
+* A concept of bad traders
 * A UI in the admin area for listing uncompleted trades and trades waiting feedback 
 * something in the trade listing query isn't indexed
-* a way to search completed trades
 * send a message when somebody accepts a trade
 * have it delay feedback until both sides complete
 * glyphicons for shipping and maybe other statuses

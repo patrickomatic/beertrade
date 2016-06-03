@@ -1,10 +1,14 @@
 <div class="row">
-  <div class="clearfix row col-sm-4">
+  <div class="col-sm-4">
     <h3>search for reddit user</h3>
 
     <%= form_tag(users_path, method: :get) do %>
-      <%= text_field_tag(:username_q, "", placeholder: "reddit username", type: "search") %>
-      <%= submit_tag("search", class: "btn btn-primary") %>
+      <div class="input-group">
+        <%= text_field_tag(:username_q, "", placeholder: "reddit username", type: "search", class: "form-control") %>
+        <span class="input-group-btn">
+          <%= submit_tag("search", class: "btn btn-primary") %>
+        </span>
+      </div>
     <% end %>
   </div>
 </div>

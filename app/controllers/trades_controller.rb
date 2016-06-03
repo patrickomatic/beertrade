@@ -10,8 +10,9 @@ class TradesController < ApplicationController
 
 
   def index
-    @last_completed = Trade.completed.order(created_at: :desc).page(params[:page])
-    @trades = Trade.completed.order(created_at: :desc).page(params[:page])
+    @trades = Trade.completed
+    @trades = @trades.basic_search(agreement: params[:q]) unless params[:q].blank?
+    @trades = @trades.order(created_at: :desc).page(params[:page])
   end
 
 
@@ -62,18 +63,9 @@ class TradesController < ApplicationController
     redirect_to user_path(current_user)
   end
 
-  def search
-    @results = Trade.completed.basic_search(agreement: search_params).page(params[:page])
-    if @results.empty?
-      flash[:alert] = "no results found"
-    end
-  end
 
   private
 
-    def search_params
-      params.require(:query)
-    end
 
     def trade_params
       params.require(:trade).permit(:agreement)

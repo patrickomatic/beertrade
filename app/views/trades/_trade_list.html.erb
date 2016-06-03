@@ -1,21 +1,37 @@
-<% if trades && !trades.empty? %>
-  <article class="row">
+<%- show_search = local_assigns[:show_search] || false %>
+
+<article>
+  <div class="row">
     <h2><%= type %> trades</h2>
+  </div>
 
-    <ul class="trades-list">
-      <% trades.each do |trade| %>
-        <li>
-          <%= link_to trade.participants.first.user, user_path(trade.participants.first.user) %>
-          and
-          <%= link_to trade.participants.second.user, user_path(trade.participants.second.user) %>:
+  <% if show_search %>
+    <%= render partial: "trades/search" %>
+  <% end %>
 
-          <%= feedback_text(trade.lowest_feedback, "positive") do %>
-            <%= link_to truncate(trade.to_s, separator: ' ', length: 75), trade_path(trade) %>
-          <% end %>
-        </li>
-      <% end %>
-    </ul>
+  <% if trades && !trades.empty? %>
+    <div class="row">
+      <ul class="trades-list">
+        <% trades.each do |trade| %>
+          <li>
+            <%= link_to trade.participants.first.user, user_path(trade.participants.first.user) %>
+            and
+            <%= link_to trade.participants.second.user, user_path(trade.participants.second.user) %>:
 
-    <%= paginate trades, param_name: pagination_param %>
-  </article>
-<% end %>
+            <%= feedback_text(trade.lowest_feedback, "positive") do %>
+              <%= link_to truncate(trade.to_s, separator: ' ', length: 75), trade_path(trade) %>
+            <% end %>
+          </li>
+        <% end %>
+      </ul>
+    </div>
+
+    <div class="row text-center">
+      <%= paginate trades, param_name: pagination_param %>
+    </div>
+  <% elsif show_search %>
+    <div class="row">
+      <p>no search results for: <%= params[:q] %></p> 
+    </div>
+  <% end %>
+</article>

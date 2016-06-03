@@ -1,8 +1,18 @@
-<div class='col-sm-4'>
-  <h3>search completed trades</h3>
+<div class="row">
+  <div class="col-sm-4">
+    <%= form_tag(trades_path, method: :get) do %>
+      <div class="input-group">
+        <%= text_field_tag(:q, "", placeholder: "search completed trades", type: "search", class: "form-control", value: params[:q]) %>
+        <span class="input-group-btn">
+          <%= submit_tag("search", class: "btn btn-primary") %>
+        </span>
+      </div>
+    <% end %>
+  </div>
+</div>
 
-  <%= form_tag(search_trades_path, method: :get) do %>
-    <%= text_field_tag(:query, "", placeholder: "beer name", type: "search") %>
-    <%= submit_tag("search", class: "btn btn-primary") %>
+<div class="row">
+  <% if params.include? [:q] %>
+    <p>search results for: <%= params[:q] %></p>
   <% end %>
 </div>

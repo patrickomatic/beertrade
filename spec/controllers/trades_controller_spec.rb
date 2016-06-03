@@ -17,13 +17,39 @@ RSpec.describe TradesController, type: :controller do
 
 
   describe "GET index" do
-    before do
-      FactoryGirl.create(:trade, :completed)
-      get :index
+    let!(:trade) { FactoryGirl.create(:trade, :completed) }
+    let!(:trade2) { FactoryGirl.create(:trade, :completed, agreement: "yinlin for KBBBBBS") }
+    let(:params) { {} }
+
+    before { get :index, params }
+
+
+    context "with no q param" do
+      it "should show all trades" do
+        expect(assigns[:trades]).to eq([trade2, trade])
+      end
     end
 
-    it "assigns @trades" do
-      expect(assigns[:trades]).not_to be_empty
+
+    context 'with at least one search result' do
+      let(:params) { {q: 'pliny'} }
+
+      it "should be a success" do
+        expect(response).to be_success
+      end
+
+      it "should assign @trades" do
+        expect(assigns[:trades]).to eq [trade]
+      end
+    end
+
+
+    context 'with no search results' do
+      let(:params) { {q: 'darklord'} }
+
+      it "should assign empty @trades" do
+        expect(assigns[:trades]).to be_empty
+      end
     end
   end
 
@@ -165,45 +191,6 @@ RSpec.describe TradesController, type: :controller do
 
       it "should be forbidden" do
         expect(response).to be_forbidden
-      end
-    end
-  end
-
-  describe 'GET search' do
-    let(:trade) { FactoryGirl.create(:trade, :completed) }
-    let(:user) { FactoryGirl.create(:user) }
-
-    context "as a logged in user" do
-      before do
-        log_in_as user
-      end
-
-      context 'with at least one search result' do
-        before { get :search, query: 'pliny' }
-
-        it "should be a success" do
-          expect(response).to be_success
-        end
-
-        it "should assign @results" do
-          expect(assigns[:results]).to eq [trade]
-        end
-      end
-
-      context 'with no search results' do
-        before { get :search, query: 'foo' }
-
-        it "should set flash[:alert]" do
-          expect(flash[:alert]).not_to be_nil
-        end
-      end
-    end
-
-    context "as a not logged in user" do
-      before { get :search, query: 'pliny' }
-
-      it "should be a redirect response" do
-        expect(response).to redirect_to(new_session_path)
       end
     end
   end
