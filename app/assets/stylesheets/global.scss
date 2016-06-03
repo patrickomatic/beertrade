@@ -19,43 +19,31 @@ $main-width: 90%;
   padding-right: 0;
   list-style: none;
   display: block;
-
-  li {
-    display: inline;
-  }
+  li { display: inline; }
 }
 
 
 nav.header-nav {
-  display: block;
   border-bottom: 2px solid $border-color;
-  width: 100%;
   min-height: 3em;
-  padding-bottom: 2px;
+  margin-bottom: 1em;
   padding-top: 1em;
 
   #left-nav {
     @include action-list;
     float: left;
-
-    li {
-      padding-left: 1em;
-    }
+    li { padding-left: 1em; }
   }
 
   #right-nav {
     @include action-list;
     float: right;
-
-    li {
-      padding-right: 1em;
-    }
+    li { padding-right: 1em; }
   }
 }
 
 
 footer {
-  width: 100%;
   margin-top: 1em;
   padding-top: 1em;
   border-top: 1px solid $border-color;

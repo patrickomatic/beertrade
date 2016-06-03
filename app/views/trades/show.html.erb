@@ -1,4 +1,4 @@
-<div>
+<div class="row">
   <div class="trade-action-buttons pull-right">
     <% if @trade.waiting_to_give_feedback? current_user %>
       <% participant = @trade.participant(current_user) %>
@@ -13,13 +13,11 @@
   </div>
 
   <h2 class="pull-left"><%= @trade %></h2>
-
-  <br style="clear: both;"/>
 </div>
 
 
 <% if @trade.waiting_for_approval? current_user %>
-  <div id="approve-trade">
+  <div class="row" id="approve-trade">
     this trade is waiting your approval:
 
     <%= link_to "accept", trade_participants_path(@trade), method: :post, class: "btn btn-success btn-lg" %>
@@ -29,7 +27,7 @@
 
 
 <% if @trade.completed? %>
-  <dl>
+  <dl class="row">
     <% @trade.participants.each do |participant| %>
       <dt>
         <%= link_to participant.other_participant.user, user_path(participant.other_participant.user) %> said
@@ -47,7 +45,7 @@
 
 
 <% if @trade.has_shipping_info? && (@trade.participant(current_user) || current_user.try(:moderator?)) %>
-  <div id="shipping-info">
+  <div class="row" id="shipping-info">
     <h3>shipping info</h3>
     <dl>
       <% @trade.participants.each do |participant| %>
@@ -61,7 +59,7 @@
 <% end %>
   
 
-<div class="small">
+<div class="row small">
   <strong>requested</strong> <%= time_ago_in_words(@trade.created_at) %> ago<%= "," if @trade.completed? %>
 
   <% if @trade.completed? %>

@@ -1,19 +1,21 @@
 <% if trades && !trades.empty? %>
-  <h2><%= type %> trades</h2>
+  <article class="row">
+    <h2><%= type %> trades</h2>
 
-  <ul class="trades-list">
-    <% trades.each do |trade| %>
-      <li>
-        <%= link_to trade.participants.first.user, user_path(trade.participants.first.user) %> 
-        and
-        <%= link_to trade.participants.second.user, user_path(trade.participants.second.user) %>: 
-        
-        <%= feedback_text(trade.lowest_feedback, "positive") do %>
-          <%= link_to truncate(trade.to_s, separator: ' ', length: 75), trade_path(trade) %>
-        <% end %>
-      </li>
-    <% end %>
-  </ul>
+    <ul class="trades-list">
+      <% trades.each do |trade| %>
+        <li>
+          <%= link_to trade.participants.first.user, user_path(trade.participants.first.user) %>
+          and
+          <%= link_to trade.participants.second.user, user_path(trade.participants.second.user) %>:
 
-  <%= paginate trades, param_name: pagination_param %>
+          <%= feedback_text(trade.lowest_feedback, "positive") do %>
+            <%= link_to truncate(trade.to_s, separator: ' ', length: 75), trade_path(trade) %>
+          <% end %>
+        </li>
+      <% end %>
+    </ul>
+
+    <%= paginate trades, param_name: pagination_param %>
+  </article>
 <% end %>

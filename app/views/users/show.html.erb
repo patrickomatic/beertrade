@@ -1,7 +1,7 @@
 <div id="user-show">
   <%= render partial: "reputation", locals: {user: @user} %>
 
-  <div class="user-info">
+  <div class="row" class="user-info">
     <h1><%= @user %></h1>
 
     <% unless @notifications.empty? %>
@@ -19,10 +19,9 @@
         <%= paginate @notifications, param_name: :notification_page %>
       </div>
     <% end %>
-
-
-    <%= render partial: "trades/trade_list", locals: {trades: @pending, type: "pending", pagination_param: :pending_page} %>
-
-    <%= render partial: "trades/trade_list", locals: {trades: @completed, type: "completed", pagination_param: :completed_page} %>
   </div>
+
+  <%= render partial: "trades/trade_list", locals: {trades: @pending, type: "pending", pagination_param: :pending_page} %>
+
+  <%= render partial: "trades/trade_list", locals: {trades: @completed, type: "completed", pagination_param: :completed_page} %>
 </div>

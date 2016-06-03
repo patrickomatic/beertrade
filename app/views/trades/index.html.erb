@@ -1,8 +1,15 @@
-<div>welcome to the <%= link_to "/r/beertrade", "http://reddit.com/r/beertrade" %> trade tracking app.  from here you can request beer trades with other reddit users.  just sign in above to get started.</div>
+<% unless current_user %>
+  <div class="row">
+    <div class="alert alert-info">
+      welcome to the <%= link_to "/r/beertrade", "http://reddit.com/r/beertrade" %> trade tracking app.  from here you can request beer trades with other reddit users.  just sign in above to get started.
+    </div>
+  </div>
+<% end %>
+
+<% if params.include? [:q] %>
+  search results for: <%= params[:q] %>
+<% end %>
 
 <%= render partial: "trades/trade_list", locals: {trades: @trades, type: "latest", pagination_param: :page} %>
 
-<div class="clearfix">
-  <%= render partial: "users/search" %>
-  <%= render partial: "trades/search" %>
-</div>
+<%= render partial: "users/search" %>

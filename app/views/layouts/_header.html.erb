@@ -1,4 +1,4 @@
-<nav class="header-nav">
+<nav class="row header-nav">
   <% if current_user %>
       <ul id="left-nav">
         <li><%= link_to 'home', root_path %></li>
@@ -27,4 +27,3 @@
     <h3><%= link_to "sign in with reddit", '/auth/reddit' %></h3>
   <% end %>
 </nav>
-<br style="clear: both;"/>

@@ -1,13 +1,15 @@
-<h1>all users</h1>
+<article class="row">
+  <h1>all users</h1>
 
-<ul class="user-list">
-  <% @users.each do |user| %>
-    <li>
-      <%= link_to user, user_path(user) %>
-      <%= user.reputation %>% 
-      out of <%= user.total_completed_trades %> trades
-    </li>
-  <% end %>
+  <ul class="user-list">
+    <% @users.each do |user| %>
+      <li>
+        <%= link_to user, user_path(user) %>
+        <%= user.reputation %>% 
+        out of <%= user.total_completed_trades %> trades
+      </li>
+    <% end %>
 
-  <%= paginate @users %>
-</ul>
+    <%= paginate @users %>
+  </ul>
+</div>

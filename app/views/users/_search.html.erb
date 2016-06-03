@@ -1,8 +1,10 @@
-<div class='col-sm-4'>
-  <h3>search for reddit user</h3>
+<div class="row">
+  <div class="clearfix row col-sm-4">
+    <h3>search for reddit user</h3>
 
-  <%= form_tag(users_path, method: :get) do %>
-    <%= text_field_tag(:username_q, "", placeholder: "reddit username", type: "search") %>
-    <%= submit_tag("search", class: "btn btn-primary") %>
-  <% end %>
+    <%= form_tag(users_path, method: :get) do %>
+      <%= text_field_tag(:username_q, "", placeholder: "reddit username", type: "search") %>
+      <%= submit_tag("search", class: "btn btn-primary") %>
+    <% end %>
+  </div>
 </div>
