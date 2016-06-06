@@ -1,6 +1,6 @@
 <%- show_search = local_assigns[:show_search] || false %>
 
-<% if trades.any? || show_search %>
+<% if trades.try(:any?) || show_search %>
   <article>
     <div class="row">
       <h2><%= type %> trades</h2>
