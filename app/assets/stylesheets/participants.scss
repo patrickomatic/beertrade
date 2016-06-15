@@ -13,6 +13,19 @@ label[for=participant_feedback_type_negative] {
   color: $bad-color;
 }
 
+label[for=other_participant_feedback_type_positive] {
+  color: $good-color;
+}
+
+label[for=other_participant_feedback_type_neutral] {
+  color: $neutral-color;
+}
+
+label[for=other_participant_feedback_type_negative] {
+  color: $bad-color;
+}
+
+
 .positive-participant {
   color: $dark-color;
 }

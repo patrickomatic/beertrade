@@ -1,34 +1,10 @@
-<%= form_for(Trade.new) do |f| %>
-  <h2>bulk import trades for a user</h2>
+<%= render partial: "navigation", locals: {active: :index} %>
 
-  <div class="reddit-username-input form-group has-feedback">
-    <%= f.label :participant_username, "reddit username that we're importing trades for:", class: "control-label" %>
-    <%= render "users/reddit_user_search" %>
-  </div>
+<h3>trades with negative feedback which need mod approval</h3>
 
-  <div class="form-group">
-    <%= f.label :users_to_import, "list of reddit usernames they traded with:", class: "control-label" %>
-    <%= text_area_tag :users_to_import, "", class: "form-control" %>
-  </div>
-
-  <%= f.submit "import trades", class: "btn btn-primary" %>
-<% end %>
+<%= render partial: "trades/trade_list", locals: {trades: @mod_pending_trades, type: "pending", pagination_param: :mod_pending_page} %>
 
 
-<%= form_for(User.new) do |f| %>
-  <h2>change username</h2>
+<h3>trades which haven't been accepted by both parties</h3>
 
-  <p>this will carry over the trades from the old username to the new one. note that this will remove the trades from the old user</p>
-
-  <div class="form-group has-feedback">
-    <%= f.label :username, "old reddit username:", class: "control-label" %>
-    <%= render "users/reddit_user_search", {username_field: "user[username]", hide_validation: true} %>
-  </div>
-
-  <div class="reddit-username-input form-group has-feedback">
-    <%= f.label :new_username, "new reddit username:", class: "control-label" %>
-    <%= render "users/reddit_user_search", {username_field: "user[new_username]"} %>
-  </div>
-
-  <%= f.submit "import trades", class: "btn btn-primary" %>
-<% end %>
+<%= render partial: "trades/trade_list", locals: {trades: @not_accepted_trades, type: "pending", pagination_param: :not_accepted_page} %>

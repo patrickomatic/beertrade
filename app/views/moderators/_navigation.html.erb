@@ -1,0 +1,8 @@
+<nav>
+  <ul class="nav nav-tabs">
+    <li role="presentation" class="<%= 'active' if active == :index %>"><a href="<%= moderators_path %>">trades waiting feedback</a></li>
+    <li role="presentation" class="<%= 'active' if active == :import_trades %>"><a href="<%= moderators_import_trades_path %>">import trades</a></li>
+    <li role="presentation" class="<%= 'active' if active == :change_username %>"><a href="<%= moderators_change_username_path %>">change username</a></li>
+    <li role="presentation" class="<%= 'active' if active == :add_trade %>"><a href="<%= moderators_add_trade_path %>">add a trade</a></li>
+  </ul>
+</nav>

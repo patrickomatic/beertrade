@@ -36,6 +36,7 @@ class TradesController < ApplicationController
 
   def create
     return trade_import if current_user.moderator? && params[:users_to_import]
+    return add_trade if current_user.moderator? && params[:user] and params[:other_user]
 
     @trade = Trade.new(trade_params)
 
@@ -71,6 +72,23 @@ class TradesController < ApplicationController
       params.require(:trade).permit(:agreement)
     end
 
+    def user_params
+      params.require(:user).permit(:username)
+    end
+
+    def other_user_params
+      params.require(:other_user).permit(:username)
+    end
+
+    def participant_params
+      params.require(:participant).permit(:feedback_type, :feedback)
+    end
+
+    def other_participant_params
+      params.require(:other_participant).permit(:feedback_type, :feedback)
+    end
+
+
     def trade_import
       user = User.find_by_username(params[:participant_username])
 
@@ -83,5 +101,25 @@ class TradesController < ApplicationController
       end
 
       redirect_to moderators_path
+    end
+
+
+    def add_trade
+      user = User.find_or_create_by_username(user_params[:username])
+      other_user = User.find_or_create_by_username(other_user_params[:username])
+
+      trade = Trade.new(trade_params)
+      trade.participants.build(participant_params.merge(user: user))
+      trade.participants.build(other_participant_params.merge(user: other_user))
+      trade.participants.each {|p| p.accepted_at = p.moderator_approved_at = Time.now}
+      trade.completed_at = Time.now
+
+      if trade.save
+        flash[:notice] = "successfully added trade"
+        redirect_to trade
+      else
+        flash[:alert] = "error adding trade"
+        redirect_to moderator_add_trade_path
+      end
     end
 end
