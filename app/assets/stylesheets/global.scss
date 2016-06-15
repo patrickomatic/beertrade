@@ -80,13 +80,20 @@ body {
   #main {
     padding: 2em;
     z-index: 1;
-    width: $main-width;
     text-align: left;
     margin: 0px auto;
     padding-top: 0px;
     background-color: $foreground-color;
     min-height: 500px;
     box-shadow: 0 0 0.5em $dark-color;
+
+    width: 90%;
+    @media all and (min-width: 40em) {
+      width: 80%;
+    }
+    @media all and (min-width: 50em) {
+      width: 70%;
+    }
   }
 }
 

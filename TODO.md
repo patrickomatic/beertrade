@@ -1,4 +1,3 @@
-* Add some responsive media query breakpoint things for different screen sizes - feels too wide at full screen
 * A concept of bad traders
 * something in the trade listing query isn't indexed
 * send a message when somebody accepts a trade
