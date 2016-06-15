@@ -2,9 +2,11 @@
 
 <% if trades.try(:any?) || show_search %>
   <article>
-    <div class="row">
-      <h2><%= type %> trades</h2>
-    </div>
+    <% if local_assigns[:type] %>
+      <div class="row">
+        <h2><%= type %> trades</h2>
+      </div>
+    <% end %>
 
     <% if show_search %>
       <%= render partial: "trades/search" %>

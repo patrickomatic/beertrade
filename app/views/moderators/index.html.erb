@@ -2,9 +2,9 @@
 
 <h3>trades with negative feedback which need mod approval</h3>
 
-<%= render partial: "trades/trade_list", locals: {trades: @mod_pending_trades, type: "pending", pagination_param: :mod_pending_page} %>
+<%= render partial: "trades/trade_list", locals: {trades: @mod_pending_trades, pagination_param: :mod_pending_page} %>
 
 
 <h3>trades which haven't been accepted by both parties</h3>
 
-<%= render partial: "trades/trade_list", locals: {trades: @not_accepted_trades, type: "pending", pagination_param: :not_accepted_page} %>
+<%= render partial: "trades/trade_list", locals: {trades: @not_accepted_trades, pagination_param: :not_accepted_page} %>
