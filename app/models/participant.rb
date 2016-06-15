@@ -13,7 +13,7 @@ class Participant < ActiveRecord::Base
 
   scope :pending,                    ->{ where(feedback: nil) }
   scope :not_yet_accepted,           ->{ where(accepted_at: nil) }
-  scope :old_and_not_yet_accepted,   ->{ where(["participants.created_at < ? AND accepted_at IS NULL", 2.months.ago]) }
+  scope :old_and_not_yet_accepted,   ->{ where(["participants.created_at < ? AND accepted_at IS NULL", 1.month.ago]) }
   scope :completed,                  ->{ where("feedback IS NOT NULL AND feedback_approved_at IS NOT NULL") }
   scope :with_shipping_info,         ->{ where("shipping_info IS NOT NULL") }
   scope :needing_moderator_approval, ->{ where("feedback_type = 0 AND feedback_approved_at IS NULL") }
