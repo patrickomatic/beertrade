@@ -1,20 +1,9 @@
 @import "global";
 
-#user-show {
-  position: relative;
-  width: 100%;
-}
-
-.user-info {
-  display: inline-block;
-}
-
 #reputation {
-  float: right;
-  padding: 1em;
-  min-height: 10em;
-
-  table {
+  h3 { text-align: center; }
+  table { 
+    margin: 0.5em;
     width: 100%;
   }
 }
