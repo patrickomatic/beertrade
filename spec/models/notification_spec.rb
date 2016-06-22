@@ -39,7 +39,7 @@ RSpec.describe Notification, type: :model do
 
 
   # TODO use a shared example to test all the reddit api calls
-  describe "::updated_shipping" do
+  describe ".updated_shipping" do
     before { expect(Reddit).to receive(:pm) }
 
     let(:trade) { FactoryGirl.create(:trade, :accepted) }
@@ -75,7 +75,7 @@ RSpec.describe Notification, type: :model do
   end
 
 
-  describe "::send_invites" do
+  describe ".send_invites" do
     before { expect(Reddit).to receive(:pm) }
 
     let(:participant) { FactoryGirl.create(:participant) }
@@ -86,7 +86,7 @@ RSpec.describe Notification, type: :model do
   end
 
   
-  describe "::left_feedback" do
+  describe ".left_feedback" do
     before { expect(Reddit).to receive(:pm) }
 
     let(:trade) { FactoryGirl.create(:trade, :accepted) }
@@ -94,6 +94,18 @@ RSpec.describe Notification, type: :model do
 
     it "should create Notification objects" do
       expect { Notification.left_feedback(participant) }.to change { Notification.count }.by 1
+    end
+  end
+
+
+  describe ".accepted_trade" do
+    before { expect(Reddit).to receive(:pm) }
+
+    let(:trade) { FactoryGirl.create(:trade, :accepted) }
+    let(:participant) { trade.participants.first }
+
+    it "should create Notification objects" do
+      expect { Notification.accepted_trade(participant) }.to change { Notification.count }.by 1
     end
   end
 end

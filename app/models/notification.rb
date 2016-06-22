@@ -55,9 +55,9 @@ class Notification < ActiveRecord::Base
 
 
   def self.left_feedback(participant)
-    other_username = participant.other_participant.user.to_s
-
     if_not_already_sent do
+      other_username = participant.other_participant.user.to_s
+
       n = Notification.create!(user: participant.user, 
                            message: "#{other_username} has left you feedback",
                            trade: participant.trade)
@@ -65,6 +65,21 @@ class Notification < ActiveRecord::Base
       Reddit.pm(participant.user.username, "#{other_username} has left you feedback", 
                 "notifications/left_feedback", 
                 participant: participant, notification: n)
+    end
+  end
+
+
+  def self.accepted_trade(participant)
+    participant.other_participants.each do |p|
+      if_not_already_sent do
+        n = Notification.create!(user: p.user, 
+                                 message: "#{participant.user} has accepted your trade request",
+                                 trade: participant.trade)
+
+        Reddit.pm(p.user.username, "#{participant.user} has accepted your trade request", 
+                  "notifications/trade_accepted", 
+                  participant: p, other_participant: participant, notification: n)
+      end
     end
   end
 

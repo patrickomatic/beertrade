@@ -6,7 +6,7 @@ RSpec.describe BadTradeReportedJob, type: :job do
   describe "#perform" do
     let(:participant) { FactoryGirl.create(:participant) }
 
-    it "should call notification.send_invites" do
+    it "should call Notification.send_invites" do
       expect(Reddit).to receive(:pm)
       job.perform(participant.id)
     end

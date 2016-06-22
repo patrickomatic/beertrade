@@ -29,6 +29,7 @@ class ParticipantsController < ApplicationController
     if !@participant.update_attributes(accepted_at: Time.now)
       flash[:alert] = @participant.errors.full_messsaes.join(", ")
     else
+      AcceptedTradeJob.perform_later(@participant.id)
       flash[:notice] = "successfully confirmed trade"
     end
 
