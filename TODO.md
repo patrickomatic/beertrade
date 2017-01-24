@@ -1,3 +1,4 @@
+* A way to edit trades directly 
 * log ips so we can tell if users are giving themselves credits
 * have it delay feedback until both sides complete and close out existing bad feedback but not fully completed
 * redd gem merged in my change so use that
