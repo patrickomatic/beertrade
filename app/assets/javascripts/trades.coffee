@@ -58,5 +58,5 @@ ready = ->
   redditUsernameSearch($($el)) for $el in $(".reddit-username-input")
 
 
-$(document).on('page:load', ready)
+$(document).on('turbolinks:load', ready)
 $ ready
