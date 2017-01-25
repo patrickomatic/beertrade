@@ -55,13 +55,18 @@ class Trade < ActiveRecord::Base
   end
 
 
-  def create_participants(organizer_user, participant_reddit_username)
+  def organizing_participant
+    participants.order(accepted_at: :asc).first
+  end
+
+
+  def create_participants(organizer_user, participant_reddit_username, ip_address)
     if organizer_user.username.downcase == participant_reddit_username.downcase
       self.errors.add(:base, "You cannot request a trade with yourself")
       raise ActiveRecord::RecordInvalid.new(self)
     end
 
-    participants.build(user: organizer_user, accepted_at: Time.now)
+    participants.build(user: organizer_user, accepted_at: Time.now, ip_address: ip_address)
     
     user = User.find_or_create_by_username(participant_reddit_username)
 

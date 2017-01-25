@@ -82,7 +82,8 @@ CREATE TABLE participants (
     accepted_at timestamp without time zone,
     created_at timestamp without time zone NOT NULL,
     updated_at timestamp without time zone NOT NULL,
-    feedback_approved_at timestamp without time zone
+    feedback_approved_at timestamp without time zone,
+    ip_address text
 );
 
 
@@ -254,24 +255,10 @@ CREATE INDEX index_participants_on_user_id ON participants USING btree (user_id)
 
 
 --
--- Name: index_trade_on_agreement; Type: INDEX; Schema: public; Owner: -
---
-
-CREATE INDEX index_trade_on_agreement ON trades USING gin (to_tsvector('english'::regconfig, agreement));
-
-
---
 -- Name: index_users_on_auth_uid; Type: INDEX; Schema: public; Owner: -
 --
 
 CREATE INDEX index_users_on_auth_uid ON users USING btree (auth_uid);
-
-
---
--- Name: index_users_on_lower_username; Type: INDEX; Schema: public; Owner: -
---
-
-CREATE UNIQUE INDEX index_users_on_lower_username ON users USING btree (lower(username));
 
 
 --
@@ -308,4 +295,6 @@ INSERT INTO schema_migrations (version) VALUES ('20151024204508');
 INSERT INTO schema_migrations (version) VALUES ('20151027171552');
 
 INSERT INTO schema_migrations (version) VALUES ('20160526185052');
+
+INSERT INTO schema_migrations (version) VALUES ('20170124233811');
 

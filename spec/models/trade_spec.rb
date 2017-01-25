@@ -25,6 +25,7 @@ RSpec.describe Trade, type: :model do
     end
   end
 
+
   describe "#lowest_feedback" do
     let(:trade) { FactoryGirl.create(:trade, :completed) }
     subject { trade.lowest_feedback }
@@ -248,10 +249,29 @@ RSpec.describe Trade, type: :model do
 
   describe "#create_participants" do
     let(:trade) { FactoryGirl.build(:trade) }
-    let(:requester) { FactoryGirl.create(:user) }
-    let(:requestee) { FactoryGirl.create(:user) }
+    let(:organizer) { FactoryGirl.create(:user) }
+    let(:other_user) { FactoryGirl.create(:user) }
 
-    pending # XXX will need to stub api calls
+    subject { trade.create_participants(organizer, other_user.username, "192.168.1.1") }
+
+    it "should create the participants" do
+      expect { subject }.to change { Participant.count }.by 2
+      is_expected.to be_instance_of Participant
+    end
+
+    context "with a user that doesn't exist" do
+      let(:other_user) { FactoryGirl.build(:user, username: "someuser") }
+
+      it "should create the user" do
+        organizer
+        expect { subject }.to change { User.count }.by 1
+      end
+    end
+
+    context "with a user requesting a trade with themselves" do
+      let(:other_user) { organizer }
+      it { is_expected.to be false }
+    end
   end
 
 

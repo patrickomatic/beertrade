@@ -26,7 +26,7 @@ class ParticipantsController < ApplicationController
 
     @participant = @trade.participants.not_yet_accepted.find_by(user_id: current_user.id)
     
-    if !@participant.update_attributes(accepted_at: Time.now)
+    if !@participant.update_attributes(accepted_at: Time.now, ip_address: request.remote_ip)
       flash[:alert] = @participant.errors.full_messsaes.join(", ")
     else
       AcceptedTradeJob.perform_later(@participant.id)

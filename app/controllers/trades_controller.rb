@@ -41,7 +41,7 @@ class TradesController < ApplicationController
     @trade = Trade.new(trade_params)
 
     username = params[:participant_username].strip
-    if new_participant = @trade.create_participants(current_user, username)
+    if new_participant = @trade.create_participants(current_user, username, request.remote_ip)
       TradeInviteJob.perform_later(new_participant.id)
 
       flash[:notice] = "trade successfully requested.  waiting on #{new_participant.user} to confirm it"
