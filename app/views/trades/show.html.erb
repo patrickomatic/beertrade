@@ -60,7 +60,7 @@
   
 
 <div class="row small">
-  <strong>requested</strong> <%= time_ago_in_words(@trade.created_at) %> ago<% if current_user.moderator? && @trade.organizing_participant.ip_address? %>, from ip: <%= @trade.organizing_participant.ip_address %><% end %><%= "," if @trade.completed? %>
+  <strong>requested</strong> <%= time_ago_in_words(@trade.created_at) %> ago<% if (current_user.try(:moderator?) && @trade.organizing_participant.ip_address? %>, from ip: <%= @trade.organizing_participant.ip_address %><% end %><%= "," if @trade.completed? %>
 
   <% if @trade.completed? %>
     <strong>completed</strong>
