@@ -20,8 +20,8 @@ class TradesController < ApplicationController
     @trade = Trade.find(params[:id])
 
     if params[:notification_id]
-      n = @trade.notifications.find_by(id: params[:notification_id])
-      n.mark_as_seen! if n.user == current_user
+      notification = @trade.notifications.find(id: params[:notification_id])
+      notification.mark_as_seen! if notification && notification.user == current_user
     end
 
     if !@trade.can_see?(current_user)
