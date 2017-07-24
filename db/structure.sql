@@ -157,7 +157,9 @@ CREATE TABLE users (
     auth_uid character varying,
     created_at timestamp without time zone NOT NULL,
     updated_at timestamp without time zone NOT NULL,
-    moderator boolean DEFAULT false
+    moderator boolean DEFAULT false,
+    banned_at timestamp without time zone,
+    ban_details text
 );
 
 
@@ -297,4 +299,6 @@ INSERT INTO schema_migrations (version) VALUES ('20151027171552');
 INSERT INTO schema_migrations (version) VALUES ('20160526185052');
 
 INSERT INTO schema_migrations (version) VALUES ('20170124233811');
+
+INSERT INTO schema_migrations (version) VALUES ('20170718004925');
 
