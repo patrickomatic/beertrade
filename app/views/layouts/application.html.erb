@@ -9,13 +9,13 @@
   </head>
   <body>
     <div id="main" class="container-fluid">
-      <%= render partial: "layouts/header" %>
-      <%= render partial: "layouts/flash_messages" %>
+      <%= render "layouts/header" %>
+      <%= render "layouts/flash_messages" %>
 
       <%= yield %>
 
-      <%= render partial: "layouts/footer" %>
-      <%= render partial: "layouts/google_analytics" %>
+      <%= render "layouts/footer" %>
+      <%= render "layouts/google_analytics" %>
     </div>
   </body>
 </html>

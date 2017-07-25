@@ -3,7 +3,7 @@
 <%= form_for(@trade) do |f| %>
   <div class="reddit-username-input form-group has-feedback">
     <%= f.label :participant_username, "who are you trading with?", class: "control-label" %>
-    <%= render partial: "users/reddit_user_search" %>
+    <%= render "users/reddit_user_search" %>
   </div>
 
   <div id="no-trades-message" class="hidden trader-alert alert alert-info fade in">

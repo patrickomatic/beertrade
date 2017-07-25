@@ -6,6 +6,6 @@
   </div>
 <% end %>
 
-<%= render partial: "trades/trade_list", locals: {trades: @trades, type: "latest", pagination_param: :page, show_search: true} %>
+<%= render "trades/trade_list", trades: @trades, type: "latest", pagination_param: :page, show_search: true %>
 
-<%= render partial: "users/search" %>
+<%= render "users/search" %>
