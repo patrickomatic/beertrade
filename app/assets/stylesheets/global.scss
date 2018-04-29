@@ -13,6 +13,7 @@ $background-color: #D1D1D1;
 $foreground-color: $light-color;
 $main-width: 90%;
 
+$notice-color: #CFE4F7;
 
 @mixin action-list {
   padding-left: 0;
@@ -22,6 +23,14 @@ $main-width: 90%;
   li { display: inline; }
 }
 
+
+#notice {
+  background-color: $notice-color;
+  width: 100%;
+  border-bottom: 1px solid #619acd;
+  padding: 0.5em 0;
+  margin: 0;
+}
 
 nav.header-nav {
   border-bottom: 2px solid $border-color;
@@ -85,7 +94,7 @@ body {
     padding-top: 0px;
     background-color: $foreground-color;
     min-height: 500px;
-    box-shadow: 0 0 0.5em $dark-color;
+    box-shadow: 0 0.15em 0.5em $dark-color;
 
     width: 90%;
     @media all and (min-width: 40em) {
