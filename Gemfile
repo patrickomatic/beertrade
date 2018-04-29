@@ -9,7 +9,7 @@ gem 'coffee-rails', '~> 4.1.0'
 gem 'puma'
 gem 'bootstrap-sass', '~> 3.2.0'
 gem 'autoprefixer-rails'
-gem 'pg'
+gem 'pg', '~> 0.21'
 
 gem 'jquery-rails'
 gem 'turbolinks'
